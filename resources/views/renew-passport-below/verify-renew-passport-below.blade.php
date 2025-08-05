@@ -52,7 +52,7 @@
                         </div>    
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_arabic">الاسم الكامل (كما هو مذكور في جواز السفر)</label>
+                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
                                         <input type="text" class="form-control" name="name_arabic" value="{{ $application->formable->name_arabic }}"  @if(!request('edit')) disabled @endif   required/>
                                         @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -120,7 +120,7 @@
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء الصلاحية</label>
+                                        <label class="form-label fw-bold" for="expire_on">تاريخ الانتهاء</label>
                                         <input type="date" class="form-control" name="expire_on"  value="{{ $application->formable->passport->expires_on }}"  @if(!request('edit')) disabled @endif   required/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -129,7 +129,7 @@
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_by">سلطة الإصدار</label>
                                         <select class="form-select" name="passport_center"  @if(!request('edit')) disabled @endif  required>
-                                            <option>Issuing Authority</option>
+                                            <option>جهة الإصدار</option>
                                             @foreach ($passport_centers as $center)
                                                 <option value="{{ $center->id }}" @selected($center->id == $application->formable->passport->passport_center_id)>{{ $center->center_name }}</option>
                                             @endforeach
@@ -323,7 +323,7 @@
                             </div>
                              
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="phone">إمارة</label>
+                                <label class="form-label fw-bold" for="phone">المنطقة - الإمارة</label>
                                 <input type="text" class="form-control" name="address_emirate" value="{{ $application->formable->emirate }}"  @if(!request('edit')) disabled @endif   required/>
                                 @error('address_emirate') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>

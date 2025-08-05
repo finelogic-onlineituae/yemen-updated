@@ -7,6 +7,8 @@ use App\Models\DrivingLicenceCenter;
 use App\Models\VehicleCategory;
 use App\Models\DrivingLicence;
 use App\Models\Form;
+use App\Models\Country;
+use App\Models\PassportCenter;
 
 class DrivingLicenceController extends Controller
 {
@@ -18,51 +20,77 @@ class DrivingLicenceController extends Controller
             session()->forget(['edit_application', 'application_id']);
         }
 
-        return view('driving-licence.create');
+        return view('driving-licence.create', [
+            'countries' => Country::all(), 
+            'passport_centers' => PassportCenter::all(), 
+            'driving_licence_centers' => DrivingLicenceCenter::all(), 
+            'vehicle_categories' => VehicleCategory::all()
+        ]);
     }
 
     public function storeDrivingLicence(Request $request)
     {
-        if($request->hasFile('attachment')) {
-            $file_path = $request->file('attachment')->store('uploads/user_' . auth()->id());
+        $request->validate([
+            'name_english' => 'required',
+            
+            'name_arabic' => 'required',
+            'profession' => 'required',
+            'country_of_birth' => 'required|exists:countries,id',
+            'city_of_birth' => 'required',
+            'date_of_birth' => 'required|date',
+            'driving_licence_number' => 'required',
+            'driving_licence_center_id' => 'required|exists:driving_licence_centers,id',
+            'vehicle_category_id' => 'requiredexists:vehicle_categories,id',
+            'dl_issued_on' => 'required',
+            'dl_expire_on' => 'required',
+            'emirate_id_attachment' =>  $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
+            'passport_number' => 'required|string|min:8',
+            'expire_on' => 'required',
+            'passport_center' => 'required|exists:passport_centers,id',
+            'issued_on' => 'required|before:tomorrow',
+            'passport_attachment' => $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
+        ]);
+
+        if($request->hasFile('passport_attachment')) {
+            $passport_file_path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id());
         }
-        if($request->hasFile('licence_attachment')) {
-            $licence_file_path = $request->file('licence_attachment')->store('uploads/user_' . auth()->id());
+        if($request->hasFile('emirate_id_attachment')) {
+            $emirate_id_file_path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id());
         }
-        if($request->hasFile('residance_permit')) {
-            $residance_permit_file_path = $request->file('residance_permit')->store('uploads/user_' . auth()->id());
-        }
+       
 
         if($request->has('application')){
             $application = Form::findOrFail($request->application);
 
             
-            $application->formable->name = ucfirst($request->name);
-            $application->formable->phone_number = $request->phone_number;
+            $application->formable->name = ucfirst($request->name_english);
+            $application->formable->name_arabic = $request->name_arabic;
+            $application->formable->profession = $request->profession;
+            $application->formable->country_of_birth = $request->country_of_birth;
+            $application->formable->city_of_birth = $request->city_of_birth;
+            $application->formable->gender = $request->gender;
+            $application->formable->date_of_birth = $request->date_of_birth;
             $application->formable->driving_licence_number = $request->driving_licence_number;
             $application->formable->driving_licence_center_id = $request->driving_licence_center;
             $application->formable->vehicle_category_id = $request->vehicle_category;
-            $application->formable->issued_on = $request->issued_on;
-            $application->formable->expire_on = $request->expire_on;
-            $application->formable->emirates_id = $request->emirates_id;
+            $application->formable->dl_issued_on = $request->dl_issued_on;
+            $application->formable->dl_expire_on = $request->dl_expire_on;
+           
 
-            if($request->hasFile('residance_permit')) {
-            $application->formable->residance_permit = $residance_permit_file_path;
-            }
-            if($request->hasFile('licence_attachment')){
-                $application->formable->licence_attachment = $licence_file_path;
-            }
+           
 
             //update passport
             $application->formable->passport->passport_number = $request->passport_number;
             $application->formable->passport->passport_center_id = $request->passport_center;
             $application->formable->passport->issued_on = $request->issued_on;
-            $application->formable->passport->expires_on = $request->expires_on;
+            $application->formable->passport->expires_on = $request->expire_on;
 
-            if($request->hasFile('attachment')){
-                $application->formable->passport->attachment = $file_path;
+            if($request->hasFile('passport_attachment')){
+                $application->formable->passport->attachment = $passport_file_path;
             }
-
+             if($request->hasFile('emirate_id_attachment')){
+                $application->formable->emirates_id_attachment = $emirate_id_file_path;
+            }
 
             $application->formable->passport->save(); 
             $application->formable->save();          
@@ -74,22 +102,24 @@ class DrivingLicenceController extends Controller
                 'issued_by' => 'YE',
                 'passport_center_id' => $request->passport_center,
                 'issued_on' => $request->issued_on,
-                'expires_on' => $request->expires_on,
-                'attachment' => $file_path
+                'expires_on' => $request->expire_on,
+                'attachment' => $passport_file_path
             ]);
     
             $drivingLicence = DrivingLicence::create([
-                'name' => ucwords($request->name),
-                'phone_number' => $request->phone_number,
+                'name' => ucwords($request->name_english),
+                'name_arabic' => $request->name_arabic,
                 'passport_id' => $passport->id,
                 'driving_licence_number' => $request->driving_licence_number,
                 'driving_licence_center_id' => $request->driving_licence_center,
                 'vehicle_category_id' => $request->vehicle_category,
-                'issued_on' => $request->issued_on,
-                'expire_on' => $request->expire_on,
-                'emirates_id' => $request->emirates_id,
-                'licence_attachment' => $licence_file_path,
-                'residance_permit' => $residance_permit_file_path
+                'dl_issued_on' => $request->dl_issued_on,
+                'dl_expire_on' => $request->dl_expire_on,
+                'country_of_birth' => $request->country_of_birth,
+                'city_of_birth' => $request->city_of_birth,
+                'date_of_birth' => $request->date_of_birth,
+                'profession' => $request->profession,
+                'emirates_id_attachment' => $emirate_id_file_path
             ]);
 
             $application = $user->forms()->create([
@@ -100,16 +130,22 @@ class DrivingLicenceController extends Controller
             ]); 
         }
        
-        return redirect()->route('driving-licence.verify', ['application_id' => encrypt($application->id)]);
+        return redirect()->route('driving-licence.verify', ['application_id' => $application->id]);
     }
     public function verifyDrivingLicence(Request $request)
     {
-        $application_id = decrypt($request->application_id);
+        $application_id = $request->application_id;
         $application = Form::findOrFail($application_id);
         session(['application_id' => $application_id]);
         
         //dd($application);
-        return view('driving-licence.verify-driving-licence', ['application' => $application]);
+        return view('driving-licence.verify-driving-licence', [
+            'application' => $application,
+            'countries' => Country::all(), 
+            'passport_centers' => PassportCenter::all(), 
+            'driving_licence_centers' => DrivingLicenceCenter::all(), 
+            'vehicle_categories' => VehicleCategory::all()
+        ]);
     }
 
     public function editDrivingLicence(Request $request)

@@ -22,7 +22,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_arabic">الاسم الكامل (كما هو مذكور في جواز السفر)</label>
+                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
                                         <input type="text" class="form-control" name="name_arabic" value="{{ old('name_arabic') }}" required/>
                                         @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -42,31 +42,16 @@
                                         @error('passport_number') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">مهنة</label>
-                                        <input type="text" class="form-control" name="profession" value="{{ old('profession') }}" required/>
-                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
                                         <input type="date" class="form-control" name="date_of_birth" value="{{ old('date_of_birth') }}" required/>
                                         @error('date_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">جنس</label>
-                                        <select class="form-select" name="gender" required>
-                                            <option value="">Choose Gender</option>
-                                            <option value="Male" @checked(old('gender') == 'Male')>Male</option>
-                                            <option value="Female" @checked(old('gender') == 'Female')>Female</option>
-                                        </select>
-                                        @error('gender')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
+                                    
                                 </div>
+                                
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="country_of_birth">بلد الميلاد</label>
+                                        <label class="form-label fw-bold" for="country_of_birth">(المحافظة) محل الميلاد</label>
                                         <select class="form-select" name="country_of_birth" required>
                                             <option value="">Choose a Country</option>
                                             @forelse ($countries as $country)
@@ -78,9 +63,25 @@
                                         @error('country_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="city_of_birth">مدينة الميلاد</label>
+                                        <label class="form-label fw-bold" for="city_of_birth">(المحافظة - المدينة) محل الميلاد</label>
                                         <input type="text" class="form-control" name="city_of_birth" value="{{ old('city_of_birth') }}" required/>
                                         @error('city_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="profession">جنس</label>
+                                        <select class="form-select" name="gender" required>
+                                            <option value="">Choose Gender</option>
+                                            <option value="Male" @selected(old('gender') == 'Male')>Male</option>
+                                            <option value="Female" @selected(old('gender') == 'Female')>Female</option>
+                                        </select>
+                                        @error('gender')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="profession">مهنة</label>
+                                        <input type="text" class="form-control" name="profession" value="{{ old('profession') }}" required/>
+                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="row">
@@ -90,7 +91,7 @@
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء الصلاحية</label>
+                                        <label class="form-label fw-bold" for="expire_on">تاريخ الانتهاء</label>
                                         <input type="date" class="form-control" name="expire_on" value="{{ old('expire_on') }}" required/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -99,7 +100,7 @@
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_by">سلطة الإصدار</label>
                                         <select class="form-select" name="passport_center" required>
-                                            <option>Issuing Authority</option>
+                                            <option>جهة الإصدار</option>
                                             @foreach ($passport_centers as $center)
                                                 <option value="{{ $center->id }}" @selected(old('passport_center') == $center->id)>{{ $center->center_name }}</option>
                                             @endforeach
@@ -218,24 +219,24 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="relative_name">الاسم الكامل للقريب </label>
+                                        <label class="form-label fw-bold" for="relative_name">الاسم </label>
                                         <input type="text" class="form-control" name="relative_name"  value="{{ old('relative_name') }}"/>
                                         @error('relative_name')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="relative_relation">علاقة</label>
+                                        <label class="form-label fw-bold" for="relative_relation">صلة القرابة</label>
                                         <input type="text" class="form-control" name="relative_relation" value="{{ old('relative_relation') }}"/>
                                         @error('relative_relation')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="relative_address">العنوان النسبي </label>
+                                        <label class="form-label fw-bold" for="relative_address">العنوان</label>
                                         <input type="text" class="form-control" name="relative_address" value="{{ old('relative_address') }}"/>
                                         @error('relative_address')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="relative_phone">رقم الهاتف النسبي </label>
+                                        <label class="form-label fw-bold" for="relative_phone">رقم الهاتف</label>
                                         <input type="text" class="form-control" name="relative_phone" value="{{ old('relative_phone') }}"/>
                                         @error('relative_phone')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -267,7 +268,7 @@
                             </div>
                              
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="phone">إمارة</label>
+                                <label class="form-label fw-bold" for="phone">المنطقة - الإمارة</label>
                                 <input type="text" class="form-control" name="address_emirate" value="{{ old('address_emirate') }}"/>
                                 @error('address_emirate') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>

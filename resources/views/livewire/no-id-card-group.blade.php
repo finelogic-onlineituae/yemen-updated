@@ -21,7 +21,7 @@
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name_english">الاسم الكامل باللغة الإنجليزية كما هو الحال في جواز السفر</label>
                                         <input type="text" class="form-control" name="name_english" wire:model="name_english"/>
-                                        @error('name_arname_englishabic')<span class="text-danger">{{ $message }}</span> @enderror
+                                        @error('name_english')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="row">

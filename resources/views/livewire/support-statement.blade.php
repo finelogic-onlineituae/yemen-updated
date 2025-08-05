@@ -29,7 +29,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_arabic">الاسم الكامل (كما هو مذكور في جواز السفر)</label>
+                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
                                         <input type="text" class="form-control" name="name_arabic" wire:model="surname_arabic"/>
                                         @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>

@@ -16,7 +16,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_arabic">الاسم الكامل (كما هو مذكور في جواز السفر)</label>
+                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
                                         <input type="text" class="form-control" name="name_arabic" wire:model="surname_arabic"/>
                                         @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="country_of_birth">بلد الميلاد</label>
+                                        <label class="form-label fw-bold" for="country_of_birth">(المحافظة) محل الميلاد</label>
                                         <select class="form-select" name="country_of_birth" wire:model="country_of_birth">
                                             <option value="">Choose a Country</option>
                                             @forelse ($countries as $country)
@@ -72,7 +72,7 @@
                                         @error('country_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">مدينة الميلاد</label>
+                                        <label class="form-label fw-bold" for="city_of_birth">(المحافظة - المدينة) محل الميلاد</label>
                                         <input type="text" class="form-control" name="city_of_birth" wire:model="city_of_birth"/>
                                         @error('city_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -85,7 +85,7 @@
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name">تاريخ انتهاء الصلاحية</label>
+                                        <label class="form-label fw-bold" for="name">تاريخ الانتهاء</label>
                                         <input type="date" class="form-control" name="expire_on" wire:model="expire_on"/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -93,9 +93,9 @@
                                  <div class="row">
                                     
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="issued_by">سلطة الإصدار</label>
+                                        <label class="form-label fw-bold" for="issued_by">جهة الإصدار</label>
                                         <select class="form-select" name="passport_center" wire:model="passport_center">
-                                            <option>Issuing Authority</option>
+                                            <option>جهة الإصدار</option>
                                             @foreach ($passport_centers as $center)
                                                 <option value="{{ $center->id }}">{{ $center->center_name }}</option>
                                             @endforeach

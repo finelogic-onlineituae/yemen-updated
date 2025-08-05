@@ -7,194 +7,257 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center">شهادة الزواج</h2>
-    <div>
-        <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
-            <div class="w-100 align-items-center text-center d-flex justify-content-center verfiy-form">
-                @csrf
-                <div class="manage-width-75 manage-width p-3 mx-2 rounded  align-items-center text-center form-scroll bg-ash ">
-                   
-               
-            
-
-               
-                    <div class="card">
-                        <div class="card-header">معلومات الزوج</div>
-                        <div class="card-body text-start">
-                            <div class="row">
-                                <div class="mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                                    <span class="fw-bold"> اسم</span>
-                                    <span>:{{ $application->formable->husband_name }}</span>
-                                </div>
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <span class="fw-bold">رقم الهوية الإماراتية</span>
-                                    <span>:{{ $application->formable->husband_emirates_id }}</span>
-                                </div>
+    <h2 class="text-success w-100 text-center" >طلب شهادة الزواج</h2>
+<div>
+    
+    <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
+         <form action="{{ route('marriage-certificate.store') }}" enctype="multipart/form-data" method="POST" id="renew-passport-above-form" class="w-100 align-items-center text-center d-flex justify-content-center">
+            @csrf
+            <div class="manage-width-75 manage-width p-3 mx-2 rounded  align-items-center text-center form-scroll bg-ash ">
+                <div class="card text-start my-2">
+                     <div class="card-body">
+                         @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
-                            <div class="row">
-                                <div class="mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                                    <span class="fw-bold">رقم جواز سفر </span>
-                                    <span>:{{ $application->formable->husbandPassport->passport_number }}</span>
-                                </div>
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <span class="fw-bold">صادرة عن</span>
-                                    <span>:{{ $application->formable->husbandPassport->passportCenter->center_name }}</span>
-                                </div>
-                            </div>
-                        
-                    
-                            <div class="row">
-                                <div class="mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                                    <span class="fw-bold">صدر بتاريخ</span>
-                                    <span>:{{ $application->formable->husbandPassport->issued_on }}</span>
-                                </div>
-                                 <div class="mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                                    <span class="fw-bold"> رقم جواز سفر </span>
-                                    <span>:{{ $application->formable->phone_number }}</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <span><button class="btn btn-dark me-2 rounded-5" onclick="openModal('pdfModal-verify-husbandPassport')">عرض جواز السفر</button></span>
-                                    <!-- Modal -->
-                                    <div id="pdfModal-verify-husbandPassport" class="modal">
-                                        <div class="modal-content">
-                                            <span class="close" onclick="closeModal('pdfModal-verify-husbandPassport')">&times;</span>
-                                            <iframe id="pdfViewer-verify-husbandPassport" src="{{ generate_signed_storage_url($application->formable->husbandPassport->attachment) }}"></iframe>
-                                        </div>
+                        @endif
+                        <div class="card">
+                            <div class="card-header">معلومات جواز السفر</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
+                                        <input type="text" class="form-control" name="name_arabic" value="{{ $application->formable->name_arabic }}" required/>
+                                        @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-                                    <!-- End Modal -->
-                                </div>
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <span><button class="btn btn-dark me-2 rounded-5" onclick="openModal('pdfModal-verify-husband_residance_permit')">تصريح الإقامة</button></span>
-                                    <!-- Modal -->
-                                    <div id="pdfModal-verify-husband_residance_permit" class="modal">
-                                        <div class="modal-content">
-                                            <span class="close" onclick="closeModal('pdfModal-verify-husband_residance_permit')">&times;</span>
-                                            <iframe id="pdfViewer-verify-husband_residance_permit" src="{{ generate_signed_storage_url($application->formable->husband_residance_permit) }}"></iframe>
-                                        </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="name_english">الاسم الكامل باللغة الإنجليزية كما هو الحال في جواز السفر</label>
+                                        <input type="text" class="form-control" name="name_english" value="{{ $application->formable->name_english }}" required/>
+                                        @error('name_english')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-                                    <!-- End Modal -->
+                                </div>
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    
+                                        <label class="form-label fw-bold"  for="passport_number">رقم جواز السفر</label>
+                                        
+                                        <input type="text" id="passportInput-" maxlength="8" class="form-control" value="{{ $application->formable->passport->passport_number }}" name="passport_number" required/>
+                                        <small id="passportError-" class="text-danger d-none"> Please enter a valid Passport Number</small>
+                                        @error('passport_number') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
+                                        <input type="date" class="form-control" name="date_of_birth" value="{{ $application->formable->date_of_birth }}" required/>
+                                        @error('date_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="country_of_birth">(المحافظة) محل الميلاد</label>
+                                        <select class="form-select" name="country_of_birth" required>
+                                            <option value="">Choose a Country</option>
+                                            @forelse ($countries as $country)
+                                                <option value="{{ $country->id }}" @selected($application->formable->country_of_birth == $country->id)>{{ $country->country_name }}</option>
+                                            @empty
+                                                
+                                            @endforelse
+                                        </select>
+                                        @error('country_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="city_of_birth">(المحافظة - المدينة) محل الميلاد</label>
+                                        <input type="text" class="form-control" name="city_of_birth" value="{{ $application->formable->city_of_birth }}" required/>
+                                        @error('city_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="issued_on">تاريخ الإصدار</label>
+                                        <input type="date" class="form-control" name="issued_on" value="{{ $application->formable->passport->issued_on }}" required/>
+                                        @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="expire_on">تاريخ الانتهاء</label>
+                                        <input type="date" class="form-control" name="expire_on" value="{{ $application->formable->passport->expires_on }}" required/>
+                                        @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="profession">جنس</label>
+                                        <select class="form-select" name="gender" required>
+                                            <option value="">Choose Gender</option>
+                                            <option value="Male" @selected(old('gender') == 'Male')>Male</option>
+                                            <option value="Female" @selected(old('gender') == 'Female')>Female</option>
+                                        </select>
+                                        @error('gender')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="profession">مهنة</label>
+                                        <input type="text" class="form-control" name="profession" value="{{ $application->formable->profession }}" required/>
+                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="issued_by">جهة الإصدار</label>
+                                        <select class="form-select" name="passport_center" required>
+                                            <option>Issuing Authority</option>
+                                            @foreach ($passport_centers as $center)
+                                                <option value="{{ $center->id }}" @selected($application->formable->passport->passport_center_id == $center->id)>{{ $center->center_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('passport_center') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                     <div class="card text-start my-2">
+                    <div class="card-header">
+                        معلومات عقد الزواج
                     </div>
-                    <div class="card">
-                        <div class="card-header">معلومات الزوجة</div>
-                        <div class="card-body text-start">
+                    <div class="card-body">
+                        {{-- Agent Passport --}}
+    
                             <div class="row">
-                                <div class="mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                                    <span class="fw-bold"> اسم</span>
-                                    <span>:{{ $application->formable->wife_name }}</span>
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold" for="contract_issued_by">جهة الإصدار</label>
+                                    <input type="text" class="form-control" name="contract_issued_by"  value="{{ $application->formable->contract_issued_by }}" required/>
+                                    @error('contract_issued_by')<span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <span class="fw-bold">رقم الهوية الإماراتية</span>
-                                    <span>:{{ $application->formable->wife_emirates_id }}</span>
+                                    <label class="form-label fw-bold" for="registration_number">رقم التسجيل </label>
+                                    <input  type="text" class="form-control" wire:model="registration_number" value="{{ $application->formable->registration_number }}" required/>
+                                    @error('registration_number') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                                    <span class="fw-bold"> رقم جواز سفر </span>
-                                    <span>:{{ $application->formable->wifePassport->passport_number }}</span>
-                                </div>
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <span class="fw-bold">صادرة عن</span>
-                                    <span>:{{ $application->formable->wifePassport->passportCenter->center_name }}</span>
-                                </div>
-                            </div>
-                        
-                    
-                            <div class="row">
-                                <div class="mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                                    <span class="fw-bold">صدر بتاريخ</span>
-                                    <span>:{{ $application->formable->wifePassport->issued_on }}</span>
-                                </div>
+                                    <label class="form-label fw-bold" for="contract_issued_on">تاريخ الافراج عنه </label>
+                                    <input  type="date" class="form-control" id="contract_issued_on" name="contract_issued_on" value="{{ $application->formable->contract_issued_on }}" required/>
+                                    @error('contract_issued_on') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>     
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <span><button class="btn btn-dark me-2 rounded-5" onclick="openModal('pdfModal-verify-wifePassport')">عرض جواز السفر</button></span>
-                                    <!-- Modal -->
-                                    <div id="pdfModal-verify-wifePassport" class="modal">
-                                        <div class="modal-content">
-                                            <span class="close" onclick="closeModal('pdfModal-verify-wifePassport')">&times;</span>
-                                            <iframe id="pdfViewer-verify-wifePassport" src="{{ generate_signed_storage_url($application->formable->wifePassport->attachment) }}"></iframe>
-                                        </div>
-                                    </div>
-                                    <!-- End Modal -->
+                                    <label class="form-label fw-bold" for="date_of_marriage">تاريخ الزواج </label>
+                                    <input  type="date" class="form-control" wire:model="date_of_marriage"  name="date_of_marriage" value="{{ $application->formable->date_of_marriage }}" required/>
+                                    @error('date_of_marriage') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
-                            </div>
-                            <div class="row">
-                            
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <span><button class="btn btn-dark me-2 rounded-5" onclick="openModal('pdfModal-verify-husband_residance_permit')">عرض تصريح الإقامة </button></span>
-                                    <!-- Modal -->
-                                    <div id="pdfModal-verify-husband_residance_permit" class="modal">
-                                        <div class="modal-content">
-                                            <span class="close" onclick="closeModal('pdfModal-verify-husband_residance_permit')">&times;</span>
-                                            <iframe id="pdfViewer-verify-husband_residance_permit" src="{{ generate_signed_storage_url($application->formable->husband_residance_permit) }}"></iframe>
-                                        </div>
-                                    </div>
-                                    <!-- End Modal -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">معلومات عقد الزواج</div>
-                        <div class="card-body text-start"> 
-                            <div class="row">
-                                <div class="mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                                    <span class="fw-bold"> رقم التسجيل</span>
-                                    <span>:{{ $application->formable->registration_number }}</span>
-                                </div>
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <span class="fw-bold">العقد الصادر من</span>
-                                    <span>:{{ $application->formable->contract_issued_by }}</span>
-                                </div>
-                               
-                            </div>
-                             <div class="row">
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <span class="fw-bold">تم إصدار العقد في</span>
-                                    <span>:{{ $application->formable->contract_issued_on }}</span>
-                                </div>
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <span class="fw-bold">تاريخ الزواج</span>
-                                    <span>:{{ $application->formable->date_of_marriage }}</span>
-                                </div>
-                            </div>
-                    
-                            <div class="row">
                               
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <span><button class="btn btn-dark me-2 rounded-5" onclick="openModal('pdfModal-verify-marriage_document')"> وثيقة الزواج </button></span>
-                                    <!-- Modal -->
-                                    <div id="pdfModal-verify-marriage_document" class="modal">
-                                        <div class="modal-content">
-                                            <span class="close" onclick="closeModal('pdfModal-verify-marriage_document')">&times;</span>
-                                            <iframe id="pdfViewer-verify-marriage_document" src="{{ generate_signed_storage_url($application->formable->marriage_document) }}"></iframe>
-                                        </div>
-                                    </div>
-                                    <!-- End Modal -->
-                                </div>
                             </div>
-                           
+                            
                         </div>
                     </div>
-                <div>
-                    <livewire:signature :application_id="$application->id"/>
-
-                <div class="form-group gap-2 my-3 text-center d-flex">
-                    <form method="POST" action="{{ route('application.confirm', ['application_id' => encrypt($application->id)]) }}">
-                        @csrf
-                        <button class="btn btn-success" id="final-submit" disabled>تقديم الطلب</button>
-                    </form>
-                    {{-- <a href="#" class="btn btn-dark">Make Changes</a> --}}
-                     <a href="{{ route('marriage-certificate.edit', ['application_id' => encrypt($application->id)]) }}" class="btn btn-dark">إجراء التغييرات</a>
+                    
+                <div class="card text-start my-2">
+                    <div class="card-header">المرفقات</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                            <label class="form-label fw-bold" for="passport_attachment"> جواز (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                            <input type="file" class="form-control" name="passport_attachment" required/>
+                            @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="emirate_id_attachment"> الهوية الإماراتية (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" name="emirate_id_attachment" required/>
+                                @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
+                            </div>   
+                        </div>    
+                        <div class="row">
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold" for="marriage_document"> إثبات الزواج (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" name="marriage_document" required/>
+                                    @error('marriage_document') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                          
+                    </div>
                 </div>
                 </div>
             </div>
-        </div>
+           
+            <div class="form-group my-3 text-center">
+                <button class="btn buttom-effect" id="submitBtn">تقديم الطلب</button>
+            </div>
+            </div>
+            </div>
+        </form>
     </div>
-    
-
-
+</div>
 </x-app-layout>
+
+<script>
+        let cropper;
+        const imageInput = document.getElementById('imageInput');
+        const previewImage = document.getElementById('previewImage');
+        const cropButton = document.getElementById('cropButton');
+        const croppedPreview = document.getElementById('croppedPreview');
+        const croppedImageInput = document.getElementById('croppedImage');
+        const cropPlatform = document.getElementById('crop-platform');
+        const cropPreview = document.getElementById('preview-crop');
+        const submitBtn = document.getElementById('submitBtn');
+
+        imageInput.addEventListener('change', function (e) {
+            cropPlatform.classList.remove("d-none");
+            cropButton.style.display = 'block';
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                previewImage.src = event.target.result;
+
+                if (cropper) cropper.destroy();
+
+                cropper = new Cropper(previewImage, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                    autoCropArea: 1
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+
+        cropButton.addEventListener('click', function () {
+            if (!cropper) return;
+
+            const canvas = cropper.getCroppedCanvas({
+                width: 200,
+                height: 200
+            });
+
+            const dataURL = canvas.toDataURL('image/jpeg');
+
+            // Set preview and hidden input
+            croppedPreview.src = dataURL;
+            croppedImageInput.value = dataURL;
+            cropPreview.style.display="block";
+            
+        });
+    </script>
+<script>
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', function (e) {
+        const croppedImage = croppedImageInput.value;
+
+        if (!croppedImage || !croppedImage.startsWith("data:image")) {
+            e.preventDefault(); // prevent form from submitting
+            alert("Please crop the image before submitting.");
+        }
+    });
+</script>
+
+
+<script>
+// Get today's date in YYYY-MM-DD format
+const today = new Date().toISOString().split('T')[0];
+  // Set max attribute to today's date
+  document.getElementById('issued_on').setAttribute('max', today);
+
+</script>
+

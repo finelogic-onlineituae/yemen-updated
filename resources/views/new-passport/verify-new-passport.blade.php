@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="country_of_birth">بلد الميلاد</label>
+                                        <label class="form-label fw-bold" for="country_of_birth">(المحافظة) محل الميلاد</label>
                                         <select class="form-select" name="country_of_birth"  @if(!request('edit')) disabled @endif  required>
                                             <option value="">Choose a Country</option>
                                             @forelse ($countries as $country)
@@ -86,7 +86,7 @@
                                         @error('country_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="city_of_birth">مدينة الميلاد</label>
+                                        <label class="form-label fw-bold" for="city_of_birth">(المحافظة - المدينة) محل الميلاد</label>
                                         <input type="text" class="form-control" name="city_of_birth" value="{{ $application->formable->city_of_birth }}"  @if(!request('edit')) disabled @endif  required/>
                                         @error('city_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -253,7 +253,7 @@
                              
                               <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="address_street">شارع</label>
-                                <input type="text" class="form-control" name="address_street" value="kjhkj{{ $application->formable->address_street }}"  @if(!request('edit')) disabled @endif   required/>
+                                <input type="text" class="form-control" name="address_street" value="{{ $application->formable->address_street }}"  @if(!request('edit')) disabled @endif   required/>
                                 @error('address_street') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
@@ -265,7 +265,7 @@
                             </div>
                              
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="phone">إمارة</label>
+                                <label class="form-label fw-bold" for="phone">المنطقة - الإمارة</label>
                                 <input type="text" class="form-control" name="address_emirate" value="{{ $application->formable->address_emirate }}"  @if(!request('edit')) disabled @endif   required/>
                                 @error('address_emirate') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
