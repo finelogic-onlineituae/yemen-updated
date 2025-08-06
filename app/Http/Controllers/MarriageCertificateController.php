@@ -29,12 +29,11 @@ class MarriageCertificateController extends Controller
             'country_of_birth' => 'required|exists:countries,id',
             'city_of_birth' => 'required',
             'date_of_birth' => 'required|date',
-            'driving_licence_number' => 'required',
-            'driving_licence_center_id' => 'required|exists:driving_licence_centers,id',
-            'vehicle_category_id' => 'requiredexists:vehicle_categories,id',
-            'dl_issued_on' => 'required',
-            'dl_expire_on' => 'required',
-            'emirate_id_attachment' =>  $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
+            'contract_issued_by' => 'required',
+            'registration_number' => 'required',
+            'contract_issued_on' => 'required|date',
+            'date_of_marriage' => 'required|date',
+            'emirates_id_attachment' =>  $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
             'passport_number' => 'required|string|min:8',
             'expire_on' => 'required',
             'passport_center' => 'required|exists:passport_centers,id',
@@ -48,7 +47,7 @@ class MarriageCertificateController extends Controller
         }
         
         if($request->hasFile('emirates_id_attachment')) {
-            $emirates_id_attachment = $request->file('passport_attachment')->store('uploads/user_' . auth()->id());
+            $emirates_id_attachment = $request->file('emirates_id_attachment')->store('uploads/user_' . auth()->id());
         }
 
         if($request->hasFile('marriage_document')) {
@@ -70,10 +69,10 @@ class MarriageCertificateController extends Controller
 
             
             if($request->hasFile('emirates_id_attachment')) {
-                $application->formable->emirates_id_attachment = $marriage_document_file_path;
+                $application->formable->emirates_id_attachment = $emirates_id_file_path;
             }    
             if($request->hasFile('marriage_document')) {
-            $application->formable->marriage_document = $husband_residance_permit_file_path;
+            $application->formable->marriage_document = $marriage_document_file_path;
             }
             $application->formable->save();    
 
@@ -93,21 +92,17 @@ class MarriageCertificateController extends Controller
             $application->formable->wifePassport->issued_on = $request->wife_issued_on;
           //  $application->formable->agentPassport->expires_on = $request->agent_expire_on;
 
-            if($request->hasFile('wife_passport_attachment')){
-                $application->formable->wifePassport->attachment = $wife_passport_file_path;
-            }
-
             $application->formable->wifePassport->save();       
         }
         else{
             $user = auth()->user();
             $husband_passport = $user->passports()->create([
-                'passport_number' => $request->husband_passport_number,                                             
+                'passport_number' => $request->passport_number,                                             
                 'issued_by' => 'YE',
-                'passport_center_id' => $request->husband_passport_center,
-                'issued_on' => $request->husband_issued_on,
-                //'expires_on' => $request->client_expire_on,
-                'attachment' => $husband_passport_file_path
+                'passport_center_id' => $request->passport_center,
+                'issued_on' => $request->issued_on,
+                'expires_on' => $request->expire_on,
+                'attachment' => $passport_attachment
             ]);
 
             $wife_passport = $user->passports()->create([
@@ -124,15 +119,13 @@ class MarriageCertificateController extends Controller
                 'wife_name' => ucwords($request->wife_name),
                 'phone_number' => $request->phone_number,
                 'date_of_marriage' => $request->date_of_marriage,
-                'husband_passport_id' => $husband_passport->id,
-                'wife_passport_id' => $wife_passport->id,
-                'husband_emirates_id' => $request->husband_emirates_id,
-                'wife_emirates_id' => $request->wife_emirates_id,
+                'passport_id' => $husband_passport->id,
+                
+                
                 'contract_issued_by' => $request->contract_issued_by,
                 'contract_issued_on' => $request->contract_issued_on,
                 'registration_number' => $request->registration_number,
                 'husband_residance_permit' => $husband_residance_permit_file_path,
-                'wife_residance_permit' => $wife_residance_permit_file_path,
                 'marriage_document' => $marriage_document_file_path
             ]);
 

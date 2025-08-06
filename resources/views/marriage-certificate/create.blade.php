@@ -131,7 +131,7 @@
                                 </div>
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="registration_number">رقم التسجيل </label>
-                                    <input  type="text" class="form-control" wire:model="registration_number" value="{{ old('registration_number') }}" required/>
+                                    <input  type="text" class="form-control" name="registration_number" value="{{ old('registration_number') }}" required/>
                                     @error('registration_number') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
@@ -162,9 +162,9 @@
                             @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="emirate_id_attachment"> الهوية الإماراتية (ملف بي دي إف  ,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="emirate_id_attachment" required/>
-                                @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
+                                <label class="form-label fw-bold" for="emirates_id_attachment"> الهوية الإماراتية (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" name="emirates_id_attachment" required/>
+                                @error('emirates_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>   
                         </div>    
                         <div class="row">
