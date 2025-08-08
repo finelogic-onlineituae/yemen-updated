@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="issued_by">سلطة الإصدار</label>
+                                        <label class="form-label fw-bold" for="issued_by">جهة الإصدار</label>
                                         <select class="form-select" name="passport_center" required>
                                             <option>جهة الإصدار</option>
                                             @foreach ($passport_centers as $center)
@@ -230,7 +230,7 @@
                                         @error('relative_address')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="relative_phone">رقم الهاتف النسبي </label>
+                                        <label class="form-label fw-bold" for="relative_phone">رقم الهاتف</label>
                                         <input type="text" class="form-control" name="relative_phone" value="{{ old('relative_phone') }}"/>
                                         @error('relative_phone')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>

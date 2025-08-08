@@ -253,40 +253,32 @@
                             </div>
                         </div>
                         <div class="row">
-
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="phone"> رقم الهوية الإماراتية</label>
-                                <input type="text" id="emiratesIdInput-"  maxlength="17" class="form-control" name="emirates_id" wire:model="emirates_id"/>
-                                 <small id="emiratesIdError-" class="text-danger d-none">Please enter a valid Emirates ID.</small>
-                                @error('emirates_id') <span class="text-danger">{{ $message }}</span> @enderror
+                           <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold" for="phone">طلب للحصول على </label>
+                                    <input type="text" class="form-control" name="supporting_reason" wire:model="supporting_reason"/>
+                                    @error('supporting_reason') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
+                           </div>
+                           
+                        
+                         
+                    </div>
+                </div>
+                <livewire:passport :is_consular="true" :passport="$passport"/>
+                <div class="card text-start">
+        <div class="card-header">
+            المرفقات
+        </div>
+
+        <div class="card-body">
+                <div class="row">
                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="id_card"> بطاقة الهوية(  ملف بي دي إف )</label>
                                 <input type="file" class="form-control" name="id_card" wire:model="id_card" />
                                 @error('id_card')<span class="text-danger">{{ $message }}</span> @enderror
-
-                                {{-- @if($existing_id_card && session()->has('edit_application'))
-                                <span><a class="btn btn-dark me-2 rounded-5 mt-3" onclick="openModal('pdfModal-verify-id_card')">بطاقة الهوية </a></span>
-                                        <!-- Modal -->
-                                        <div id="pdfModal-verify-id_card" class="modal">
-                                            <div class="modal-content">
-                                                <span class="close" onclick="closeModal('pdfModal-verify-id_card')">&times;</span>
-                                                <iframe id="pdfViewer-verify-passport" src="{{ generate_signed_storage_url($existing_id_card) }}"></iframe>
-                                            </div>
-                                        </div>
-                                        <!-- End Modal -->
-                                @endif   --}}
                             </div>
-                        </div>
-                        
-                         <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <label class="form-label fw-bold" for="phone">   طلب للحصول على </label>
-                                    <input type="text" class="form-control" name="supporting_reason" wire:model="supporting_reason"/>
-                                    @error('supporting_reason') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="supporting_document"> وثيقة داعمة</label>
+                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="supporting_document"> الوثيقة المراد تصديقها</label>
                                 <input type="file" class="form-control" name="supporting_document" wire:model="supporting_document" />
                                 @error('supporting_document')<span class="text-danger">{{ $message }}</span> @enderror
 
@@ -303,9 +295,8 @@
                                 @endif  
                             </div>
                         </div>
-                    </div>
-                </div>
-                <livewire:passport :is_consular="true" :passport="$passport"/>
+                         </div>
+                        </div>
             <div class="form-group my-3 text-center">
                 <button class="btn buttom-effect ">تقديم الطلب</button>
             </div>

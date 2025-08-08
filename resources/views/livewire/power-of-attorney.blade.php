@@ -119,7 +119,11 @@
                                 <input type="text" class="form-control" name="agent_name" wire:model="agent_name"/>
                                 @error('agent_name')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                            
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="agent_name">	الغرض من الوكالة</label>
+                                <input type="text" class="form-control" name="agent_name" wire:model="agent_name"/>
+                                @error('agent_name')<span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
                            {{--  <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="agent_passport_number">رقم جواز السفر</label>
                                 <input type="text" id="passportInput-2" maxlength="8" class="form-control" name="agent_passport_number" wire:model="agent_passport_number" />

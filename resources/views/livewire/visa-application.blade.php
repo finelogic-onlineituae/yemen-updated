@@ -9,175 +9,171 @@
                 <div class="card text-start my-2">
 
                     <div class="card-body">
-                        <div class="card">
-                            <div class="card-header">معلومات شخصية</div>
-                            <div class="card-body">
                         <div class="row">
-                           
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_english">الاسم الكامل باللغة الإنجليزية كما هو الحال في جواز السفر</label>
-                                        <input type="text" class="form-control" name="name_english" wire:model="name_english"/>
-                                        @error('name_english')<span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_arabic">الاسم الكامل (كما هو مذكور في جواز السفر)</label>
-                                        <input type="text" class="form-control" name="name_arabic" wire:model="surname_arabic"/>
-                                        @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
+                            <div class="form-group mb-3 col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                                <label class="form-label fw-bold" for="name">اسم</label>
+                                <input type="text" class="form-control" name="name" wire:model="name" />
+                                @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
-                        
-                        <p class="text-danger fw-bold mt-5">معلومات الميلاد والجنسية</p>
-                        <hr>
                         <div class="row">
-                            
                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                <label class="form-label fw-bold" for="country_of_birth">بلد الميلاد</label>
-                                <select name="country_of_birth" wire:model="country_of_birth" class="form-select">
-                                    <option value="">اختر البلد</option>
+                                <label class="form-label fw-bold" for="nationality">جنسية</label>
+                                <select name="nationality" wire:model="nationality" class="form-select">
+                                    <option value="">اختر جنسيتك</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->country_code }}">{{ $country->country_name.'('.$country->country_code.')' }}</option>
                                     @endforeach
                                 </select>
-                                @error('country_of_birth') <span class="text-danger">{{ $message }}</span> @enderror
+                                @error('nationality') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 ">
-                                <label class="form-label fw-bold" for="name">مدينة الميلاد</label>
-                                <input type="text" class="form-control" name="city_of_birth" wire:model="city_of_birth"/>
-                                @error('city_of_birth') <span class="text-danger">{{ $message }}</span> @enderror
+                           {{--  <div class="col-lg-6 col-md-6 col-sm-12 ">
+                                <label class="form-label fw-bold" for="name">دِين</label>
+                                <input type="text" class="form-control" name="religion" wire:model="religion"/>
+                                @error('religion') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div> --}}
+                        </div>
+                         <div class="row">
+                               <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
+                                <input type="date" class="form-control" name="date_of_birth" wire:model="date_of_birth"/>
+                                @error('date_of_birth') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="name">مكان الميلاد</label>
+                                <input type="text" class="form-control" name="place_of_birth" wire:model="place_of_birth"/>
+                                @error('place_of_birth') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                <label class="form-label fw-bold" for="country_of_birth">الجنسية الحالية</label>
-                                <select name="current_nationality" wire:model="current_nationality" class="form-select">
-                                    <option value="">اختر الجنسية</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->country_code }}">{{ $country->country_name.'('.$country->country_code.')' }}</option>
-                                    @endforeach
-                                </select>
-                                @error('current_nationality') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                <label class="form-label fw-bold" for="country_of_birth">الجنسية الأصلية</label>
-                                <select name="original_nationality" wire:model="original_nationality" class="form-select">
-                                    <option value="">اختر الجنسية</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->country_code }}">{{ $country->country_name.'('.$country->country_code.')' }}</option>
-                                    @endforeach
-                                </select>
-                                @error('original_nationality') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                    <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
-                                    <input type="date" class="form-control" name="date_of_birth" wire:model="date_of_birth"/>
-                                    @error('date_of_birth') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                        <p class="text-danger fw-bold mt-5">العنوان في بلد الإقامة</p>
-                        <hr>
-                        <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="land_mark">معلم بارز</label>
-                                <input type="text" class="form-control" name="address_land_mark" wire:model="address_land_mark"/>
-                                @error('address_land_mark')<span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                             
-                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="phone">شارع</label>
-                                <input type="text" class="form-control" name="address_street" wire:model="address_street"/>
-                                @error('address_street') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
-                    
-                        <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="address_area">منطقة </label>
-                                <input type="text" class="form-control" name="address_area" wire:model="address_area"/>
-                                @error('address_area')<span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="address_city">مدينة العنوان</label>
-                                <input type="text" class="form-control" name="address_city" wire:model="address_city"/>
-                                @error('address_city') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
-                        
-                        <p class="text-danger fw-bold mt-5">أرقام الهاتف البريد الإلكتروني</p>
-                        <hr>
-                        <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="phone_number">رقم التليفون </label>
-                                <input type="text" class="form-control" name="phone_number" wire:model="phone_number"/>
-                                @error('phone_number')<span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="alternate_phone">رقم الهاتف البديل</label>
-                                <input type="text" class="form-control" name="alternate_phone" wire:model="address_city"/>
-                                @error('alternate_phone') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="email">بريد إلكتروني</label>
-                                <input type="text" class="form-control" name="email" wire:model="email"/>
-                                @error('email')<span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
-                        
-                        <p class="text-danger fw-bold mt-5">معلومات أخرى</p>
-                        <hr>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                <label class="form-label fw-bold" for="coming_from">قادم من البلاد</label>
-                                <select name="coming_from" wire:model="coming_from" class="form-select">
-                                    <option value="">اختر الجنسية</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->country_code }}">{{ $country->country_name.'('.$country->country_code.')' }}</option>
-                                    @endforeach
-                                </select>
-                                @error('coming_from') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                <label class="form-label fw-bold" for="coming_from">الحالة الاجتماعية</label>
-                                <select name="coming_from" wire:model="coming_from" class="form-select">
-                                    <option value="">الحالة الاجتماعية</option>
-                                    <option value="married">Married</option>
-                                    <option value="single">Single</option>
-                                    <option value="divorced">Divorced</option>
-                                </select>
-                                @error('coming_from') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                <label class="form-label fw-bold" for="coming_from">جنس</label>
-                                <select name="coming_from" wire:model="coming_from" class="form-select">
-                                    <option value="">اختر الجنس</option>
-                                    <option value="Male">ذكر</option>
-                                    <option value="Female">أنثى</option>
-                                    <option value="transgender">المتحولين جنسيا</option>
-                                </select>
-                                @error('coming_from') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
+                       <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
                                 <label class="form-label fw-bold" for="name">مهنة</label>
                                 <input type="text" class="form-control" name="proffession" wire:model="proffession"/>
                                 @error('proffession') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                <label class="form-label fw-bold" for="name">صورة الوجه</label>
-                                <input type="file" class="form-control" name="face_photo" wire:model="face_photo"/>
-                                @error('face_photo') <span class="text-danger">{{ $message }}</span> @enderror
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="name">مكان العمل</label>
+                                <input type="text" class="form-control" name="place_of_work" wire:model="place_of_work"/>
+                                @error('place_of_work') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
+                       <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="name">العنوان الدائم</label>
+                                <textarea type="date" class="form-control" rows="4" name="address" wire:model="address" wire:change="copyAddress" id="address"></textarea>
+                                @error('address') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="address_uae">العنوان في الإمارات العربية المتحدة</label>
+                                <textarea type="date" class="form-control" rows="4" name="address_uae" wire:model="address_uae" id="address_uae" @if($same_address) disabled @endif></textarea>
+                                @error('address_uae') <span class="text-danger">{{ $message }}</span> @enderror
+                                <input type="checkbox" class="form-check-input" name="same_address" wire:model="same_address" wire:click="copyAddress" id="same_address"/>
+                                <label for="same_address" class="form-label">نفس العنوان الدائم</label>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="name">غرض السفر إلى الجمهورية اليمنية</label>
+                                <input type="text" class="form-control" name="purpose_of_travel" wire:model="purpose_of_travel"/>
+                                @error('purpose_of_travel') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <label class="form-label fw-bold" for="name">الفترة المطلوبة (بالأيام)</label>
+                                <input type="number" class="form-control" name="period_required" wire:model="period_required" max="30"/>
+                                @error('period_required') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                          <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="name">العنوان في الجمهورية اليمنية</label>
+                                <textarea class="form-control" name="address_in_roy" wire:model="address_in_roy"></textarea>
+                                @error('address') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-0">
+                            </div>
+                        </div>
+                          <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="name">الراعي 1: الاسم</label>
+                                <input type="text" class="form-control" name="sponsor_1_name" wire:model="sponsor_1_name"/>
+                                @error('sponsor_1_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                <label class="form-label fw-bold" for="name">الراعي 1: العنوان</label>
+                                <textarea class="form-control" rows="4" name="sponsor_1_address" wire:model="sponsor_1_address"></textarea>
+                                @error('sponsor_1_address') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="name">الراعي 2: الاسم</label>
+                                <input type="text" class="form-control" name="sponsor_2_name" wire:model="sponsor_2_name"/>
+                                @error('sponsor_2_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                <label class="form-label fw-bold" for="name">الراعي 1: العنوان</label>
+                                <textarea class="form-control"  rows="4" name="sponsor_2_address" wire:model="sponsor_2_address"></textarea>
+                                @error('sponsor_2_address') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                          <label class="form-label fw-bold" for="previous_visit_1">تواريخ الزيارة السابقة للجمهورية اليمنية (إن وجدت)</label>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">    
+                                <input type="date" class="form-control" name="previous_visit_date_1" wire:model="previous_visit_date_1"/>
+                                @error('previous_visit_date_1') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <input type="date" class="form-control" name="previous_visit_date_2" wire:model="previous_visit_date_2"/>
+                                @error('previous_visit_date_2') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="name">تحميل بطاقة الهوية <br>(ملف PDF أقل من 2 ميجا بايت)</label>
+                                <input type="file" class="form-control" name="id_card" wire:model="id_card"/>
+                                @error('id_card') <span class="text-danger">{{ $message }}</span> @enderror
+
+                                @if($id_card_file && session()->has('edit_application'))
+                                <span><a class="btn btn-dark me-2 rounded-5 mt-3" onclick="openModal('pdfModal-verify-id_card_file')">تحميل بطاقة الهوية </a></span>
+                                        <!-- Modal -->
+                                        <div id="pdfModal-verify-id_card_file" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close" onclick="closeModal('pdfModal-verify-id_card_file')">&times;</span>
+                                                <iframe id="pdfViewer-verify-id_card_file" src="{{ generate_signed_storage_url($id_card_file) }}"></iframe>
+                                            </div>
+                                        </div>
+                                        <!-- End Modal -->
+                                @endif  
+
+                              
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="name">تحميل بطاقة الراعي<br>(ملف PDF أقل من 2 ميجا بايت)</label>
+                                <input type="file" class="form-control" name="sponsor_pass" wire:model="sponsor_pass"/>
+                                @error('sponsor_pass') <span class="text-danger">{{ $message }}</span> @enderror
+
+                                @if($sponsor_pass_file && session()->has('edit_application'))
+                                <span><a class="btn btn-dark me-2 rounded-5 mt-3" onclick="openModal('pdfModal-verify-sponsor_pass_file')">تحميل بطاقة الراعي</a></span>
+                                        <!-- Modal -->
+                                        <div id="pdfModal-verify-sponsor_pass_file" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close" onclick="closeModal('pdfModal-verify-sponsor_pass_file')">&times;</span>
+                                                <iframe id="pdfViewer-verify-sponsor_pass_file" src="{{ generate_signed_storage_url($sponsor_pass_file) }}"></iframe>
+                                            </div>
+                                        </div>
+                                        <!-- End Modal -->
+                                @endif 
+                             
+                            </div>
+                        </div>
+                     
                     </div>
                 </div>
+            <livewire:passport :is_consular="false" :passport="$passport"/>
+
+              
+              
+                        <div class="form-group my-3 text-center">
+                               
+                                <input type="checkbox" class="form-check-input" name="add_accompany" wire:model="add_accompany"  id="add_accompany"/>
+                                <label for="add_accompany" class="form-label"> Add Accompany </label>
+                        </div>
             <div class="form-group my-3 text-center">
-                <a class="btn buttom-effect" href="{{ route('visa-application.travel') }}">تقديم الطلب</a>
+                <button class="btn buttom-effect">تقديم الطلب</button>
             </div> 
             </div>
         </form>

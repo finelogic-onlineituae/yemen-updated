@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="issued_by">سلطة الإصدار</label>
+                                        <label class="form-label fw-bold" for="issued_by">جهة الإصدار</label>
                                         <select class="form-select" name="passport_center" required>
                                             <option>جهة الإصدار</option>
                                             @foreach ($passport_centers as $center)
@@ -104,12 +104,12 @@
                                 <div class="row">
                            
                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="police_reporting_letter">تقرير فقدان الهوية الصادر من الهيئة الاتحادية للهوية والجنسية</label>
+                                <label class="form-label fw-bold" for="police_reporting_letter">تعميم فقدان صادر من الهيئة الاتحادية للهوية والجنسية</label>
                                 <input type="file" class="form-control" name="police_reporting_letter" value="{{ old('police_reporting_letter') }}" required/>
                                 @error('police_reporting_letter')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="notice_in_newpaper">إعلان عن المفقودات في الجريدة الرسمية</label>
+                                <label class="form-label fw-bold" for="notice_in_newpaper">إعلان فقدان في الجريدة الرسمية</label>
                                 <input type="file" class="form-control" name="notice_in_newpaper" value="{{ old('notice_in_newpaper') }}" required/>
                                 @error('notice_in_newpaper')<span class="text-danger">{{ $message }}</span> @enderror
                             </div> 
@@ -235,7 +235,7 @@
                                         @error('relative_address')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="relative_phone">رقم الهاتف النسبي </label>
+                                        <label class="form-label fw-bold" for="relative_phone">رقم الهاتف</label>
                                         <input type="text" class="form-control" name="relative_phone" value="{{ old('relative_phone') }}"/>
                                         @error('relative_phone')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>

@@ -90,7 +90,7 @@
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء الصلاحية</label>
+                                        <label class="form-label fw-bold" for="expire_on">تاريخ الانتهاء</label>
                                         <input type="date" class="form-control" name="expire_on" value="{{ old('expire_on') }}" required/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>

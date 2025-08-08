@@ -17,7 +17,7 @@
                     @error('passport_number') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                    <label class="form-label fw-bold" for="issued_by">سلطة الإصدار</label>
+                    <label class="form-label fw-bold" for="issued_by">جهة الإصدار</label>
                         @if(!$is_consular)
                             <select class="form-select" @if($useExistingPassport) disabled @endif name="issued_by" wire:model="issued_by">
                                 <option>Issuing Country</option>
@@ -47,7 +47,7 @@
                  
                 {{-- <div class="row"> --}}
                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                        <label class="form-label fw-bold" for="expires_on">تاريخ انتهاء الصلاحية</label>
+                        <label class="form-label fw-bold" for="expires_on">تاريخ الانتهاء</label>
                         <input @if($useExistingPassport) disabled @endif type="date" class="form-control" wire:model="expires_on" id="expires_on" name="expires_on"/>
                         @error('expires_on') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>

@@ -11,7 +11,7 @@
 <div>
     
     <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
-         <form action="{{ route('marriage-certificate.store') }}" enctype="multipart/form-data" method="POST" id="renew-passport-above-form" class="w-100 align-items-center text-center d-flex justify-content-center">
+         <form action="@if(request()->has('edit')) {{ route('marriage-certificate.store', ['application' => $application->id]) }} @else {{ route('application.confirm', ['application_id' => $application->id]) }}  @endif" enctype="multipart/form-data" method="POST" id="renew-passport-above-form" class="w-100 align-items-center text-center d-flex justify-content-center">
             @csrf
             <div class="manage-width-75 manage-width p-3 mx-2 rounded  align-items-center text-center form-scroll bg-ash ">
                 <div class="card text-start my-2">
@@ -31,12 +31,12 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
-                                        <input type="text" class="form-control" name="name_arabic" value="{{ $application->formable->name_arabic }}" required/>
+                                        <input type="text" class="form-control" name="name_arabic" value="{{ $application->formable->name_arabic }}"  @if(!request('edit')) disabled @endif required/>
                                         @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name_english">الاسم الكامل باللغة الإنجليزية كما هو الحال في جواز السفر</label>
-                                        <input type="text" class="form-control" name="name_english" value="{{ $application->formable->name_english }}" required/>
+                                        <input type="text" class="form-control" name="name_english" value="{{ $application->formable->name_english }}"  @if(!request('edit')) disabled @endif  required/>
                                         @error('name_english')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
@@ -45,13 +45,13 @@
                                     
                                         <label class="form-label fw-bold"  for="passport_number">رقم جواز السفر</label>
                                         
-                                        <input type="text" id="passportInput-" maxlength="8" class="form-control" value="{{ $application->formable->passport->passport_number }}" name="passport_number" required/>
+                                        <input type="text" id="passportInput-" maxlength="8" class="form-control" value="{{ $application->formable->passport->passport_number }}" name="passport_number"  @if(!request('edit')) disabled @endif   required/>
                                         <small id="passportError-" class="text-danger d-none"> Please enter a valid Passport Number</small>
                                         @error('passport_number') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
-                                        <input type="date" class="form-control" name="date_of_birth" value="{{ $application->formable->date_of_birth }}" required/>
+                                        <input type="date" class="form-control" name="date_of_birth" value="{{ $application->formable->date_of_birth }}"  @if(!request('edit')) disabled @endif   required/>
                                         @error('date_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="country_of_birth">(المحافظة) محل الميلاد</label>
-                                        <select class="form-select" name="country_of_birth" required>
+                                        <select class="form-select" name="country_of_birth"  @if(!request('edit')) disabled @endif required>
                                             <option value="">Choose a Country</option>
                                             @forelse ($countries as $country)
                                                 <option value="{{ $country->id }}" @selected($application->formable->country_of_birth == $country->id)>{{ $country->country_name }}</option>
@@ -71,42 +71,42 @@
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="city_of_birth">(المحافظة - المدينة) محل الميلاد</label>
-                                        <input type="text" class="form-control" name="city_of_birth" value="{{ $application->formable->city_of_birth }}" required/>
+                                        <input type="text" class="form-control" name="city_of_birth" value="{{ $application->formable->city_of_birth }}" @if(!request('edit')) disabled @endif required/>
                                         @error('city_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_on">تاريخ الإصدار</label>
-                                        <input type="date" class="form-control" name="issued_on" value="{{ $application->formable->passport->issued_on }}" required/>
+                                        <input type="date" class="form-control" name="issued_on" value="{{ $application->formable->passport->issued_on }}" @if(!request('edit')) disabled @endif required/>
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="expire_on">تاريخ الانتهاء</label>
-                                        <input type="date" class="form-control" name="expire_on" value="{{ $application->formable->passport->expires_on }}" required/>
+                                        <input type="date" class="form-control" name="expire_on" value="{{ $application->formable->passport->expires_on }}" @if(!request('edit')) disabled @endif required/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="profession">جنس</label>
-                                        <select class="form-select" name="gender" required>
+                                        <select class="form-select" name="gender" @if(!request('edit')) disabled @endif required>
                                             <option value="">Choose Gender</option>
-                                            <option value="Male" @selected(old('gender') == 'Male')>Male</option>
-                                            <option value="Female" @selected(old('gender') == 'Female')>Female</option>
+                                            <option value="Male" @selected($application->formable->gender == 'Male')>Male</option>
+                                            <option value="Female" @selected($application->formable->gender == 'Female')>Female</option>
                                         </select>
                                         @error('gender')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="profession">مهنة</label>
-                                        <input type="text" class="form-control" name="profession" value="{{ $application->formable->profession }}" required/>
+                                        <input type="text" class="form-control" name="profession" value="{{ $application->formable->profession }}" @if(!request('edit')) disabled @endif required/>
                                         @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_by">جهة الإصدار</label>
-                                        <select class="form-select" name="passport_center" required>
+                                        <select class="form-select" name="passport_center" @if(!request('edit')) disabled @endif required>
                                             <option>Issuing Authority</option>
                                             @foreach ($passport_centers as $center)
                                                 <option value="{{ $center->id }}" @selected($application->formable->passport->passport_center_id == $center->id)>{{ $center->center_name }}</option>
@@ -126,24 +126,24 @@
                             <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="contract_issued_by">جهة الإصدار</label>
-                                    <input type="text" class="form-control" name="contract_issued_by"  value="{{ $application->formable->contract_issued_by }}" required/>
+                                    <input type="text" class="form-control" name="contract_issued_by" @if(!request('edit')) disabled @endif  value="{{ $application->formable->contract_issued_by }}" required/>
                                     @error('contract_issued_by')<span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <label class="form-label fw-bold" for="registration_number">رقم التسجيل </label>
-                                    <input  type="text" class="form-control" wire:model="registration_number" value="{{ $application->formable->registration_number }}" required/>
+                                    <label class="form-label fw-bold" for="registration_number">رقم عقد الزواج</label>
+                                    <input  type="text" class="form-control" name="registration_number" @if(!request('edit')) disabled @endif value="{{ $application->formable->registration_number }}" required/>
                                     @error('registration_number') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="contract_issued_on">تاريخ الافراج عنه </label>
-                                    <input  type="date" class="form-control" id="contract_issued_on" name="contract_issued_on" value="{{ $application->formable->contract_issued_on }}" required/>
+                                    <input  type="date" class="form-control" id="contract_issued_on" @if(!request('edit')) disabled @endif name="contract_issued_on" value="{{ $application->formable->contract_issued_on }}" required/>
                                     @error('contract_issued_on') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>     
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="date_of_marriage">تاريخ الزواج </label>
-                                    <input  type="date" class="form-control" wire:model="date_of_marriage"  name="date_of_marriage" value="{{ $application->formable->date_of_marriage }}" required/>
+                                    <input  type="date" class="form-control" wire:model="date_of_marriage" @if(!request('edit')) disabled @endif  name="date_of_marriage" value="{{ $application->formable->date_of_marriage }}" required/>
                                     @error('date_of_marriage') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                               
@@ -157,23 +157,82 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="passport_attachment"> جواز (ملف بي دي إف  ,jpg, png, jpeg)</label>
-                            <input type="file" class="form-control" name="passport_attachment" required/>
-                            @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
+                            <div @class(["d-none" => !request('edit'), "mb-2"])>
+                                <label class="form-label fw-bold" for="passport_attachment"> جواز (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" name="passport_attachment"  @if(!request('edit')) disabled @endif/>
+                                 @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="emirate_id_attachment"> الهوية الإماراتية (ملف بي دي إف  ,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="emirate_id_attachment" required/>
-                                @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
-                            </div>   
-                        </div>    
-                        <div class="row">
+                           <div>
+                            <a onclick="openModal('passport')" class="btn btn-dark">View Passport</a>
+                            <!-- Modal -->
+                                    <div id="passport" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" onclick="closeModal('passport')">&times;</span>
+                                            @if(Str::of($application->formable->passport->attachment)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
+                                                    <img src="/storage/{{ $application->formable->passport->attachment }}"
+                                                        alt="Preview"
+                                                        style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
+                                            @else
+                                            <iframe id="passport_iframe" src="/storage/{{ $application->formable->passport->attachment }}"></iframe>
+                                            @endif
+                                            
+                                        </div>
+                                    </div>
+                                    <!-- End Modal -->
+                            </div>
+                            </div>
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <label class="form-label fw-bold" for="marriage_document"> إثبات الزواج (ملف بي دي إف  ,jpg, png, jpeg)</label>
-                                    <input type="file" class="form-control" name="marriage_document" required/>
-                                    @error('marriage_document') <span class="text-danger">{{ $message }}</span> @enderror
+                                <div @class(["d-none" => !request('edit'), "mb-2"])>
+                                <label class="form-label fw-bold" for="emirate_id_attachment"> الهوية الإماراتية (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" name="emirate_id_attachment"  @if(!request('edit')) disabled @endif  />
+                                @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
+                                 </div>
+                                <div>
+                                <a onclick="openModal('emirate_id')" class="btn btn-dark">View Emirate ID</a>
+                                <!-- Modal -->
+                                    <div id="emirate_id" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" onclick="closeModal('emirate_id')">&times;</span>
+                                            @if(Str::of($application->formable->emirates_id_attachment)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
+                                                    <img src="/storage/{{ $application->formable->emirates_id_attachment }}"
+                                                        alt="Preview"
+                                                        style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
+                                            @else
+                                            <iframe id="emirate_id_iframe" src="/storage/{{ $application->formable->emirates_id_attachment }}"></iframe>
+                                            @endif
+                                            
+                                        </div>
+                                    </div>
+                                    <!-- End Modal -->
                             </div>
-                        </div>
+                            </div>  
+                            <div class="row">
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                            <div @class(["d-none" => !request('edit'), "mb-2"])>
+                                <label class="form-label fw-bold" for="marriage_document"> جواز (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" name="marriage_document"  @if(!request('edit')) disabled @endif/>
+                                 @error('marriage_document') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                           <div>
+                            <a onclick="openModal('marriage_document')" class="btn btn-dark">View Marriage Document</a>
+                            <!-- Modal -->
+                                    <div id="marriage_document" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" onclick="closeModal('marriage_document')">&times;</span>
+                                            @if(Str::of($application->formable->marriage_document)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
+                                                    <img src="/storage/{{ $application->formable->marriage_document }}"
+                                                        alt="Preview"
+                                                        style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
+                                            @else
+                                            <iframe id="passport_iframe" src="/storage/{{ $application->formable->marriage_document }}"></iframe>
+                                            @endif
+                                            
+                                        </div>
+                                    </div>
+                                    <!-- End Modal -->
+                            </div>
+                            </div> 
+                        </div>    
                           
                     </div>
                 </div>
@@ -181,7 +240,12 @@
             </div>
            
             <div class="form-group my-3 text-center">
-                <button class="btn buttom-effect" id="submitBtn">تقديم الطلب</button>
+                @if(request()->has('edit'))
+                    <button class="btn buttom-effect" id="submitBtn" >تغييرات التحديث</button>
+                @else
+                    <button class="btn buttom-effect" id="submitBtn" >تأكيد التطبيق</button>
+                @endif
+                <a class="btn btn-dark" id="submitBtn" href="{{ route('marriage-certificate.verify', ['application_id' => $application->id, 'edit'=> true]) }}">قم بإجراء التغييرات</a>
             </div>
             </div>
             </div>

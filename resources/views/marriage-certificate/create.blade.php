@@ -7,7 +7,7 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center" >طلب شهادة الزواج</h2>
+    <h2 class="text-success w-100 text-center" >شهادة إثبات زواج</h2>
 <div>
     
     <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
@@ -130,14 +130,14 @@
                                     @error('contract_issued_by')<span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <label class="form-label fw-bold" for="registration_number">رقم التسجيل </label>
+                                    <label class="form-label fw-bold" for="registration_number">رقم عقد الزواج</label>
                                     <input  type="text" class="form-control" name="registration_number" value="{{ old('registration_number') }}" required/>
                                     @error('registration_number') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <label class="form-label fw-bold" for="contract_issued_on">تاريخ الافراج عنه </label>
+                                    <label class="form-label fw-bold" for="contract_issued_on">تاريخ إصدار عقد الزواج</label>
                                     <input  type="date" class="form-control" id="contract_issued_on" name="contract_issued_on" value="{{ old('contract_issued_on') }}" required/>
                                     @error('contract_issued_on') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>     

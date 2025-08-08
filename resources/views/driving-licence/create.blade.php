@@ -131,7 +131,7 @@
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="driving_licence_center">جهة الإصدار</label>
                                 <select class="form-select" name="driving_licence_center" value="{{ old('expire_on') }}">
-                                    <option>صدرت في</option>
+                                    <option>جهة الإصدار</option>
                                     @foreach ($driving_licence_centers as $center)
                                         <option value="{{ $center->id }}" @selected($center->id == old('expire_on'))>{{ $center->center_name }}</option>
                                     @endforeach
@@ -141,7 +141,7 @@
                         </div>
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="dl_issued_on">	صدر بتاريخ</label>
+                                <label class="form-label fw-bold" for="dl_issued_on">تاريخ الإصدار</label>
                                 <input type="date" class="form-control" name="dl_issued_on" value="{{ old('dl_issued_on') }}" />
                                 @error('dl_issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>

@@ -83,7 +83,9 @@
                                 </a>
                                 <div  id="{{$categorys->id}}" @class(['collapse', 'show' => session('category') == $categorys->id])>
                                     @foreach ($categorys->FormTypeName as $FormTypeName)
+                                        @if($FormTypeName->id != 5 && $FormTypeName->id != 7)
                                         <a @class(['bg-dark text-white' => session('app') == $FormTypeName->url]) href="/{{$FormTypeName->url}}">{{$FormTypeName->application_name_arabic}}</a>
+                                        @endif
                                     @endforeach
                                     {{-- <a href="/applications/visa-application">التقدم بطلب للحصول على تأشيرة جديدة</a>
                                     <a href="/#">	قواعد ولوائح التأشيرة</a> --}}

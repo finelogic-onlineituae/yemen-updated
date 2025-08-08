@@ -51,18 +51,20 @@ class MarriageCertificateController extends Controller
         }
 
         if($request->hasFile('marriage_document')) {
-            $marriage_document = $request->file('passport_attachment')->store('uploads/user_' . auth()->id());
+            $marriage_document_file_path = $request->file('marriage_document')->store('uploads/user_' . auth()->id());
         }
 
         if($request->has('application')){
             $application = Form::findOrFail($request->application);
 
-            $application->formable->husband_name = ucfirst($request->husband_name);
-            $application->formable->wife_name = ucfirst($request->wife_name);
+            $application->formable->name_english = ucfirst($request->name_english);
+            $application->formable->name_arabic = $request->name_arabic;
             $application->formable->date_of_marriage = $request->date_of_marriage;
-            $application->formable->phone_number = $request->phone_number;
-            $application->formable->husband_emirates_id = $request->husband_emirates_id;
-            $application->formable->wife_emirates_id = $request->wife_emirates_id;
+            $application->formable->country_of_birth = $request->country_of_birth;
+            $application->formable->city_of_birth = $request->city_of_birth;
+            $application->formable->date_of_birth = $request->date_of_birth;
+            $application->formable->gender = $request->gender;
+            $application->formable->profession = $request->profession;
             $application->formable->contract_issued_by = $request->contract_issued_by;
             $application->formable->contract_issued_on = $request->contract_issued_on;
             $application->formable->registration_number = $request->registration_number;
@@ -77,55 +79,51 @@ class MarriageCertificateController extends Controller
             $application->formable->save();    
 
             //update client passport
-            $application->formable->husbandPassport->passport_number = $request->husband_passport_number;
-            $application->formable->husbandPassport->passport_center_id = $request->husband_passport_center;
-            $application->formable->husbandPassport->issued_on = $request->husband_issued_on;
+            $application->formable->passport->passport_number = $request->passport_number;
+            $application->formable->passport->passport_center_id = $request->passport_center;
+            $application->formable->passport->issued_on = $request->issued_on;
 
             if($request->hasFile('passport_attachment')){
-                $application->formable->passport->attachment = $husband_passport_file_path;
+                $application->formable->passport->attachment = $passport_file_path;
             }
 
-            $application->formable->husbandPassport->save(); 
+            $application->formable->passport->save(); 
+            
             //update agent passport
-            $application->formable->wifePassport->passport_number = $request->wife_passport_number;
+          /*  $application->formable->wifePassport->passport_number = $request->wife_passport_number;
             $application->formable->wifePassport->passport_center_id = $request->wife_passport_center;
             $application->formable->wifePassport->issued_on = $request->wife_issued_on;
           //  $application->formable->agentPassport->expires_on = $request->agent_expire_on;
 
-            $application->formable->wifePassport->save();       
+            $application->formable->wifePassport->save();       */
         }
         else{
             $user = auth()->user();
-            $husband_passport = $user->passports()->create([
+            $passport = $user->passports()->create([
                 'passport_number' => $request->passport_number,                                             
                 'issued_by' => 'YE',
                 'passport_center_id' => $request->passport_center,
                 'issued_on' => $request->issued_on,
                 'expires_on' => $request->expire_on,
-                'attachment' => $passport_attachment
+                'attachment' => $passport_file_path
             ]);
 
-            $wife_passport = $user->passports()->create([
-                'passport_number' => $request->wife_passport_number,
-                'issued_by' => 'YE',
-                'passport_center_id' => $request->wife_passport_center,
-                'issued_on' => $request->wife_issued_on,
-                //'expires_on' => $request->agent_expire_on,
-                'attachment' => $wife_passport_file_path
-            ]);
+           
     
             $marriage = MarriageCertificate::create([
-                'husband_name' => ucwords($request->husband_name),
-                'wife_name' => ucwords($request->wife_name),
-                'phone_number' => $request->phone_number,
+                'name_english' => ucwords($request->name_english),
+                'name_arabic' => $request->name_arabic,
+                'country_of_birth' => $request->country_of_birth,
+                'city_of_birth' => $request->city_of_birth,
+                'date_of_birth' => $request->date_of_birth,
+                'gender' => $request->gender,
+                'profession' => $request->profession,
                 'date_of_marriage' => $request->date_of_marriage,
-                'passport_id' => $husband_passport->id,
-                
-                
+                'passport_id' => $passport->id,
                 'contract_issued_by' => $request->contract_issued_by,
                 'contract_issued_on' => $request->contract_issued_on,
                 'registration_number' => $request->registration_number,
-                'husband_residance_permit' => $husband_residance_permit_file_path,
+                'emirates_id_attachment' => $emirates_id_attachment,
                 'marriage_document' => $marriage_document_file_path
             ]);
 
@@ -137,15 +135,15 @@ class MarriageCertificateController extends Controller
             ]); 
         }
        
-        return redirect()->route('marriage-certificate.verify', ['application_id' => encrypt($application->id)]);
+        return redirect()->route('marriage-certificate.verify', ['application_id' => $application->id]);
     }
     public function verifyMarriageCertificate(Request $request)
     {
-        $application_id = decrypt($request->application_id);
+        $application_id = $request->application_id;
         $application = Form::findOrFail($application_id);
 
        // dd($application_id);
-        return view('marriage-certificate.verify-marriage-certificate', ['application' => $application]);
+        return view('marriage-certificate.verify-marriage-certificate', ['application' => $application, 'countries' => Country::all(), 'passport_centers' => PassportCenter::all()]);
     }
 
     public function editMarriageCertificate(Request $request)
