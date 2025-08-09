@@ -28,12 +28,7 @@
                             
                         </div>
                         <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="phone">رقم الهوية الإماراتية</label>
-                                <input type="text" class="form-control"  id="emiratesIdInput-"  maxlength="17" name="emirates_id" wire:model="emirates_id"/>
-                                  <small id="emiratesIdError-" class="text-danger d-none">Please enter a valid Emirates ID.</small>
-                                @error('emirates_id') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
+                           
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="residance_permit">تصريح الإقامة(  ملف بي دي إف )</label>
                                 <input type="file" class="form-control" name="residance_permit" wire:model="residance_permit" />
@@ -61,7 +56,7 @@
                     <div class="py-2 text-start">
                         <div class="row">
                             <div class="form-group mb-3 col-lg-12 col-xl-12 col-md-12 col-sm-12">
-                                <label class="form-label fw-bold" for="name">	يتم تقديم هذه المعلومات إلى</label>
+                                <label class="form-label fw-bold" for="name">	اسم الجهة التي سيتم تقديم الشهادة لها</label>
                                 <input type="text" class="form-control" name="submitted_to" wire:model="submitted_to"/>
                                 @error('submitted_to')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>

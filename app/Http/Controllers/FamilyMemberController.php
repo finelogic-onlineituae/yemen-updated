@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Form;
+use App\Models\Country;
+use App\Models\PassportCenter;
 use App\Models\ApplicationFamilyMembers;
 use App\Models\ApplicationFamilyMemberspassport;
 
@@ -13,26 +15,32 @@ class FamilyMemberController extends Controller
     {
         session(['category' => '1', 'app' => 'applications/family-member']);
        
-        return view('family-member.create');
+        return view('family-member.create', ['countries' => Country::all(), 'passport_centers' => PassportCenter::all()]);
     }
 
     public function storeFamilyMember(Request $request)
     {
         $validated = $request->validate([
-            'family_members.*.member_name' => 'required|string|max:255',
-            'family_members.*.member_passport_number' => 'required|string|max:50',
-            'family_members.*.member_passport_center' => 'required|exists:passport_centers,id',
-            'family_members.*.member_issued_on' => 'required|date',
-            'family_members.*.member_relation' => 'required',
-            'family_members.*.member_residance_permit' => 'nullable|file|mimes:pdf|max:2048',
-            'family_members.*.member_birth_certificate' => 'nullable|file|mimes:pdf|max:2048',
-            'family_members.*.member_passport_attachment' => 'nullable|file|mimes:pdf|max:2048',
+            'member_name.*' => 'required|string|max:255',
+            'member_passport_number.*' => 'required|string|max:50',
+            'member_passport_center.*' => 'required|exists:passport_centers,id',
+            'member_issued_on.*' => 'required|date',
+            'member_expire_on.*' => 'required|date',
+            'member_relation.*' => 'required',
+            'member_emirates_id_attachment.*' => 'nullable|file|mimes:pdf|max:2048',
+            'member_passport_attachment.*' => 'nullable|file|mimes:pdf|max:2048',
         ]);
 
        // dd($validated);
         // if($request->hasFile('passport_attachment')) {
         //     $file_path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id());
         // }
+        $passport_file_paths = [];
+        foreach($request->file('member_passport_attachment') as $passport)
+        {
+            $file_path = $passport->store('uploads/user_' . auth()->id());
+            array_push($passport_file_paths, $file_path);
+        }
         if($request->hasFile('attachment')) {
             $file_path = $request->file('attachment')->store('uploads/user_' . auth()->id());
         }

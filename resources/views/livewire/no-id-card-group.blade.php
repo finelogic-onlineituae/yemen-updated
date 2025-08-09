@@ -277,6 +277,18 @@
                                 @error('mothers_id')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div> 
+                        <div class="row">
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                            <label class="form-label fw-bold" for="photo"> صورة شخص (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                            <input type="file" class="form-control" wire:model="photo" name="photo" />
+                            @error('photo') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="birth_certificate">	شهادة ميلاد (ملف بي دي إف ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" name="birth_certificate" wire:model="birth_certificate" />
+                                @error('birth_certificate')<span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div> 
                     </div>
                 </div>
                 <div><a class="btn btn-success">Add Member</a></div>

@@ -83,7 +83,7 @@
                                 </a>
                                 <div  id="{{$categorys->id}}" @class(['collapse', 'show' => session('category') == $categorys->id])>
                                     @foreach ($categorys->FormTypeName as $FormTypeName)
-                                        @if($FormTypeName->id != 5 && $FormTypeName->id != 7)
+                                        @if($FormTypeName->id != 5 && $FormTypeName->id != 7 &&  $FormTypeName->id != 18 &&  $FormTypeName->id != 19 &&  $FormTypeName->id != 3)
                                         <a @class(['bg-dark text-white' => session('app') == $FormTypeName->url]) href="/{{$FormTypeName->url}}">{{$FormTypeName->application_name_arabic}}</a>
                                         @endif
                                     @endforeach
@@ -91,45 +91,7 @@
                                     <a href="/#">	قواعد ولوائح التأشيرة</a> --}}
                                 </div>
                             </div>
-                           @endforeach
-                            {{-- <div>
-                                <a href="#visa-services" id="visa" onclick="toggleCollapseButtonMenu(this)" class="menu-heading" data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="personal-documents">
-                                    <i class="bi bi-plus-circle-fill"  id="visa-collapse-button"></i>	خدمات التأشيرات
-                                </a>
-                                <div class="collapse" id="visa-services">
-                                    <a href="/applications/visa-application">التقدم بطلب للحصول على تأشيرة جديدة</a>
-                                    <a href="/#">	قواعد ولوائح التأشيرة</a>
-                                </div>
-                            </div>
-                          
-                            <div>
-                                <a href="#other-documents" id="other" onclick="toggleCollapseButtonMenu(this)" class="menu-heading" data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="personal-documents">
-                                    <i class="bi bi-plus-circle-fill"  id="other-collapse-button"></i>  	الشهادات
-                                </a>
-                                <div class="collapse" id="other-documents">
-                                    <a href="/applications/power-of-attorney">	توكيل </a>
-                                    <a href="#">	لا شهادة مدرسية</a>
-                                    <a href="#"> 	لا شهادة جامعية</a> 
-                                </div>
-                            </div> --}}
-                        
-                          {{-- <div>
-                                <a href="#3" id="passport" onclick="toggleCollapseButtonMenu(this)" class="menu-heading" data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="personal-documents">
-                                    <i @class(['bi', 'bi-dash-circle-fill' => session('category') == '4', 'bi-plus-circle-fill' => session('category') != '4'])   id="id-documents-collapse-button"></i> 	خدمات الجوازات
-                                </a>
-                                <div  id="3" @class(['collapse', 'show' => session('category') == '3'])>
-                                    <a href="/applications/renew-passport-above"  @class(['bg-dark text-white' => session('app') == 'renew_passport_above'])>تجديد جواز السفر لمن هم فوق سن 18 عامًا</a>
-                                    <a href="/applications/renew-passport-below"  @class(['bg-dark text-white' => session('app') == 'renew_passport_below'])>	تجديد جواز السفر (أقل من 18 عامًا)</a>
-                                    <a href="/applications/new-passport"  @class(['bg-dark text-white' => session('app') == 'new-passport'])>جواز سفر جديد</a>
-                                    <a href="/applications/damaged-passport"  @class(['bg-dark text-white' => session('app') == 'damaged-passport'])>جواز السفر التالف</a>
-                                    <a href="/applications/loss-passport"  @class(['bg-dark text-white' => session('app') == 'loss-passport'])>فقدان جواز السفر</a>
-                                    <a href="/applications/passport-name-change" @class(['bg-dark text-white' => session('app') == 'passport-name-change'])>تغيير الاسم في جواز السفر</a>
-                                </div>
- 
-                            </div> --}}
-
-
-                        
+                           @endforeach                        
                     </div>
 
                 @endauth

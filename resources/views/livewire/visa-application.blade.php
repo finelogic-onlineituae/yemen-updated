@@ -79,7 +79,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
                                 <label class="form-label fw-bold" for="name">الفترة المطلوبة (بالأيام)</label>
-                                <input type="number" class="form-control" name="period_required" wire:model="period_required" max="30"/>
+                                <input type="number" class="form-control" id="days" name="period_required" wire:model="period_required" max="30"/>
                                 @error('period_required') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
@@ -179,3 +179,10 @@
         </form>
     </div>
 </div>
+<script>
+document.getElementById("days").addEventListener("input", function () {
+    if (this.value > 30) {
+        this.value = 30; // Force max value
+    }
+});
+</script>

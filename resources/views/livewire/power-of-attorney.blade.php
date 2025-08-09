@@ -83,7 +83,7 @@
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name">تاريخ انتهاء الصلاحية</label>
+                                        <label class="form-label fw-bold" for="name">تاريخ الانتهاء</label>
                                         <input type="date" class="form-control" name="expire_on" wire:model="expire_on"/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -91,7 +91,7 @@
                                  <div class="row">
                                     
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="issued_by">سلطة الإصدار</label>
+                                        <label class="form-label fw-bold" for="issued_by">جهة الإصدار</label>
                                         <select class="form-select" name="passport_center" wire:model="passport_center">
                                             <option>Issuing Authority</option>
                                             @foreach ($passport_centers as $center)
