@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ApplicationFamilyMembers extends Model
+class Kinship extends Model
 {
     protected $guarded = [];
     public function form()
@@ -19,6 +19,6 @@ class ApplicationFamilyMembers extends Model
 
     public function familyMembers()
     {
-        return $this->hasMany(ApplicationFamilyMemberspassport::class, 'family_member_id');
+        return $this->hasMany(FamilyMember::class, 'kinship_id');
     }
 }

@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Form;
 use App\Models\Country;
 use App\Models\PassportCenter;
-use App\Models\ApplicationFamilyMembers;
-use App\Models\ApplicationFamilyMemberspassport;
+use App\Models\Kinship;
+use App\Models\FamilyMember;
 
 class FamilyMemberController extends Controller
 {
@@ -21,14 +21,16 @@ class FamilyMemberController extends Controller
     public function storeFamilyMember(Request $request)
     {
         $validated = $request->validate([
+            'supporter_name' => 'required|max:250',
+            'dependancy_relationship' => 'required|max:250',
             'member_name.*' => 'required|string|max:255',
             'member_passport_number.*' => 'required|string|max:50',
             'member_passport_center.*' => 'required|exists:passport_centers,id',
             'member_issued_on.*' => 'required|date',
             'member_expire_on.*' => 'required|date',
             'member_relation.*' => 'required',
-            'member_emirates_id_attachment.*' => 'nullable|file|mimes:pdf|max:2048',
-            'member_passport_attachment.*' => 'nullable|file|mimes:pdf|max:2048',
+            'member_emirates_id_attachment.*' => 'file|mimes:pdf|max:2048',
+            'member_passport_attachment.*' => 'file|mimes:pdf|max:2048',
         ]);
 
        // dd($validated);
@@ -36,189 +38,70 @@ class FamilyMemberController extends Controller
         //     $file_path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id());
         // }
         $passport_file_paths = [];
+        $emirate_id_file_paths = [];
+        
         foreach($request->file('member_passport_attachment') as $passport)
         {
             $file_path = $passport->store('uploads/user_' . auth()->id());
             array_push($passport_file_paths, $file_path);
         }
-        if($request->hasFile('attachment')) {
-            $file_path = $request->file('attachment')->store('uploads/user_' . auth()->id());
+        
+        foreach($request->file('member_emirate_id_attachment') as $emirate_id)
+        {
+            $file_path = $emirate_id->store('uploads/user_' . auth()->id());
+            array_push($emirate_id_file_paths, $file_path);
         }
 
-        if($request->hasFile('residance_permit')) {
-            $residance_permit_file_path = $request->file('residance_permit')->store('uploads/user_' . auth()->id());
-        }
-        
+       
         if($request->has('application')) {
-            $application = Form::findOrFail($request->application);
-            $formable = $application->formable;
-        
-            // Update main applicant info
-            $formable->name = ucfirst($request->name);
-            $formable->phone_number = $request->phone_number;
-            $formable->emirates_id = $request->emirates_id;
-            $formable->information_provided = $request->information_provided;
-        
-            if ($request->hasFile('attachment')) {
-                $formable->attachment = $file_path;
-            }
-            if ($request->hasFile('residance_permit')) {
-                $formable->residance_permit = $residance_permit_file_path;
-            }
-        
-            $formable->save();
-        
-            // Update passport
-            if ($formable->passport) {
-                $formable->passport->passport_number = $request->passport_number;
-                $formable->passport->passport_center_id = $request->passport_center;
-                $formable->passport->issued_on = $request->issued_on;
-                $formable->passport->save();
-            }
-        
-            // Track incoming IDs
-            $incomingIds = [];
-        
-            foreach ($request->family_members as $index => $member) {
-                $res_permit_path = $request->file("family_members.{$index}.member_residance_permit")?->store("uploads/user_" . auth()->id());
-                $birth_cert_path = $request->file("family_members.{$index}.member_birth_certificate")?->store("uploads/user_" . auth()->id());
-                $passport_path = $request->file("family_members.{$index}.member_passport_attachment")?->store("uploads/user_" . auth()->id());
 
-                if (!empty($member['id'])) {
-                   
-                    // Update existing member
-                    $existingMember = \App\Models\ApplicationFamilyMemberspassport::find($member['id']);
-                    if ($existingMember) {
-                        $updateData = [
-                            'name' => $member['member_name'],
-                            'realtion' => $member['member_relation'],
-                        ];
-                        if ($res_permit_path) {
-                            $updateData['residance_permit'] = $res_permit_path;
-                        }
-                        if ($birth_cert_path) {
-                            $updateData['birth_certificiate'] = $birth_cert_path;
-                        }
-            
-                        $existingMember->update($updateData);
-            
-                        if ($existingMember->passport) {
-                            $passportUpdate = [
-                                'passport_number' => $member['member_passport_number'],
-                                'passport_center_id' => $member['member_passport_center'],
-                                'issued_on' => $member['member_issued_on'],
-                            ];
-                            if ($passport_path) {
-                                $passportUpdate['attachment'] = $passport_path;
-                            }
-            
-                            $existingMember->passport->update($passportUpdate);
-                        }
-            
-                        $incomingIds[] = $existingMember->id;
-                    }
-                } else {
-                    // New member
-                    $memberPassport = auth()->user()->passports()->create([
-                        'passport_number' => $member['member_passport_number'],
-                        'issued_by' => 'YE',
-                        'passport_center_id' => $member['member_passport_center'],
-                        'issued_on' => $member['member_issued_on'],
-                        'attachment' => $passport_path,
-                    ]);
-        
-                    $newMember = \App\Models\ApplicationFamilyMemberspassport::create([
-                        'name' => $member['member_name'],
-                        'realtion' => $member['member_relation'],
-                        'passport_id' => $memberPassport->id,
-                        'family_member_id' => $formable->id,
-                        'residance_permit' => $res_permit_path,
-                        'birth_certificiate' => $birth_cert_path,
-                    ]);
-        
-                    $incomingIds[] = $newMember->id;
-                }
-            }
-
-             
-
-        
-            // $formable->familyMembers()->whereNotIn('id', $incomingIds)->each(function ($member) {
-            //     // Delete member first to break the foreign key link
-            //     $member->delete();
-            
-            //     // Now delete passport safely
-            //     if ($member->passport) {
-            //         $member->passport->delete();
-            //     }
-            // });
-
-         
         }
         
         else{
+            $kinship = Kinship::create([
+                'supporter_name' => $request->supporter_name,
+                'dependancy_relationship' => $request->dependancy_relationship,
+            ]);
+
             $user = auth()->user();
-            $passport = $user->passports()->create([
-                'passport_number' => $request->passport_number,
-                'issued_by' => 'YE',
-                'passport_center_id' => $request->passport_center,
-                'issued_on' => $request->issued_on,
-                'expires_on' => $request->expires_on,
-                'attachment' => $file_path
-            ]);
-
-            $family = ApplicationFamilyMembers::create([
-                'name' => ucwords($request->name),
-                'phone_number' => $request->phone_number,
-                'passport_id' => $passport->id,
-                'emirates_id' => $request->emirates_id,
-                'information_provided' => $request->information_provided,
-                'residance_permit' => $residance_permit_file_path,
-            ]);
-
-
-            foreach ($validated['family_members'] as $index => $member) {
-                $res_permit_path = $request->file("family_members.{$index}.member_residance_permit")?->store('uploads/user_' . auth()->id());
-                $birth_cert_path = $request->file("family_members.{$index}.member_birth_certificate")?->store('uploads/user_' . auth()->id());
-                $passport_path = $request->file("family_members.{$index}.member_passport_attachment")?->store('uploads/user_' . auth()->id());
-            
-                $memberpassport = $user->passports()->create([
-                   // 'member_name' => $member['member_name'],
-                    'passport_number' => $member['member_passport_number'],
+            $i=0;
+            foreach($passport_file_paths as $file_path){
+                $passport = $user->passports()->create([
+                    'passport_number' => $request->member_passport_number[$i],
                     'issued_by' => 'YE',
-                    'passport_center_id' => $member['member_passport_center'],
-                    'issued_on' => $member['member_issued_on'],
-                    //'expires_on' => '',
-                    'attachment' => $passport_path,
+                    'passport_center_id' => $request->member_passport_center[$i],
+                    'issued_on' => $request->member_issued_on[$i],
+                    'expires_on' => $request->member_expire_on[$i],
+                    'attachment' => $file_path
                 ]);
-
-                \App\Models\ApplicationFamilyMemberspassport::create([
-                    'name' => $member['member_name'],
-                    'realtion' => $member['member_relation'],
-                    'passport_id' => $memberpassport->id,
-                    'family_member_id' => $family->id,
-                    'residance_permit' => $res_permit_path,
-                    'birth_certificiate' => $birth_cert_path,
+                $member = FamilyMember::create([
+                        'name' => $request->member_name[$i],
+                        'relationship' => $request->member_relation[$i],
+                        'emirates_id_attachment' => $emirate_id_file_paths[$i],
+                        'kinship_id' => $kinship->id,
+                        'passport_id' => $passport->id
                 ]);
+                
+                $i++;
             }
 
             $application = $user->forms()->create([
                 'status' => 'Initiated',
-                'formable_id' => $family->id,
-                'formable_type' => \App\Models\ApplicationFamilyMembers::class,
+                'formable_id' => $kinship->id,
+                'formable_type' => \App\Models\Kinship::class,
                 'form_type_id' => '8'
             ]); 
         }
        
-        return redirect()->route('family-member.verify', ['application_id' => encrypt($application->id)]);
+        return redirect()->route('family-member.verify', ['application_id' => $application->id]);
     }
     public function verifyFamilyMember(Request $request)
     {
-        $application_id = decrypt($request->application_id);
+        $application_id = $request->application_id;
         $application = Form::findOrFail($application_id);
 
        // dd($application);
-        return view('family-member.verify-family-member', ['application' => $application]);
+        return view('family-member.verify-family-member', ['application' => $application,'countries' => Country::all(), 'passport_centers' => PassportCenter::all()]);
     }
 
     public function editFamilyMember(Request $request)

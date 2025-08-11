@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ApplicationFamilyMemberspassport extends Model
+class FamilyMember extends Model
 {
     protected $guarded = [];
     
