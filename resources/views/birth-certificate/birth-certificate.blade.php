@@ -7,7 +7,7 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center" >طلب الحصول على شهادة ميلاد</h2>
+    <h2 class="text-success w-100 text-center" >إفادة اثبات ميلاد</h2>
     
 <div>
     
@@ -22,12 +22,12 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_arabic">الاسم الكامل (كما هو مذكور في جواز السفر)</label>
+                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية (كما هو مذكور في جواز السفر)</label>
                                         <input type="text" class="form-control" name="name_arabic" value="{{ old('name_arabic') }}" required/>
                                         @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_english">الاسم الكامل باللغة الإنجليزية كما هو الحال في جواز السفر</label>
+                                        <label class="form-label fw-bold" for="name_english">Full name in English as per the passport</label>
                                         <input type="text" class="form-control" name="name_english" value="{{ old('name_english') }}" required/>
                                         @error('name_english')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -42,31 +42,15 @@
                                         @error('passport_number') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">مهنة</label>
-                                        <input type="text" class="form-control" name="profession" value="{{ old('profession') }}" required/>
-                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
                                         <input type="date" class="form-control" name="date_of_birth" value="{{ old('date_of_birth') }}" required/>
                                         @error('date_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">جنس</label>
-                                        <select class="form-select" name="gender" required>
-                                            <option value="">Choose Gender</option>
-                                            <option value="Male" @checked(old('gender') == 'Male')>Male</option>
-                                            <option value="Female" @checked(old('gender') == 'Female')>Female</option>
-                                        </select>
-                                        @error('gender')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
                                 </div>
+                                
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="country_of_birth">(المحافظة) محل الميلاد </label>
+                                        <label class="form-label fw-bold" for="country_of_birth"> محل الميلاد </label>
                                         <select class="form-select" name="country_of_birth" required>
                                             <option value="">Choose a Country</option>
                                             @forelse ($countries as $country)
@@ -78,26 +62,44 @@
                                         @error('country_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="city_of_birth">(المحافظة - المدينة) محل الميلاد</label>
+                                        <label class="form-label fw-bold" for="city_of_birth">المحافظة - المدينة</label>
                                         <input type="text" class="form-control" name="city_of_birth" value="{{ old('city_of_birth') }}" required/>
                                         @error('city_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="row">
+                                    
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="issued_on">تاريخ الإصدار</label>
+                                        <label class="form-label fw-bold" for="profession">المهنة</label>
+                                        <input type="text" class="form-control" name="profession" value="{{ old('profession') }}" required/>
+                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="profession">الجنس</label>
+                                        <select class="form-select" name="gender" required>
+                                            <option value="">Choose Gender</option>
+                                            <option value="Male" @selected(old('gender') == 'Male')>Male</option>
+                                            <option value="Female" @selected(old('gender') == 'Female')>Female</option>
+                                        </select>
+                                        @error('gender')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="issued_on">تاريخ إصدار جواز السفر</label>
                                         <input type="date" class="form-control" name="issued_on" value="{{ old('issued_on') }}" required/>
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="expire_on">تاريخ الانتهاء</label>
+                                        <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء جواز السفر</label>
                                         <input type="date" class="form-control" name="expire_on" value="{{ old('expire_on') }}" required/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="issued_by">سلطة الإصدار</label>
+                                        <label class="form-label fw-bold" for="issued_by">جهة إصدار جواز السفر</label>
                                         <select class="form-select" name="passport_center" required>
                                             <option>جهة الإصدار</option>
                                             @foreach ($passport_centers as $center)
@@ -114,7 +116,7 @@
                             <div class="card-body">
                                 <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">اسم الأم</label>
+                                        <label class="form-label fw-bold" for="mother_name">اسم الام الرباعي</label>
                                         <input type="text" class="form-control" name="mother_name" value="{{ old('mother_name') }}" required/>
                                         @error('mother_name')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -150,14 +152,26 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="passport_attachment"> جواز (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                            <label class="form-label fw-bold" for="passport_attachment"> نسخة من جواز  السفر (pdf ,jpg, png, jpeg)</label>
                             <input type="file" class="form-control" name="passport_attachment" required/>
                             @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="emirate_id_attachment"> الهوية الإماراتية (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                                <label class="form-label fw-bold" for="emirate_id_attachment"> نسخة من الهوية الاماراتيه(pdf ,jpg, png, jpeg)</label>
                                 <input type="file" class="form-control" name="emirate_id_attachment" required/>
                                 @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
+                            </div>   
+                        </div>    
+                        <div class="row">
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                            <label class="form-label fw-bold" for="father_passport_attachment"> جواز سفر الأب(pdf ,jpg, png, jpeg)</label>
+                            <input type="file" class="form-control" name="father_passport_attachment" required/>
+                            @error('father_passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="mother_passport_attachment"> جواز سفر الأم(pdf ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" name="mother_passport_attachment" required/>
+                                @error('mother_passport_attachment')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>   
                         </div>    
                           

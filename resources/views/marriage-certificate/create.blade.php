@@ -7,7 +7,7 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center" >شهادة إثبات زواج</h2>
+    <h2 class="text-success w-100 text-center" >إفادة اثبات زواج</h2>
 <div>
     
     <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
@@ -26,7 +26,7 @@
                             </div>
                         @endif
                         <div class="card">
-                            <div class="card-header">معلومات جواز السفر</div>
+                            <div class="card-header">بيانات جواز سفر - الزوج</div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
@@ -118,7 +118,7 @@
                             </div>
                      <div class="card text-start my-2">
                     <div class="card-header">
-                        معلومات عقد الزواج
+                        بيانات عقد الزواج
                     </div>
                     <div class="card-body">
                         {{-- Agent Passport --}}
@@ -137,15 +137,15 @@
                             </div>
                             <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <label class="form-label fw-bold" for="contract_issued_on">تاريخ إصدار عقد الزواج</label>
+                                    <label class="form-label fw-bold" for="contract_issued_on">تاريخ عقد الزواج</label>
                                     <input  type="date" class="form-control" id="contract_issued_on" name="contract_issued_on" value="{{ old('contract_issued_on') }}" required/>
                                     @error('contract_issued_on') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>     
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                {{-- <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="date_of_marriage">تاريخ الزواج </label>
                                     <input  type="date" class="form-control" wire:model="date_of_marriage"  name="date_of_marriage" value="{{ old('date_of_marriage') }}" required/>
                                     @error('date_of_marriage') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
+                                </div> --}}
                               
                             </div>
                             
@@ -157,19 +157,31 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="passport_attachment"> جواز (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                            <label class="form-label fw-bold" for="passport_attachment"> نسخة من جواز سفر - الزوج(pdf ,jpg, png, jpeg)</label>
                             <input type="file" class="form-control" name="passport_attachment" required/>
                             @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="emirates_id_attachment"> الهوية الإماراتية (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                                <label class="form-label fw-bold" for="emirates_id_attachment"> نسخة من الهوية الاماراتية - الزوج(pdf ,jpg, png, jpeg)</label>
                                 <input type="file" class="form-control" name="emirates_id_attachment" required/>
                                 @error('emirates_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>   
                         </div>    
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <label class="form-label fw-bold" for="marriage_document"> إثبات الزواج (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                            <label class="form-label fw-bold" for="passport_attachment"> نسخة من جواز سفر - الزوجة (pdf ,jpg, png, jpeg)</label>
+                            <input type="file" class="form-control" name="passport_attachment" required/>
+                            @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="emirates_id_attachment"> نسخة من الهوية الاماراتية - الزوجة(pdf ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" name="emirates_id_attachment" required/>
+                                @error('emirates_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
+                            </div>   
+                        </div>    
+                        <div class="row">
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold" for="marriage_document"> نسخة من عقد الزواج(pdf  ,jpg, png, jpeg)</label>
                                     <input type="file" class="form-control" name="marriage_document" required/>
                                     @error('marriage_document') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>

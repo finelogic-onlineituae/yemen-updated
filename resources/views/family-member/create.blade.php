@@ -34,7 +34,7 @@
                         </div>
                         <div class="bg-ash p-2 rounded">أفراد العائلة</div>
                         <div id="member-form">
-                <div class="card text-start my-2" >
+                    <div class="card text-start my-2" >
                     
                             
                 
@@ -52,7 +52,7 @@
                                             <option value="Mother">Mother</option>
                                             <option value="Spouse">Spouse</option>
                                             <option value="Children">Children</option>
-                                            <option value="Other">Other</option>
+                                            <option value="Sibling">Sibling</option>
 
                                             <!-- Add more relations if needed -->
                                         </select>

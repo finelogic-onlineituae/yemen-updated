@@ -16,18 +16,18 @@
             @csrf
             <div class="manage-width-75 manage-width p-3 mx-2 rounded  align-items-center text-center form-scroll bg-ash ">
                 <div class="card text-start my-2">
+                    <div class="card">
                      <div class="card-body">
-                        <div class="card">
-                            <div class="card-header">معلومات جواز السفر</div>
+                        <div class="card-header">معلومات جواز السفر</div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_arabic">الاسم الكامل (كما هو مذكور في جواز السفر)</label>
+                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية (كما هو مذكور في جواز السفر)</label>
                                         <input type="text" class="form-control" name="name_arabic" value="{{ $application->formable->name_arabic }}"  @if(!request('edit')) disabled @endif   required/>
                                         @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_english">الاسم الكامل باللغة الإنجليزية كما هو الحال في جواز السفر</label>
+                                        <label class="form-label fw-bold" for="name_english">Full name in English as per the passport</label>
                                         <input type="text" class="form-control" name="name_english" value="{{ $application->formable->name }}"  @if(!request('edit')) disabled @endif  required/>
                                         @error('name_english')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -46,12 +46,11 @@
                                         <input type="date" class="form-control" name="date_of_birth" value="{{ $application->formable->date_of_birth }}"  @if(!request('edit')) disabled @endif  required/>
                                         @error('date_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-                                    
                                 </div>
                                 
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="country_of_birth">بلد الميلاد</label>
+                                        <label class="form-label fw-bold" for="country_of_birth"> محل الميلاد </label>
                                         <select class="form-select" name="country_of_birth"  @if(!request('edit')) disabled @endif  required>
                                             <option value="">Choose a Country</option>
                                             @forelse ($countries as $country)
@@ -63,24 +62,17 @@
                                         @error('country_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="city_of_birth">مدينة الميلاد</label>
+                                        <label class="form-label fw-bold" for="city_of_birth">المحافظة - المدينة</label>
                                         <input type="text" class="form-control" name="city_of_birth" value="{{ $application->formable->city_of_birth }}"  @if(!request('edit')) disabled @endif  required/>
                                         @error('city_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="issued_on">تاريخ الإصدار</label>
-                                        <input type="date" class="form-control" name="issued_on" value="{{ $application->formable->passport->issued_on }}"  @if(!request('edit')) disabled @endif  required/>
-                                        @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
+                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="profession">المهنة</label>
+                                        <input type="text" class="form-control" name="profession" value="{{ $application->formable->profession }}"  @if(!request('edit')) disabled @endif   required/>
+                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء الصلاحية</label>
-                                        <input type="date" class="form-control" name="expire_on"  value="{{ $application->formable->passport->expires_on }}"  @if(!request('edit')) disabled @endif   required/>
-                                        @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="profession">جنس</label>
                                         <select class="form-select" name="gender"  @if(!request('edit')) disabled @endif  required>
@@ -90,17 +82,24 @@
                                         </select>
                                         @error('gender')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">مهنة</label>
-                                        <input type="text" class="form-control" name="profession" value="{{ $application->formable->profession }}"  @if(!request('edit')) disabled @endif   required/>
-                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
+                                        <label class="form-label fw-bold" for="issued_on">تاريخ إصدار جواز السفر</label>
+                                        <input type="date" class="form-control" name="issued_on" value="{{ $application->formable->passport->issued_on }}"  @if(!request('edit')) disabled @endif  required/>
+                                        @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء جواز السفر</label>
+                                        <input type="date" class="form-control" name="expire_on"  value="{{ $application->formable->passport->expires_on }}"  @if(!request('edit')) disabled @endif   required/>
+                                        @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="issued_by">سلطة الإصدار</label>
+                                        <label class="form-label fw-bold" for="issued_by">جهة إصدار جواز السفر</label>
                                         <select class="form-select" name="passport_center"  @if(!request('edit')) disabled @endif  required>
-                                            <option>Issuing Authority</option>
+                                            <option>جهة الإصدار</option>
                                             @foreach ($passport_centers as $center)
                                                 <option value="{{ $center->id }}" @selected($center->id == $application->formable->passport->passport_center_id)>{{ $center->center_name }}</option>
                                             @endforeach
@@ -109,7 +108,8 @@
                                     </div>
                                 </div>
                             </div>
-                       
+                    <div class="card">
+                        <div class="card-header">معلومات رخصة القيادة</div>   
                    <div class="card-body">
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">

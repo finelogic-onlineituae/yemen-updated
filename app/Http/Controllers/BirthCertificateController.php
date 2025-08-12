@@ -39,6 +39,8 @@ class BirthCertificateController extends Controller
             'passport_center' => 'required|exists:passport_centers,id',
             'issued_on' => 'required|before:tomorrow',
             'passport_attachment' => $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
+            'father_passport_attachment' => $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
+            'mother_passport_attachment' => $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
         ]);
         $user = auth()->user();
 
@@ -47,6 +49,13 @@ class BirthCertificateController extends Controller
         }
         if($request->hasFile('emirate_id_attachment')) {
             $emirate_id_file_path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id());
+            //dd($emirate_id_file_path);
+        }
+        if($request->hasFile('father_passport_attachment')) {
+            $father_passport_file_path = $request->file('father_passport_attachment')->store('uploads/user_' . auth()->id());
+        }
+        if($request->hasFile('mother_passport_attachment')) {
+            $mother_passport_file_path = $request->file('mother_passport_attachment')->store('uploads/user_' . auth()->id());
         }
         if($request->has('application')){
             $application = Form::findOrFail($request->application);
@@ -63,6 +72,7 @@ class BirthCertificateController extends Controller
             $application->formable->passport->passport_center_id = $request->passport_center;
             $application->formable->passport->issued_on = $request->issued_on;
             $application->formable->passport->expires_on = $request->expire_on;
+            
 
             if($request->hasFile('passport_attachment')){
                 $application->formable->passport->attachment = $passport_file_path;
@@ -71,6 +81,12 @@ class BirthCertificateController extends Controller
                 $application->formable->emirate_id_attachment = $emirate_id_file_path;
             }
 
+            if($request->hasFile('father_passport_attachment')){
+                $application->formable->father_passport_attachment = $father_passport_file_path;
+            }
+            if($request->hasFile('mother_passport_attachment')){
+                $application->formable->mother_passport_attachment = $mother_passport_file_path;
+            }
             $application->formable->passport->save(); 
             $application->formable->save();          
         }
@@ -87,15 +103,17 @@ class BirthCertificateController extends Controller
             $birthCertificate = BirthCertificate::create([
                 'name' => $request->name_english,
                 'name_arabic' => $request->name_arabic,
-                'proffession' => $request->proffession,
+                'profession' => $request->profession,
                 'date_of_birth' => $request->date_of_birth,
                 'country_of_birth' => $request->country_of_birth,
                 'city_of_birth' => $request->city_of_birth,
-                'mother_name' => $request->mothers_name,
+                'mother_name' => $request->mother_name,
                 'mother_nationality' => $request->mothers_nationality,
                 'passport_id' => $passport->id,
-                'emirate_id_attachment' => $request->emirate_id_file_path,
-                'gender' => $request->gender
+                'emirate_id_attachment' => $emirate_id_file_path,
+                'gender' => $request->gender,
+                'father_passport_attachment' => $father_passport_file_path,
+                'mother_passport_attachment' => $mother_passport_file_path,
             ]);
             $application = auth()->user()->forms()->create([
                 'status' => 'Initiated',

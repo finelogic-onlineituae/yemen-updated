@@ -147,6 +147,8 @@ Route::middleware(['auth', 'email.verified'])->group(function () {
         Route::get('/applications/edit-support-statement/{application_id}', [SupportStatementController::class, 'editSupportStatement'])->name('support-statement.edit');
    
         Route::get('/applications/verify-family-member/{application_id}', [FamilyMemberController::class, 'verifyFamilyMember'])->name('family-member.verify');
+        Route::get('/applications/remove-family-member/{application_id}/{member_id}', [FamilyMemberController::class, 'removeFamilyMember'])->name('family-member.remove');
+        Route::post('/applications/add-family-member/{application_id}', [FamilyMemberController::class, 'addFamilyMember'])->name('family-member.more');
         Route::get('/applications/edit-family-member/{application_id}', [FamilyMemberController::class, 'editFamilyMember'])->name('family-member.edit');
 
         Route::get('/applications/verify-no-id-card-group/{application_id}', [NoIdCardGroupController::class, 'verify'])->name('no-id-card-group.verify');
