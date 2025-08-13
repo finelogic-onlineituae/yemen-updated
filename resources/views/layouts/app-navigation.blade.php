@@ -10,7 +10,7 @@
         @endauth
         <img src="{{ asset('assets/images/logo.png') }}" class="logo img-fluid header_logo_section" />
         @auth
-        <div class="border-start ps-2  border-2 fw-bold text-start header_logo_section">سفارة <br>الجمهورية اليمنية</br>  في الإمارات العربية المتحدة</div>
+        <div class="border-start ps-2  border-2 fw-bold text-start header_logo_section">سفارة الجمهورية اليمنية<br> أبوظبي</div>
           @else
           <div class="border-end pe-2 text-white  border-2 fw-bold text-end header_logo_section">سفارة <br>الجمهورية اليمنية</br> في الإمارات العربية المتحدة</div>
         @endauth

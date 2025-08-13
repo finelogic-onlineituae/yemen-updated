@@ -58,25 +58,26 @@
                               <img class="card-image img-fluid rounded-top" src="{{ asset('assets/images/relation.webp') }}" alt="Card image cap">
                                 <a data-bs-toggle="collapse" onclick="toggleCollapseButton(this)" href="#relationship-documents-dashboard" role="button" aria-expanded="false" aria-controls="collapseExample">
                                     <div class="card-header fw-bold d-flex justify-content-between ">
-                                        الشهادات
+                                        طلبات الإفادات
                                             <i class="bi bi-plus-circle-fill" ></i>
                                     </div>
                                 </a>
 
                                 <div class="collapse" id="relationship-documents-dashboard">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><a href="/applications/birth-certificate" class="text-decoration-none">شهادة إثبات الولادة</a></li>
-                                        <li class="list-group-item"><a href="/applications/driving-licence" class="text-decoration-none">تأكيد رخصة القيادة</a></li>
-                                        <li class="list-group-item"><a href="/applications/no-id-card" class="text-decoration-none">شهادة عدم وجود بطاقة هوية</a></li>
+                                        <li class="list-group-item"><a href="/applications/birth-certificate" class="text-decoration-none">إفادة اثبات ميلاد</a></li>
+                                        <li class="list-group-item"><a href="/applications/driving-licence" class="text-decoration-none">إفادة تأكيد رخصة قيادة</a></li>
+                                       {{--  <li class="list-group-item"><a href="/applications/no-id-card" class="text-decoration-none">شهادة عدم وجود بطاقة هوية</a></li>
                                        
-                                        <li class="list-group-item"><a href="/applications/support-statement" class="text-decoration-none">شهادة التبعية </a></li>
+                                        <li class="list-group-item"><a href="/applications/support-statement" class="text-decoration-none">شهادة التبعية </a></li> --}}
                                         {{-- <li class="list-group-item"><a href="/applications/family-member" class="text-decoration-none">طلب لأفراد العائلة (بدون هوية)</a></li> --}}
 
                                         {{-- <li class="list-group-item"><a href="#" class="text-decoration-none">لشهادة عدم وجود بطاقة هوية للمجموعة</a></li> --}}
-                                    <li class="list-group-item"><a href="/applications/marriage-certificate" class="text-decoration-none">شهادة الزواج</a></li>
+                                    <li class="list-group-item"><a href="/applications/marriage-certificate" class="text-decoration-none">إفادة اثبات زواج</a></li>
                                     {{-- <li class="list-group-item"><a href="#" class="text-decoration-none">Dependancy Certificate</a></li> --}}
-                                    <li class="list-group-item"><a href="/applications/family-member" class="text-decoration-none">شهادة القرابة</a></li>
-                            <li class="list-group-item"><a href="/applications/no-id-card-group" class="text-decoration-none"> شهادة عدم وجود بطاقة هوية(مجموعة)</a></li>
+                                    <li class="list-group-item"><a href="/applications/family-member" class="text-decoration-none">إفادة صلة قرابة</a></li>
+                            <li class="list-group-item"><a href="/applications/no-id-card-group" class="text-decoration-none">إفادة لايحمل هوية</a></li>
+                            <li class="list-group-item"><a href="#" class="text-decoration-none">إفادة اعاله</a></li>
 
 
                                     {{-- <li class="list-group-item"><a href="#" class="text-decoration-none">شهادة القرابة</a></li>
@@ -89,7 +90,7 @@
                     {{--                 <div class="display-1 text-danger w-100 text-center"><i class="bi bi-person-check"></i></div> --}}
                                     <a data-bs-toggle="collapse" href="#other-documents-dashboard" onclick="toggleCollapseButton(this)" role="button" aria-expanded="false" aria-controls="collapseExample">
                                         <div class="card-header fw-bold d-flex justify-content-between ">
-                                            توكيل
+                                            خدمة التوكيلات
                                             
                                                 <i class="bi bi-plus-circle-fill" ></i>
                                         </div>
@@ -110,7 +111,7 @@
                     {{--                 <div class="display-1 text-danger w-100 text-center"><i class="bi bi-person-check"></i></div> --}}
                                     <a data-bs-toggle="collapse" href="#attachements-documents-dashboard" onclick="toggleCollapseButton(this)" role="button" aria-expanded="false" aria-controls="collapseExample">
                                         <div class="card-header fw-bold d-flex justify-content-between ">
-                                            تصديق
+                                            خدمات التصديقات
                                             
                                                 <i class="bi bi-plus-circle-fill" ></i>
                                         </div>

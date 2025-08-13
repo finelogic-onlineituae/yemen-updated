@@ -1,0 +1,147 @@
+<x-app-layout>
+<div>
+    
+    <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
+        <form action="{{ route('family-member.store') }}" enctype="multipart/form-data" method="POST" wire:submit.prevent="verifyApplication" id="family-member-form" class="w-100 align-items-center text-center d-flex justify-content-center">
+            @csrf
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <div class="manage-width-75 manage-width p-3 mx-2 rounded  align-items-center text-center form-scroll bg-ash ">
+              
+            <div class="card text-start my-2">
+                          <div class="card-header">معلومات الداعم</div>
+                            <div class="card-body">
+                                 <div class="row">
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="supporter_name">اسم المؤيد</label>
+                                        <input type="text" class="form-control" name="supporter_name" value="{{ old('supporter_name') }}"/>
+                                        @error('supporter_name')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="dependancy_relationship">العلاقة بالتبعية</label>
+                                        <input type="text" class="form-control" name="dependancy_relationship"  value="{{ old('dependancy_relationship') }}"/>
+                                        @error('dependancy_relationship')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-ash p-2 rounded">أفراد العائلة</div>
+                        <div id="member-form">
+                    <div class="card text-start my-2" >
+                    
+                            
+                
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="name"> اسم</label>
+                                        <input type="text" name="member_name[]" class="form-control">
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="member_relation">العلاقة</label>
+                                        <select name="member_relation[]" class="form-control">
+                                            <option value="">يختار العلاقة</option>
+                                            <option value="Father">Father</option>
+                                            <option value="Mother">Mother</option>
+                                            <option value="Spouse">Spouse</option>
+                                            <option value="Children">Children</option>
+                                            <option value="Sibling">Sibling</option>
+
+                                            <!-- Add more relations if needed -->
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="name">  رقم جواز سفر </label>
+                                        <input type="text"  maxlength="8"  id="passportInput-"  name="member_passport_number[]" class="form-control">
+                                            <small id="passportError-" class="text-danger d-none">
+                                            Please enter a valid Passport Number
+                                        </small>
+                                        
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="name"> جهة الإصدار</label>
+
+                                        <select name="member_passport_center[]" class="form-control">                                              
+                                            <option value="">Select</option>
+                                            @foreach ($passport_centers as $center)
+                                                <option value="{{ $center->id }}">{{ $center->center_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="member_issued_on"> تاريخ الإصدار</label>
+                                        <input type="date" name="member_issued_on[]" class="form-control">
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="name"> تاريخ الانتهاء</label>
+                                        <input type="date" name="member_expire_on[]" class="form-control">
+                                    </div>
+                                </div>
+                               <div class="row">
+                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="member_passport_attachment">جواز سفر</label>
+                                        <input type="file" name="member_passport_attachment[]" class="form-control">
+                                    </div>
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="member_emirate_id_attachment[]"> هوية الإمارات التابعة (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                                        <input type="file" class="form-control" name="member_emirate_id_attachment[]" />
+                                    </div>   
+                                </div>      
+                        </div>
+
+                </div>
+            </div>
+              <div id="additonal_members"></div>
+    <div class="card-header">
+        
+                        <a type="button"  onclick="addMember()" class="btn btn-success">إضافة عضو</a>
+                       
+                    </div>
+            <div class="form-group my-3 text-center">
+                <button class="btn buttom-effect">تقديم الطلب</button>
+            </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var memberCount = 1;
+    function addMember()
+    {
+        memberCount++;
+        const html = document.getElementById("member-form").innerHTML;
+        const newElement = document.createElement('div');
+        newElement.className = 'border border-rounded p-2 my-2'
+        newElement.id = 'member-'+memberCount;
+        newElement.innerHTML = html;
+        let closeId = `member-`+memberCount;
+        closeButton = document.createElement('div');
+        closeButton.className = 'w-100 text-end'
+        closeButton.innerHTML = '<a onclick=removeMember("'+newElement.id+'") class="btn btn-danger">x</a>'
+        newElement.prepend(closeButton);
+        document.getElementById("additonal_members").appendChild(newElement);
+    }
+    function removeMember(id)
+    {
+        
+       console.log(memberCount);
+       el = document.getElementById(id);
+       el.remove();
+       memberCount--;
+      
+    }
+</script>
+</x-app-layout>

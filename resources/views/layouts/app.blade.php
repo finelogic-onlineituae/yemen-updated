@@ -54,7 +54,7 @@
                 
                     <div class="sidebar" id="sidebar">
                         <button class="close-btn text-white" id="closeMenu"><i class="bi bi-x-circle-fill"></i></button>
-                        <a href="/dashboard" class="menu-heading"><i class="bi bi-speedometer"></i>	لوحة القيادة</a>
+                        <a href="/dashboard" class="menu-heading"><i class="bi bi-speedometer"></i>	الصفحة الرئيسية</a>
                         <a href="/myapplications" class="menu-heading"><i class="bi bi-check-circle-fill"></i> 	التطبيق الخاص بك</a>
                             {{-- <div>
                                 <a href="#personal-documents" id="id-documents" onclick="toggleCollapseButtonMenu(this)" class="menu-heading" data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="personal-documents">

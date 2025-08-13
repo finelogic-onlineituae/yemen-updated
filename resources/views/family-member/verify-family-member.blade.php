@@ -2,7 +2,7 @@
 <div>
     
     <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
-        <form action="{{ route('family-member.store') }}" enctype="multipart/form-data" method="POST" wire:submit.prevent="verifyApplication" id="family-member-form" class="w-100 align-items-center text-center d-flex flex-column justify-content-center">
+        <form action="@if(request()->has('edit')) {{ route('family-member.store', ['application' => $application->id]) }} @else {{ route('application.confirm', ['application_id' => $application->id]) }}  @endif" enctype="multipart/form-data" method="POST" wire:submit.prevent="verifyApplication" id="family-member-form" class="w-100 align-items-center text-center d-flex flex-column justify-content-center">
             @csrf
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -16,20 +16,37 @@
             <div class="manage-width-75 manage-width p-3 mx-2 rounded  align-items-center text-center form-scroll bg-ash ">
               
             <div class="card text-start my-2">
-                          <div class="card-header">معلومات الداعم</div>
+                          <div class="card-header">بيانات مقدم الطلب</div>
                             <div class="card-body">
-                                 <div class="row">
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="supporter_name">اسم المؤيد</label>
-                                        <input type="text" class="form-control" name="supporter_name" value="{{ $application->formable->supporter_name }}" @if(!request('edit')) disabled @endif/>
-                                        @error('supporter_name')<span class="text-danger">{{ $message }}</span> @enderror
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="name">الاسم</label>
+                                        <input type="text" name="applicant_name" class="form-control" value="{{ $application->formable->applicant_name }}" @if(!request('edit')) disabled @endif required>
                                     </div>
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="dependancy_relationship">العلاقة بالتبعية</label>
-                                        <input type="text" class="form-control" name="dependancy_relationship"  value="{{ $application->formable->dependancy_relationship }}" @if(!request('edit')) disabled @endif/>
-                                        @error('dependancy_relationship')<span class="text-danger">{{ $message }}</span> @enderror
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="name">  رقم جواز السفر</label>
+                                        <input type="text"  maxlength="8"  id="passportInput-"  name="applicant_passport_number" class="form-control" value="{{ $application->formable->passport->passport_number }}" @if(!request('edit')) disabled @endif required>
+                                            <small id="passportError-" class="text-danger d-none">
+                                            Please enter a valid Passport Number
+                                        </small>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="applicant_issued_on"> تاريخ الإصدار</label>
+                                        <input type="date" name="applicant_issued_on" class="form-control" value="{{ $application->formable->passport->issued_on }}" @if(!request('edit')) disabled @endif required>
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="name"> جهة الإصدار</label>
+                                        <select name="applicant_passport_center" class="form-control">                                              
+                                            <option value="">Select</option>
+                                            @foreach ($passport_centers as $center)
+                                                <option value="{{ $center->id }}" @selected($center->id == $application->passport->passport_center_id)>{{ $center->center_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                 
                             </div>
                         </div>
                         <div class="bg-ash p-2 rounded">أفراد العائلة</div>
@@ -50,28 +67,20 @@
                                         <input type="text" name="member_name[]" class="form-control" value="{{ $member->name }}" @if(!request('edit')) disabled @endif required>
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="member_relation">العلاقة</label>
-                                        <select name="member_relation[]" class="form-control" @if(!request('edit')) disabled @endif required>
-                                            <option value="">يختار العلاقة</option>
-                                            <option value="Father" @selected($member->relationship == 'Father')>Father</option>
-                                            <option value="Mother" @selected($member->relationship == 'Mother')>Mother</option>
-                                            <option value="Spouse" @selected($member->relationship == 'Spouse')>Spouse</option>
-                                            <option value="Children" @selected($member->relationship == 'Children')>Children</option>
-                                            <option value="Sibling" @selected($member->relationship == 'Sibling')>Sibling</option>
-
-                                            <!-- Add more relations if needed -->
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">  رقم جواز سفر </label>
                                         <input type="text"  maxlength="8"  id="passportInput-"  name="member_passport_number[]" class="form-control" value="{{ $member->passport->passport_number }}" @if(!request('edit')) disabled @endif required>
                                             <small id="passportError-" class="text-danger d-none">
                                             Please enter a valid Passport Number
                                         </small>
                                         
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="member_issued_on"> تاريخ الإصدار</label>
+                                        <input type="date" name="member_issued_on[]" class="form-control" value="{{ $member->passport->issued_on }}" @if(!request('edit')) disabled @endif required>
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name"> جهة الإصدار</label>
@@ -84,15 +93,12 @@
                                         </select>
                                     </div>
                                 </div>
-                
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="member_issued_on"> تاريخ الإصدار</label>
-                                        <input type="date" name="member_issued_on[]" class="form-control" value="{{ $member->passport->issued_on }}" @if(!request('edit')) disabled @endif required>
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name"> تاريخ الانتهاء</label>
-                                        <input type="date" name="member_expire_on[]" class="form-control" value="{{ $member->passport->expires_on }}" @if(!request('edit')) disabled @endif required>
+                                        <label class="form-label fw-bold" for="member_relation">العلاقة</label>
+                                        <input type="text" name="member_relation[]" class="form-control" value="{{ $member->relationship }}" @if(!request('edit')) disabled @endif required>
+                                            <!-- Add more relations if needed -->
+                                        </select>
                                     </div>
                                 </div>
                                <div class="row">
@@ -172,7 +178,7 @@
         <div id="member-form" class="modal">
             <div class="modal-content " style="height:auto !important;">
                 <span class="close" onclick="closeModal('member-form')">&times;</span>
-            <form action="@if(request()->has('edit')) {{ route('-.store', ['application' => $application->id]) }} @else {{ route('application.confirm', ['application_id' => $application->id]) }}  @endif" enctype="multipart/form-data" method="POST">
+            <form action="{{ route('family-member.more', ['application_id' => $application->id]) }}" enctype="multipart/form-data" method="POST">
                 @csrf
                         <div class="card text-start mt-5" >
                             <div class="card-header">إضافة عضو</div>
@@ -263,7 +269,7 @@
         let closeId = `member-`+memberCount;
         closeButton = document.createElement('div');
         closeButton.className = 'w-100 text-end'
-        closeButton.innerHTML = '<a onclick=removeMember("'+newElement.id+'") class="btn btn-danger">x</a>';
+        closeButton.innerHTML = '<a onclick=removeMember("'+newElement.id+'") class="btn btn-danger"><i class="bi bi-x-square-fill text-danger"></i></a>';
         newElement.prepend(closeButton);
         document.getElementById("additonal_members").appendChild(newElement);
     }
