@@ -7,7 +7,7 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center" >جواز سفر مفقود</h2>
+    <h2 class="text-success w-100 text-center" >طلب إصدار جواز سفر بدل فاقد</h2>
     
 <div>
     
@@ -18,7 +18,7 @@
                 <div class="card text-start my-2">
                      <div class="card-body">
                         <div class="card">
-                            <div class="card-header">معلومات جواز السفر</div>
+                            {{-- <div class="card-header">معلومات جواز السفر</div> --}}
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
@@ -50,7 +50,7 @@
                                
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="country_of_birth">(المحافظة) محل الميلاد</label>
+                                        <label class="form-label fw-bold" for="country_of_birth"> محل الميلاد</label>
                                         <select class="form-select" name="country_of_birth" required>
                                             <option value="">Choose a Country</option>
                                             @forelse ($countries as $country)
@@ -62,7 +62,7 @@
                                         @error('country_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="city_of_birth">(المحافظة - المدينة) محل الميلاد</label>
+                                        <label class="form-label fw-bold" for="city_of_birth">المحافظة - المدينة</label>
                                         <input type="text" class="form-control" name="city_of_birth" value="{{ old('city_of_birth') }}" required/>
                                         @error('city_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -91,7 +91,7 @@
                                         @error('passport_center') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="gender">جنس</label>
+                                        <label class="form-label fw-bold" for="gender">الجنس</label>
                                         <select class="form-select" name="gender" required>
                                             <option value="">Choose Gender</option>
                                             <option value="Male" @selected(old('gender') == 'Male')>Male</option>
@@ -117,7 +117,7 @@
                     </div>
                        
                     <div class="card">
-                            <div class="card-header">معلومات الأم</div>
+                            <div class="card-header">بيانات الأم</div>
                             <div class="card-body">
                                 <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
@@ -197,7 +197,7 @@
                     </div>
                 </div>
                 <div class="card text-start my-2">
-                    <div class="card-header">أقارب في الإمارات / الجمهورية اليمنية</div>
+                    <div class="card-header">الاقارب في الامارات او الجمهورية اليمنية</div>
                     <div class="card-body">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
@@ -218,7 +218,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="relative_name">الاسم الكامل للقريب </label>
+                                        <label class="form-label fw-bold" for="relative_name">الاسم</label>
                                         <input type="text" class="form-control" name="relative_name"  value="{{ old('relative_name') }}"/>
                                         @error('relative_name')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -230,7 +230,7 @@
                                 </div>
                                 <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="relative_address">العنوان النسبي </label>
+                                        <label class="form-label fw-bold" for="relative_address">العنوان</label>
                                         <input type="text" class="form-control" name="relative_address" value="{{ old('relative_address') }}"/>
                                         @error('relative_address')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -244,7 +244,7 @@
                 </div>
             </div>
                  <div class="card text-start my-2">
-                    <div class="card-header">معلومات التسليم</div>
+                    <div class="card-header">عنوان استلام جواز السفر بعد تجديده</div>
                     <div class="card-body">
                                     <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">

@@ -9,7 +9,7 @@
                 
                 <div class="card text-start my-2">
                     <div class="card-header">
-                       معلومات العميل
+                       بيانات الموكل
                     </div>
                       <div class="card-body">
                                 <div class="row">
@@ -19,9 +19,16 @@
                                         @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_english">الاسم الكامل باللغة الإنجليزية كما هو الحال في جواز السفر</label>
-                                        <input type="text" class="form-control" name="name_english" wire:model="name_english"/>
-                                        @error('name_arname_englishabic')<span class="text-danger">{{ $message }}</span> @enderror
+                                        <label class="form-label fw-bold" for="nationality">الجنسية</label>
+                                        <select class="form-select" name="nationality" wire:model="country_of_birth">
+                                            <option value="">Choose a Country</option>
+                                            @forelse ($countries as $country)
+                                                <option value="{{ $country->id }}">{{ $country->country_name }}</option>
+                                            @empty
+                                                
+                                            @endforelse
+                                        </select>
+                                        @error('nationality')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="row">
@@ -34,63 +41,6 @@
                                         @error('passport_number') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">مهنة</label>
-                                        <input type="text" class="form-control" name="profession" wire:model="profession"/>
-                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
-                                        <input type="date" class="form-control" name="date_of_birth" wire:model="date_of_birth"/>
-                                        @error('date_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">جنس</label>
-                                        <select class="form-select" name="gender" wire:model="gender">
-                                            <option value="">Choose Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                        </select>
-                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="country_of_birth">بلد الميلاد</label>
-                                        <select class="form-select" name="country_of_birth" wire:model="country_of_birth">
-                                            <option value="">Choose a Country</option>
-                                            @forelse ($countries as $country)
-                                                <option value="{{ $country->id }}">{{ $country->country_name }}</option>
-                                            @empty
-                                                
-                                            @endforelse
-                                        </select>
-                                        @error('country_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">مدينة الميلاد</label>
-                                        <input type="text" class="form-control" name="city_of_birth" wire:model="city_of_birth"/>
-                                        @error('city_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="issued_on">تاريخ الإصدار</label>
-                                        <input type="date" class="form-control" name="issued_on" wire:model="issued_on"/>
-                                        @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name">تاريخ الانتهاء</label>
-                                        <input type="date" class="form-control" name="expire_on" wire:model="expire_on"/>
-                                        @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                 <div class="row">
-                                    
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_by">جهة الإصدار</label>
                                         <select class="form-select" name="passport_center" wire:model="passport_center">
                                             <option>Issuing Authority</option>
@@ -101,6 +51,33 @@
                                         @error('passport_center') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
+                                <div class="row">
+                                    
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="issued_on">تاريخ إصدار جواز السفر</label>
+                                        <input type="date" class="form-control" name="issued_on" wire:model="issued_on"/>
+                                        @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="name">تاريخ انتهاء جواز السفر</label>
+                                        <input type="date" class="form-control" name="expire_on" wire:model="expire_on"/>
+                                        @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
+                            
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="poa_document">نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" name="poa_document" wire:model="poa_document"/>
+                                @error('poa_document')<span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="poa_document">نسخة من الهوية الاماراتيه(pdf ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" name="poa_document" wire:model="poa_document"/>
+                                @error('poa_document')<span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                                
                             </div>
                         </div>
                 
@@ -108,7 +85,7 @@
                
             <div class="card text-start my-2">
                 <div class="card-header">
-                   	معلومات الوكيل
+                   	بيانات الوكيل
                 </div>
                 <div class="card-body">
                     {{-- Agent Passport --}}
@@ -119,6 +96,21 @@
                                 <input type="text" class="form-control" name="agent_name" wire:model="agent_name"/>
                                 @error('agent_name')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="agent_name">رقم البطاقة الشخصية/ رقم جواز السفر</label>
+                                <input type="text" class="form-control" name="agent_name" wire:model="agent_name"/>
+                                @error('agent_name')<span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            {{-- <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="agent_name">رقم البطاقة الشخصية / رقم جواز السفر</label>
+                              <select name="id_type" class="form-control">
+                                <option>رقم البطاقة الشخصية</option>
+                                <option>رقم جواز السفر</option>
+                              </select>
+                            </div> --}}
+                        </div>
+                        <div class="row">
+                            
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="agent_name">	الغرض من الوكالة</label>
                                 <input type="text" class="form-control" name="agent_name" wire:model="agent_name"/>
@@ -132,8 +124,13 @@
                             </div> --}}
                         </div>
                         <div class="row">
-                            <div class="form-group mb-3 col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="poa_document">	يرجى إرفاق صورة من سند الملكية أو أي وثيقة ذات صلة بالوكالة</label>
+                                <input type="file" class="form-control" name="poa_document" wire:model="poa_document"/>
+                                @error('poa_document')<span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="poa_document">	تحميل الهوية / جواز السفر</label>
                                 <input type="file" class="form-control" name="poa_document" wire:model="poa_document"/>
                                 @error('poa_document')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>

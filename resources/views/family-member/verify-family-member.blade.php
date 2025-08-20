@@ -38,10 +38,10 @@
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name"> جهة الإصدار</label>
-                                        <select name="applicant_passport_center" class="form-control">                                              
+                                        <select name="applicant_passport_center" class="form-control" @if(!request('edit')) disabled @endif required>                                              
                                             <option value="">Select</option>
                                             @foreach ($passport_centers as $center)
-                                                <option value="{{ $center->id }}" @selected($center->id == $application->passport->passport_center_id)>{{ $center->center_name }}</option>
+                                                <option value="{{ $center->id }}" @selected($center->id == $application->formable->passport->passport_center_id)>{{ $center->center_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -62,6 +62,7 @@
                                     </div>
                                     @endif
                                 <div class="row">
+                                    <input type="hidden" name="member_id[]" value="{{ encrypt($member_id) }}">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name"> اسم</label>
                                         <input type="text" name="member_name[]" class="form-control" value="{{ $member->name }}" @if(!request('edit')) disabled @endif required>

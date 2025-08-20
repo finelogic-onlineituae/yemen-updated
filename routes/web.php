@@ -25,6 +25,7 @@ use App\Http\Controllers\MamoPaymentController;
 use App\Http\Controllers\OtherCertificateController;
 use App\Http\Controllers\SchoolCertificateController;
 use App\Http\Controllers\UnivercityCertificateController;
+use App\Http\Controllers\SupportController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -94,6 +95,8 @@ Route::middleware(['auth', 'email.verified'])->group(function () {
    
     Route::get('/applications/family-member', [FamilyMemberController::class, 'createFamilyMember'])->name('family-member.create');
     Route::post('/applications/store-family-member', [FamilyMemberController::class, 'storeFamilyMember'])->name('family-member.store');
+
+    Route::get('/applications/support', [SupportController::class, 'create'])->name('support.create');
    
     Route::get('/applications/no-id-card-group', [NoIdCardGroupController::class, 'create'])->name('no-id-card-group.create');
     Route::post('/applications/store-no-id-card-group', [NoIdCardGroupController::class, 'store'])->name('no-id-card-group.store');
