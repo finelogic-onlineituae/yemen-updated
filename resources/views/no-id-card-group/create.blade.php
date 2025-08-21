@@ -7,7 +7,7 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center"> شهادة عدم وجود بطاقة هوية ( عائله)</h2>
+    <h2 class="text-success w-100 text-center">طلب إصدار إفادة لايحمل هوية</h2>
     <livewire:no-id-card-group/>
 
 

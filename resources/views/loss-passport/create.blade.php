@@ -27,7 +27,7 @@
                                         @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_english">الاسم الكامل باللغة الإنجليزية كما هو الحال في جواز السفر</label>
+                                        <label class="form-label fw-bold" for="name_english">الاسم باللغة الانجليزية بحسب جواز السفر</label>
                                         <input type="text" class="form-control" name="name_english" value="{{ old('name_english') }}" required/>
                                         @error('name_english')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -157,19 +157,19 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="passport_attachment"> جواز (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                            <label class="form-label fw-bold" for="passport_attachment"> نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
                             <input type="file" class="form-control" name="passport_attachment" required/>
                             @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="emirate_id_attachment"> الهوية الإماراتية (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                                <label class="form-label fw-bold" for="emirate_id_attachment"> نسخة من الهوية الاماراتية (pdf ,jpg, png, jpeg)</label>
                                 <input type="file" class="form-control" name="emirate_id_attachment" required/>
                                 @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>   
                         </div>    
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="photo">صورة (jpg, png, jpeg) (200x200)</label>
+                                <label class="form-label fw-bold" for="photo">صورة حديثة (jpg, png, jpeg) (200x200)</label>
                                 <input type="file" class="form-control item-photo" id="imageInput"  accept="image/*">
                                 @error('croppedPhoto')<span class="text-danger">{{ $message }}</span> @enderror
 
@@ -246,7 +246,7 @@
                  <div class="card text-start my-2">
                     <div class="card-header">عنوان استلام جواز السفر بعد تجديده</div>
                     <div class="card-body">
-                                    <div class="row">
+                                    <div class="row"> 
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="land_mark">معلم بارز</label>
                                 <input type="text" class="form-control" name="address_land_mark" value="{{ old('address_land_mark') }}"/>

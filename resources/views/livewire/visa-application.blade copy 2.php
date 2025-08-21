@@ -10,17 +10,12 @@
 
                     <div class="card-body">
                         <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
-                                        <input type="text" class="form-control" name="name_arabic" value="{{ old('name_arabic') }}" required/>
-                                        @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_english">الاسم باللغة الانجليزية بحسب جواز السفر</label>
-                                        <input type="text" class="form-control" name="name_english" value="{{ old('name_english') }}" required/>
-                                        @error('name_english')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
+                            <div class="form-group mb-3 col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                                <label class="form-label fw-bold" for="name">اسم</label>
+                                <input type="text" class="form-control" name="name" wire:model="name" />
+                                @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
                         <div class="row">
                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
                                 <label class="form-label fw-bold" for="nationality">الجنسية</label>
@@ -78,13 +73,13 @@
                         </div>
                          <div class="row">
                             <div class="col-lg-8 col-md-8 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                <label class="form-label fw-bold" for="name">الغرض من السفر إلى الجمهورية اليمنية</label>
+                                <label class="form-label fw-bold" for="name">غرض السفر إلى الجمهورية اليمنية</label>
                                 <input type="text" class="form-control" name="purpose_of_travel" wire:model="purpose_of_travel"/>
                                 @error('purpose_of_travel') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
-                                <label class="form-label fw-bold" for="name">الفترة المطلوبة </label>
-                                <input type="text" class="form-control" id="days" name="period_required" value="1 Month"  max="30" disabled/>
+                                <label class="form-label fw-bold" for="name">الفترة المطلوبة (بالأيام)</label>
+                                <input type="number" class="form-control" id="days" name="period_required" wire:model="period_required" max="30"/>
                                 @error('period_required') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
@@ -99,15 +94,20 @@
                         </div>
                           <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                <label class="form-label fw-bold" for="name">الجهة الداعية في اليمن: الاسم</label>
+                                <label class="form-label fw-bold" for="name">الراعي 1: الاسم</label>
                                 <input type="text" class="form-control" name="sponsor_1_name" wire:model="sponsor_1_name"/>
                                 @error('sponsor_1_name') <span class="text-danger">{{ $message }}</span> @enderror
-                                
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                            <label class="form-label fw-bold" for="name">الجهة الداعية في اليمن: العنوان</label>
+                                <label class="form-label fw-bold" for="name">الراعي 1: العنوان</label>
                                 <textarea class="form-control" rows="4" name="sponsor_1_address" wire:model="sponsor_1_address"></textarea>
                                 @error('sponsor_1_address') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="name">الراعي 2: الاسم</label>
+                                <input type="text" class="form-control" name="sponsor_2_name" wire:model="sponsor_2_name"/>
+                                @error('sponsor_2_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                <label class="form-label fw-bold" for="name">الراعي 1: العنوان</label>
+                                <textarea class="form-control"  rows="4" name="sponsor_2_address" wire:model="sponsor_2_address"></textarea>
+                                @error('sponsor_2_address') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                           <label class="form-label fw-bold" for="previous_visit_1">تواريخ الزيارة السابقة للجمهورية اليمنية (إن وجدت)</label>

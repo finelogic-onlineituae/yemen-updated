@@ -10,21 +10,14 @@
                <div class="card text-start my-2">
                     <div class="card-body">
                         <div class="card">
-                            <div class="card-header">معلومات جواز السفر</div>
+                           
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_arabic">الاسم الكامل (كما هو مذكور في جواز السفر)</label>
+                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
                                         <input type="text" class="form-control" name="name_arabic" wire:model="surname_arabic"/>
                                         @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_english">الاسم الكامل باللغة الإنجليزية كما هو الحال في جواز السفر</label>
-                                        <input type="text" class="form-control" name="name_english" wire:model="name_english"/>
-                                        @error('name_english')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     
                                         <label class="form-label fw-bold"  for="passport_number">رقم جواز السفر</label>
@@ -33,13 +26,9 @@
                                         <small id="passportError-" class="text-danger d-none"> Please enter a valid Passport Number</small>
                                         @error('passport_number') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">مهنة</label>
-                                        <input type="text" class="form-control" name="profession" wire:model="profession"/>
-                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
                                 </div>
-                                <div class="row">
+                                
+                                {{-- <div class="row">
                                     
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
@@ -74,7 +63,7 @@
                                         <input type="text" class="form-control" name="city_of_birth" wire:model="city_of_birth"/>
                                         @error('city_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
@@ -241,50 +230,53 @@
     <div class="card text-start my-2">
                     <div class="card-header">المرفقات</div>
                     <div class="card-body">
+
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="attachment"> جواز (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                            <label class="form-label fw-bold" for="attachment"> نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
                             <input type="file" class="form-control" wire:model="attachment" name="attachment" />
                             @error('attachment') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="licence_attachment">	الهوية الإماراتية (ملف بي دي إف ,jpg, png, jpeg)</label>
+                                <label class="form-label fw-bold" for="licence_attachment">	نسخة من الهوية الاماراتية (pdf,jpg, png, jpeg)</label>
                                 <input type="file" class="form-control" name="licence_attachment" wire:model="licence_attachment" />
                                 @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>    
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="fathers_passport"> جواز سفر الأب (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                            <label class="form-label fw-bold" for="fathers_passport"> نسخة من جواز سفر الأب  (pdf ,jpg, png, jpeg)</label>
                             <input type="file" class="form-control" wire:model="fathers_passport" name="fathers_passport" />
                             @error('fathers_passport') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="mothers_passport">	جواز سفر الأم (ملف بي دي إف ,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="mothers_passport" wire:model="mothers_passport" />
-                                @error('mothers_passport')<span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                        </div> 
-                        <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="attachment"> جواز سفر الأب (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                            <label class="form-label fw-bold" for="attachment">نسخة من الهوية الاماراتية للأب (pdf ,jpg, png, jpeg)</label>
                             <input type="file" class="form-control" wire:model="fathers_id" name="fathers_id" />
                             @error('fathers_id') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
+                            
+                        </div> 
+                        <div class="row">
                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="mothers_id">	هوية إمارة الأم (ملف بي دي إف ,jpg, png, jpeg)</label>
+                                <label class="form-label fw-bold" for="mothers_passport">نسخة من	جواز سفر الأم (pdf,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" name="mothers_passport" wire:model="mothers_passport" />
+                                @error('mothers_passport')<span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="mothers_id">نسخة من الهوية الاماراتية للأم (pdf,jpg, png, jpeg)</label>
                                 <input type="file" class="form-control" name="mothers_id" wire:model="mothers_id" />
                                 @error('mothers_id')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
+                            
                         </div> 
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="photo"> صورة شخص (ملف بي دي إف  ,jpg, png, jpeg)</label>
+                            <label class="form-label fw-bold" for="photo"> صورة شخصية  (jpg, png, jpeg)</label>
                             <input type="file" class="form-control" wire:model="photo" name="photo" />
                             @error('photo') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="birth_certificate">	شهادة ميلاد (ملف بي دي إف ,jpg, png, jpeg)</label>
+                                <label class="form-label fw-bold" for="birth_certificate">نسخة من	شهادة ميلاد (pdf,jpg, png, jpeg)</label>
                                 <input type="file" class="form-control" name="birth_certificate" wire:model="birth_certificate" />
                                 @error('birth_certificate')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
