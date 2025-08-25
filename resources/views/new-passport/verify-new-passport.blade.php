@@ -244,7 +244,7 @@
                  <div class="card text-start my-2">
                     <div class="card-header">معلومات التسليم</div>
                     <div class="card-body">
-                                    <div class="row">
+                        <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="address_landmark">معلم بارز</label>
                                 <input type="text" class="form-control" name="address_landmark" value="{{ $application->formable->address_landmark }}"  @if(!request('edit')) disabled @endif   required/>
@@ -252,14 +252,14 @@
                             </div>
                              
                               <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="address_street">شارع</label>
+                                <label class="form-label fw-bold" for="address_street">الشارع</label>
                                 <input type="text" class="form-control" name="address_street" value="{{ $application->formable->address_street }}"  @if(!request('edit')) disabled @endif   required/>
                                 @error('address_street') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="land_mark">منطقة </label>
+                                <label class="form-label fw-bold" for="land_mark">المنطقه</label>
                                 <input type="text" class="form-control" name="address_area" value="{{ $application->formable->address_area }}"   @if(!request('edit')) disabled @endif   required/>
                                 @error('address_area')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>

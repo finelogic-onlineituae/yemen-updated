@@ -43,18 +43,34 @@
                                         <input type="text" name="applicant_name" class="form-control">
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="nationality">الجنسية</label>
+                                        <select class="form-select" name="nationality" required>
+                                            <option value="">Choose a Country</option>
+                                            @forelse ($countries as $country)
+                                                <option value="{{ $country->id }}" @if(old('nationality')) @selected($country->id == old('nationality')) @else @selected($country->country_code == 'YE') @endif>{{ $country->country_name }}</option>
+                                            @empty
+                                                
+                                            @endforelse
+                                        </select>
+                                        @error('nationality')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">  رقم جواز السفر</label>
                                         <input type="text"  maxlength="8"  id="passportInput-"  name="applicant_passport_number" class="form-control">
                                             <small id="passportError-" class="text-danger d-none">
                                             Please enter a valid Passport Number
                                         </small>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="applicant_issued_on"> تاريخ الإصدار</label>
                                         <input type="date" name="applicant_issued_on" class="form-control">
                                     </div>
+                                    
+                                </div>
+                                <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name"> جهة الإصدار</label>
                                         <select name="applicant_passport_center" class="form-control">                                              
@@ -65,6 +81,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                 <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                            <label class="form-label fw-bold" for="applicant_passport_attachment">نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
+                                            <input type="file" name="applicant_passport_attachment" class="form-control">
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                            <label class="form-label fw-bold" for="applicant_emirate_id_attachment"> نسخة من الهوية الاماراتيه (pdf ,jpg, png, jpeg)</label>
+                                            <input type="file" class="form-control" name="applicant_emirate_id_attachment" />
+                                    </div>   
+                            </div>   
                                
                 </div>
             </div>
@@ -80,18 +106,34 @@
                                         <input type="text" name="member_name[]" class="form-control">
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="nationality">الجنسية</label>
+                                        <select class="form-select" name="nationality" required>
+                                            <option value="">Choose a Country</option>
+                                            @forelse ($countries as $country)
+                                                <option value="{{ $country->id }}" @if(old('nationality')) @selected($country->id == old('nationality')) @else @selected($country->country_code == 'YE') @endif>{{ $country->country_name }}</option>
+                                            @empty
+                                                
+                                            @endforelse
+                                        </select>
+                                        @error('nationality')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">  رقم جواز السفر</label>
                                         <input type="text"  maxlength="8"  id="passportInput-"  name="member_passport_number[]" class="form-control">
                                             <small id="passportError-" class="text-danger d-none">
                                             Please enter a valid Passport Number
                                         </small>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="member_issued_on"> تاريخ الإصدار</label>
                                         <input type="date" name="member_issued_on[]" class="form-control">
                                     </div>
+                                    
+                                </div>
+                                <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name"> جهة الإصدار</label>
 
@@ -102,14 +144,19 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="member_relation">صلة القرابة بمقدم الطلب</label>
+                                        <input type="text" class="form-control" name="member_relation[]" > 
+                                    </div>
+                                    
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="member_relation">صلة القرابة</label>
-                                        <input type="text" class="form-control" name="member_relation[]" > 
+                                        <label class="form-label fw-bold" for="member_passport_attachment">نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
+                                        <input type="file" name="member_passport_attachment[]" class="form-control">
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="member_passport_attachment">نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
+                                        <label class="form-label fw-bold" for="member_passport_attachment">نسخة من الهوية الاماراتية (إن وجدت)</label>
                                         <input type="file" name="member_passport_attachment[]" class="form-control">
                                     </div>
                                 </div>
@@ -117,31 +164,7 @@
             </div>
             </div>
               <div id="additonal_members" class="text-start"></div>
-                    <div class="card text-start my-2" >
-                        <div class="card-header">مستندات مقدم الطلب</div>
-                        <div class="card-body">
-                            <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                            <label class="form-label fw-bold" for="applicant_passport_attachment">نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
-                                            <input type="file" name="applicant_passport_attachment" class="form-control">
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                            <label class="form-label fw-bold" for="applicant_emirate_id_attachment"> نسخة من الهوية الاماراتيه (pdf ,jpg, png, jpeg)</label>
-                                            <input type="file" class="form-control" name="applicant_emirate_id_attachment" />
-                                    </div>   
-                            </div>   
-                            {{-- <h5>جوازات سفر المستفيدين</h5>
-                            <div class="row">
-                                    <div id="member-passport">
-                                        <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                                <label class="form-label fw-bold" for="member_passport_attachment[]">نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
-                                                <input type="file" name="member_passport_attachment[]" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div id="member-passport-container"></div>
-                            </div> --}}
-                        </div>
-                    </div>
+                    
     <div class="card-header">
         
                         <a type="button"  onclick="addMember()" class="btn btn-success">إضافة عضو</a>

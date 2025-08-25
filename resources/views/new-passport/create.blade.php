@@ -161,7 +161,7 @@
                  <div class="card text-start my-2">
                     <div class="card-header">عنوان استلام جواز السفر بعد تجديده</div>
                     <div class="card-body">
-                                    <div class="row">
+                        <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="address_landmark">معلم بارز</label>
                                 <input type="text" class="form-control" name="address_landmark" value="{{ old('address_landmark') }}"/>
@@ -169,14 +169,14 @@
                             </div>
                              
                               <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="phone">شارع</label>
+                                <label class="form-label fw-bold" for="address_street">الشارع</label>
                                 <input type="text" class="form-control" name="address_street" value="{{ old('address_street') }}"/>
                                 @error('address_street') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="land_mark">منطقة </label>
+                                <label class="form-label fw-bold" for="address_area">المنطقه</label>
                                 <input type="text" class="form-control" name="address_area" value="{{ old('address_area') }}"/>
                                 @error('address_area')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>

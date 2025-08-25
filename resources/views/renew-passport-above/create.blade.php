@@ -249,14 +249,14 @@
                             </div>
                              
                               <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="phone">شارع</label>
+                                <label class="form-label fw-bold" for="phone">الشارع</label>
                                 <input type="text" class="form-control" name="address_street" value="{{ old('address_street') }}"/>
                                 @error('address_street') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="land_mark">منطقة </label>
+                                <label class="form-label fw-bold" for="land_mark">المنطقه</label>
                                 <input type="text" class="form-control" name="address_area" value="{{ old('address_area') }}"/>
                                 @error('address_area')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>

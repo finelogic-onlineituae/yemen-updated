@@ -4,17 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Form;
+use App\Models\Country;
+use App\Models\PassportCenter;
 use App\Models\SchoolCertificate;
 
 class SchoolCertificateController extends Controller
 {
      public function create(Request $request)
     {
-        session([ 'category' => '5','app' => 'applications/school-certificate']);
-       
-        return view('school-certificate.create');
+        session([ 'category' => '5','app' => 'applications/attestation']);
+        $countries = Country::all();
+        $passport_centers = PassportCenter::all();
+        return view('attestation.create', ['countries' => $countries, 'passport_centers' => $passport_centers]);
     }
-
+    public function promptRequirement()
+    {
+        session([ 'category' => '5','app' => 'applications/attestation']);
+        return view('attestation.authentication');
+    }
+    public function requirementFailure()
+    {
+        session([ 'category' => '5','app' => 'applications/attestation']);
+        return view('attestation.failure');
+    }
     public function store(Request $request)
     {
       if($request->hasFile('attachment')) {

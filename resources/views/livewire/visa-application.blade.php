@@ -22,6 +22,38 @@
                                     </div>
                                 </div>
                         <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    
+                                        <label class="form-label fw-bold"  for="passport_number">رقم جواز السفر</label>
+                                        
+                                        <input type="text" id="passportInput-" maxlength="8" class="form-control" value="{{ old('passport_number') }}" name="passport_number" required/>
+                                        <small id="passportError-" class="text-danger d-none"> Please enter a valid Passport Number</small>
+                                        @error('passport_number') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                        <label class="form-label fw-bold" for="issued_by">جهة إصدار جواز السفر</label>
+                                        <select name="issued_by" wire:model="issued_by" class="form-select">
+                                            <option value="">Choose Country</option>
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->country_code }}">{{ $country->country_name.'('.$country->country_code.')' }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('issued_by') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                        </div>
+                        <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="issued_on">تاريخ إصدار جواز السفر</label>
+                                        <input type="date" class="form-control" name="issued_on" value="{{ old('issued_on') }}" required/>
+                                        @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء جواز السفر</label>
+                                        <input type="date" class="form-control" name="expire_on" value="{{ old('expire_on') }}" required/>
+                                        @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                        <div class="row">
                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
                                 <label class="form-label fw-bold" for="nationality">الجنسية</label>
                                 <select name="nationality" wire:model="nationality" class="form-select">
@@ -163,7 +195,7 @@
                      
                     </div>
                 </div>
-            <livewire:passport :is_consular="false" :passport="$passport"/>
+            
 
               
               

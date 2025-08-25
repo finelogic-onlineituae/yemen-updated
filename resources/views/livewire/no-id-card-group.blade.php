@@ -9,6 +9,16 @@
                 <div><a class="btn btn-info rounded-0">Member 1</a></div>
                <div class="card text-start my-2">
                     <div class="card-body">
+                        <div class="d-flex form-group rounded w-100 p-2 justify-content-center align-items-center ">
+                            <div class="form-check">
+                                <input type="radio" name="app_type" value="adult" class="form-check-input" onclick="changeAppType()" checked>
+                                <label>Applicant age above 18</label>
+                            </div>
+                            <div class="form-check mx-2">
+                                <input type="radio" name="app_type" value="college" class="form-check-input" onclick="changeAppType()">
+                                <label>Applicant age below 18</label>
+                            </div>
+                        </div>
                         <div class="card">
                            
                             <div class="card-body">
@@ -90,197 +100,107 @@
                                         @error('passport_center') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
+                                <div class="form-check" id="has-wife-block">
+                                    <input type="checkbox" class="form-check-input" id="has-wife" onclick="changeAttachments()"> <span class="text-success fw-bold">إذا كانت مقدمة الطلب زوجة مواطن إماراتي</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {{-- <div class="card text-start my-2">
-                    @foreach ($family_members as $index => $member)
-                    
-                            <div class="card-header">
-                                عضو {{ $index + 1 }}
-                               
-                                @if(count($family_members)!=1)
-                                <button type="button" wire:click="removeFamilyMember({{ $index }})" class="btn btn-danger btn-sm float-end">يزيل</button>
-                                @endif
-                            </div>
-                
-                            <div class="card-body">
-                                <input type="hidden" name="family_members[{{ $index }}][member_index]" value="{{ $index }}">
-                                <input type="hidden" name="family_members[{{ $index }}][id]" value="{{ $member['id'] ?? '' }}">
-                
-                                <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="phone_number"> رقم التليفون </label>
-                                        <input type="text" name="family_members[{{ $index }}][member_phone_number]" class="form-control"
-                                        wire:model="family_members.{{ $index }}.member_phone_number">
-                                        @error('family_members.' . $index . '.member_phone_number') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="emirates_id"> رقم الهوية الإماراتية</label>
-                                        <input type="text" id="emiratesIdInput-{{ $index }}" maxlength="21"
-                                            name="family_members[{{ $index }}][member_emirates_id]" class="form-control"
-                                            wire:model="family_members.{{ $index }}.member_emirates_id">
-                                        <small id="emiratesIdError-{{ $index }}" class="text-danger d-none">Please enter a valid Emirates ID.</small>
-                                        @error('family_members.' . $index . '.member_emirates_id') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name"> اسم</label>
-                                        <input type="text" name="family_members[{{ $index }}][member_name]" class="form-control"
-                                        wire:model="family_members.{{ $index }}.member_name">
-                                        @error('family_members.' . $index . '.member_name') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="phone">مرفق جواز السفر</label>
-                                        <input type="file" name="family_members[{{ $index }}][member_passport_attachment]" wire:model="family_members.{{ $index }}.member_passport_attachment" class="form-control">
-                                        @error('family_members.' . $index . '.member_passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
-
-                                        @if (!empty($member['existing_passport_attachment']))
-                                            <span><a class="btn btn-dark me-2 rounded-5 mt-3" onclick="openModal('pdfModal-verify-existing_passport_attachment.{{ $index+2 }}')">مرفق جواز السفر </a></span>
-                                            <!-- Modal -->
-                                            <div id="pdfModal-verify-existing_passport_attachment.{{ $index+2 }}" class="modal">
-                                                <div class="modal-content">
-                                                    <span class="close" onclick="closeModal('pdfModal-verify-existing_passport_attachment.{{ $index+2 }}')">&times;</span>
-                                                    <iframe id="pdfViewer-verify-existing_passport_attachment.{{ $index }}" src="{{ generate_signed_storage_url($member['existing_passport_attachment']) }}"></iframe>
-                                                </div>
-                                            </div>
-                                            <!-- End Modal -->
-                                            
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name">  رقم جواز سفر </label>
-                                      <input type="text"
-                                            name="family_members[{{ $index }}][member_passport_number]"
-                                            id="passportInput-{{ $index }}"  maxlength="8"
-                                            class="form-control"
-                                            wire:model="family_members.{{ $index }}.member_passport_number">
-
-                                        <small id="passportError-{{ $index }}" class="text-danger d-none">
-                                            Please enter a valid Passport Number
-                                        </small>
-                                        @error('family_members.' . $index . '.member_passport_number') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name"> مركز الجوازات</label>
-
-                                        <select name="family_members[{{ $index }}][member_passport_center]" class="form-control"
-                                                wire:model="family_members.{{ $index }}.member_passport_center">
-                                            <option value="">Select</option>
-                                            @foreach ($passport_centers as $center)
-                                                <option value="{{ $center->id }}">{{ $center->center_name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('family_members.' . $index . '.member_passport_center') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                
-                                <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name"> صدر بتاريخ</label>
-                                        <input type="date" name="family_members[{{ $index }}][member_issued_on]" class="form-control"
-                                        wire:model="family_members.{{ $index }}.member_issued_on">
-                                        @error('family_members.' . $index . '.member_issued_on') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="phone">تصريح الإقامة (  ملف بي دي إف)</label>
-                                        <input type="file" name="family_members[{{ $index }}][member_residance_permit]" wire:model="family_members.{{ $index }}.member_residance_permit" class="form-control">
-                                        @error('family_members.' . $index . '.member_residance_permit') <span class="text-danger">{{ $message }}</span> @enderror
-
-                                        @if (!empty($member['existing_residance_permit']))
-
-                                            <span><a class="btn btn-dark me-2 rounded-5 mt-3" onclick="openModal('pdfModal-verify-member_residance_permit.{{ $index+1 }}')">تصريح الإقامة </a></span>
-                                            <!-- Modal -->
-                                            <div id="pdfModal-verify-member_residance_permit.{{ $index+1 }}" class="modal">
-                                                <div class="modal-content">
-                                                    <span class="close" onclick="closeModal('pdfModal-verify-member_residance_permit.{{ $index+1 }}')">&times;</span>
-                                                    <iframe id="pdfViewer-verify-member_residance_permit.{{ $index+1 }}" src="{{ generate_signed_storage_url($member['existing_residance_permit']) }}"></iframe>
-                                                </div>
-                                            </div>
-                                            <!-- End Modal -->
-                                            
-                                        @endif
-                                    </div>
-                                </div>
-                               <div class="row">
-                                    <div class="form-group mb-3 col-lg-12 col-xl-12 col-md-12 col-sm-12">
-                                        <label class="form-label fw-bold" for="submitted_to">يتم تقديم هذه المعلومات إلى</label>
-                                        <input type="text" name="family_members[{{ $index }}][member_submitted_to]" class="form-control"
-                                        wire:model="family_members.{{ $index }}.member_submitted_to">
-                                        @error('family_members.' . $index . '.member_submitted_to') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                   
-                                </div>
-                            </div>
-                    @endforeach
-                   
-                    <div class="card-header">
-                        <button type="button"  wire:click="addFamilyMember"  class="btn btn-primary">إضافة عضو</button>
-                    </div>
-
-                </div> --}}
               
     <div class="card text-start my-2">
                     <div class="card-header">المرفقات</div>
                     <div class="card-body">
-
-                        <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="attachment"> نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
-                            <input type="file" class="form-control" wire:model="attachment" name="attachment" />
-                            @error('attachment') <span class="text-danger">{{ $message }}</span> @enderror
+                        <div id="general">
+                            <div class="row">
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="attachment"> نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" wire:model="attachment" name="attachment" />
+                                @error('attachment') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold" for="licence_attachment">	نسخة من الهوية الاماراتية (pdf,jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" name="licence_attachment" wire:model="licence_attachment" />
+                                    @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>    
+                            <div id="for-child-only" style="display:none;">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold" for="fathers_passport"> نسخة من جواز سفر الأب  (pdf ,jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" wire:model="fathers_passport" name="fathers_passport" />
+                                    @error('fathers_passport') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold" for="attachment">نسخة من الهوية الاماراتية للأب (pdf ,jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" wire:model="fathers_id" name="fathers_id" />
+                                    @error('fathers_id') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    
+                                </div> 
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="mothers_passport">نسخة من	جواز سفر الأم (pdf,jpg, png, jpeg)</label>
+                                        <input type="file" class="form-control" name="mothers_passport" wire:model="mothers_passport" />
+                                        @error('mothers_passport')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="mothers_id">نسخة من الهوية الاماراتية للأم (pdf,jpg, png, jpeg)</label>
+                                        <input type="file" class="form-control" name="mothers_id" wire:model="mothers_id" />
+                                        @error('mothers_id')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    
+                                </div> 
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold" for="photo"> صورة شخصية  (jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" wire:model="photo" name="photo" />
+                                    @error('photo') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="birth_certificate">نسخة من	شهادة ميلاد (pdf,jpg, png, jpeg)</label>
+                                        <input type="file" class="form-control" name="birth_certificate" wire:model="birth_certificate" />
+                                        @error('birth_certificate')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div> 
                             </div>
-                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="licence_attachment">	نسخة من الهوية الاماراتية (pdf,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="licence_attachment" wire:model="licence_attachment" />
-                                @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div id="yemeni-wife" style="display:none;">
+                             <div class="row">
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold" for="passport_attachment"> نسخة من جواز سفر - الزوج(pdf ,jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" name="passport_attachment" required/>
+                                    @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold" for="passport_attachment"> نسخة من جواز سفر - الزوجة (pdf ,jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" name="passport_attachment" required/>
+                                    @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>    
+                            <div class="row">
+                                
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold" for="emirates_id_attachment"> نسخة من الهوية الاماراتية - الزوجة(pdf ,jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" name="emirates_id_attachment" required/>
+                                    @error('emirates_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
+                                </div>   
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="marriage_document"> نسخة من عقد الزواج(pdf  ,jpg, png, jpeg)</label>
+                                        <input type="file" class="form-control" name="marriage_document" required/>
+                                        @error('marriage_document') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>    
+                            <div class="row">
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold" for="photo"> صورة شخصية  (jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" wire:model="photo" name="photo" />
+                                    @error('photo') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
                             </div>
-                        </div>    
-                        <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="fathers_passport"> نسخة من جواز سفر الأب  (pdf ,jpg, png, jpeg)</label>
-                            <input type="file" class="form-control" wire:model="fathers_passport" name="fathers_passport" />
-                            @error('fathers_passport') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="attachment">نسخة من الهوية الاماراتية للأب (pdf ,jpg, png, jpeg)</label>
-                            <input type="file" class="form-control" wire:model="fathers_id" name="fathers_id" />
-                            @error('fathers_id') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            
-                        </div> 
-                        <div class="row">
-                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="mothers_passport">نسخة من	جواز سفر الأم (pdf,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="mothers_passport" wire:model="mothers_passport" />
-                                @error('mothers_passport')<span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="mothers_id">نسخة من الهوية الاماراتية للأم (pdf,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="mothers_id" wire:model="mothers_id" />
-                                @error('mothers_id')<span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            
-                        </div> 
-                        <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="photo"> صورة شخصية  (jpg, png, jpeg)</label>
-                            <input type="file" class="form-control" wire:model="photo" name="photo" />
-                            @error('photo') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="birth_certificate">نسخة من	شهادة ميلاد (pdf,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="birth_certificate" wire:model="birth_certificate" />
-                                @error('birth_certificate')<span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
                 <div><a class="btn btn-success">Add Member</a></div>
@@ -291,3 +211,33 @@
         </form>
     </div>
 </div>
+<script>
+function changeAppType()
+{
+    const selected = document.querySelector('input[name="app_type"]:checked');
+    if(selected.value == 'adult'){
+     document.getElementById('for-child-only').style.display = 'none';
+     document.getElementById('has-wife-block').style.display = 'block';
+     document.getElementById('has-wife').checked = false;
+    }
+    else{
+        document.getElementById('general').style.display = 'block';
+        document.getElementById('yemeni-wife').style.display = 'none';
+        document.getElementById('has-wife-block').style.display = 'none';
+        document.getElementById('for-child-only').style.display = 'block';
+    }
+}
+function changeAttachments()
+{
+    hasWife = document.getElementById('has-wife');
+    const selected = document.querySelector('input[name="app_type"]:checked');
+    if(hasWife.checked){
+        document.getElementById('general').style.display = 'none';
+        document.getElementById('yemeni-wife').style.display = 'block';
+    }
+    else{
+        document.getElementById('general').style.display = 'block';
+        document.getElementById('yemeni-wife').style.display = 'none';
+    }
+}
+</script>

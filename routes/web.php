@@ -203,8 +203,10 @@ Route::middleware(['auth', 'email.verified'])->group(function () {
     Route::get('/applications/passport-name-change', [PassportNameChangeController::class, 'createPassportNameChange'])->name('passport-name-change.create');
     Route::post('/applications/store-passport-name-change', [PassportNameChangeController::class, 'storePassportNameChange'])->name('passport-name-change.store');
    
-     Route::get('/applications/school-certificate', [SchoolCertificateController::class, 'create'])->name('school-certificate.create');
-    Route::post('/applications/store-school-certificate', [SchoolCertificateController::class, 'store'])->name('school-certificate.store');
+    Route::get('/applications/attestation', [SchoolCertificateController::class, 'create'])->name('attestation.create');
+    Route::get('/applications/attestation/prompt-requirements', [SchoolCertificateController::class, 'promptRequirement'])->name('attestation.prompt');
+    Route::get('/applications/attestation/requirements-failed', [SchoolCertificateController::class, 'requirementFailure'])->name('attestation.failed');
+    Route::post('/applications/store-attestation', [SchoolCertificateController::class, 'store'])->name('school-certificate.store');
     
     Route::get('/applications/marriage-certificate', [MarriageCertificateController::class, 'createMarriageCertificate'])->name('marriage-certificate.create');
     Route::post('/applications/store-marriage-certificate', [MarriageCertificateController::class, 'storeMarriageCertificate'])->name('marriage-certificate.store');

@@ -338,14 +338,14 @@
                             </div>
                              
                               <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="address_street">شارع</label>
+                                <label class="form-label fw-bold" for="address_street">الشارع</label>
                                 <input type="text" class="form-control" name="address_street" value="kjhkj{{ $application->formable->street }}"  @if(!request('edit')) disabled @endif   required/>
                                 @error('address_street') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="land_mark">منطقة </label>
+                                <label class="form-label fw-bold" for="address_area">المنطقه</label>
                                 <input type="text" class="form-control" name="address_area" value="{{ $application->formable->area }}"   @if(!request('edit')) disabled @endif   required/>
                                 @error('address_area')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>

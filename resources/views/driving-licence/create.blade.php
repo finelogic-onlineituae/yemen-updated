@@ -27,21 +27,14 @@
                             </div>
                         @endif
                         <div class="card">
-                            <div class="card-header">معلومات جواز السفر</div>
+                            <div class="card-header">بيانات جواز السفر</div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية (كما هو مذكور في جواز السفر)</label>
+                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
                                         <input type="text" class="form-control" name="name_arabic" value="{{ old('name_arabic') }}" required/>
                                         @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_english">Full name in English as per the passport</label>
-                                        <input type="text" class="form-control" name="name_english" value="{{ old('name_english') }}" required/>
-                                        @error('name_english')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     
                                         <label class="form-label fw-bold"  for="passport_number">رقم جواز السفر</label>
@@ -49,6 +42,13 @@
                                         <input type="text" id="passportInput-" maxlength="8" class="form-control" value="{{ old('passport_number') }}" name="passport_number" required/>
                                         <small id="passportError-" class="text-danger d-none"> Please enter a valid Passport Number</small>
                                         @error('passport_number') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="profession">المهنة</label>
+                                        <input type="text" class="form-control" name="profession" value="{{ old('profession') }}" required/>
+                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
@@ -77,13 +77,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">المهنة</label>
-                                        <input type="text" class="form-control" name="profession" value="{{ old('profession') }}" required/>
-                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">جنس</label>
+                                        <label class="form-label fw-bold" for="profession">الجنس</label>
                                         <select class="form-select" name="gender" required>
                                             <option value="">Choose Gender</option>
                                             <option value="Male" @selected(old('gender') == 'Male')>Male</option>
@@ -91,7 +87,16 @@
                                         </select>
                                         @error('gender')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-                                    
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="issued_by">جهة إصدار جواز السفر</label>
+                                        <select class="form-select" name="passport_center" required>
+                                            <option>Issuing Authority</option>
+                                            @foreach ($passport_centers as $center)
+                                                <option value="{{ $center->id }}" @selected(old('passport_center') == $center->id)>{{ $center->center_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('passport_center') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
@@ -107,21 +112,12 @@
                                 </div>
                                 
                                 <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="issued_by">جهة إصدار جواز السفر</label>
-                                        <select class="form-select" name="passport_center" required>
-                                            <option>Issuing Authority</option>
-                                            @foreach ($passport_centers as $center)
-                                                <option value="{{ $center->id }}" @selected(old('passport_center') == $center->id)>{{ $center->center_name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('passport_center') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
+                                    
                                 </div>
                             </div>
                     <div class="card text-start my-2">
                      <div class="card-header">
-                      	معلومات رخصة القيادة
+                      	بيانات رخصة القيادة
                     </div>                     
                     <div class="card-body">
                         <div class="row">
@@ -186,7 +182,7 @@
                         </div>    
                          <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="driving_licence"> رخصة القيادة (pdf  ,jpg, png, jpeg)</label>
+                            <label class="form-label fw-bold" for="driving_licence"> نسخة من رخصة القيادة (pdf  ,jpg, png, jpeg)</label>
                             <input type="file" class="form-control" name="driving_licence" required/>
                             @error('driving_licence') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
