@@ -7,32 +7,48 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center" >إفادة اثبات ميلاد</h2>
-    
+    <h2 class="text-success w-100 text-center" >تأكيد</h2>
 <div>
     
     <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
-         <form method="POST" id="renew-passport-above-form" class="w-100 align-items-center text-center d-flex justify-content-center">
-            @csrf
+         
+           
             <div class="manage-width-75 manage-width p-3 mx-2 rounded  align-items-center text-center form-scroll bg-ash ">
                 <div class="card text-start my-2">
                     <div class="card-body">
                         <div class="border p-2 m-2 rounded">
-                            الوثيقة الصادرة من الجمهورية اليمنية، يُشترط أن تكون مصدقة من وزارة الخارجية اليمنية.<br>
-                            الوثيقة الصادرة من دولة الإمارات العربية المتحدة، يُشترط أن تكون مصدقة من وزارة <br>
-                            الوثيقة الصادرة من دولة أخرى، يُشترط أن تكون مصدقة من وزارة الخارجية في تلك الدولة، وكذلك من سفارة تلك الدولة المعتمدة لدى دولة الإمارات العربية المتحدة.
-                            <br><br><br>
-                            هل الوثيقة مستوفاة لشروط التصديق
+                            هل تم تصديق الوثيقة مسبقًا من إحدى الجهات التالية؟<br>
+                            <div class="form-group">
+                                <input type="radio" class="form-check-input" name="authentication" onclick="enableSubmit()" value="Ministry of Foreign Affairs of Yemen">
+                                <label for="authentication">وزارة الخارجية اليمنية</label>
+                            </div>
+                             <div class="form-group">
+                                <input type="radio" class="form-check-input" name="authentication" onclick="enableSubmit()" value="Ministry of Foreign Affairs of the United Arab Emirates
+">
+                                <label for="authentication">وزارة الخارجية الإماراتية</label>
+                            </div>
+                             <div class="form-group">
+                                <input type="radio" class="form-check-input" name="authentication" onclick="enableSubmit()" value="One of the diplomatic missions of the Republic of Yemen abroad">
+                                <label for="authentication">إحدى بعثات الجمهورية اليمنية في الخارج ( سفارة أو قنصلية عامة)</label>
+                            </div>
                             <br><br>
                             <div class="d-flex">
-                                <a href="{{ route('attestation.failed') }}" class="btn btn-danger">No</a>
-                                <a href="{{ route('attestation.create') }}" class="btn btn-success mx-2">Yes</a>
+                               {{--  <a href="{{ route('attestation.failed') }}" class="btn btn-danger">No</a> --}}
+                               <form action="{{ route('attestation.create') }}">
+                                <button class="btn btn-success mx-2" id="submit-btn" disabled>Yes, Proceed</button>
+                               </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        
     </div>
 </div>
+<script>
+function enableSubmit()
+{
+    document.getElementById("submit-btn").disabled = false;
+    }
+</script>
 </x-app-layout>

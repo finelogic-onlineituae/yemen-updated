@@ -155,7 +155,12 @@
                         </div>
                          <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                <label class="form-label fw-bold" for="name">تحميل بطاقة الهوية <br>(ملف PDF أقل من 2 ميجا بايت)</label>
+                                <label class="form-label fw-bold" for="passport_attachment">نسخة من جواز السفر<br>(ملف jpg/png/PDF أقل من 2 ميجا بايت)</label>
+                                <input type="file" class="form-control" name="passport_attachment" wire:model="id_card"/>
+                                @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="name">نسخة من الهوية الاماراتية<br>(ملف PDF/JPG/PNG أقل من 2 ميجا بايت)</label>
                                 <input type="file" class="form-control" name="id_card" wire:model="id_card"/>
                                 @error('id_card') <span class="text-danger">{{ $message }}</span> @enderror
 
@@ -173,8 +178,17 @@
 
                               
                             </div>
+                            
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="sponsor_passport">نسخة من جواز سفر الكفيل<br>(ملف pdf/jpg/png أقل من 2 ميجا بايت)</label>
+                                <input type="file" class="form-control" name="sponsor_passport" wire:model="photo"/>
+                                @error('sponsor_passport') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="name">تحميل بطاقة الراعي<br>(ملف PDF أقل من 2 ميجا بايت)</label>
+                                <label class="form-label fw-bold" for="name">خطاب عدم ممانعة من الكفيل<br>(ملف PDF/JPG/PNG أقل من 2 ميجا بايت)</label>
                                 <input type="file" class="form-control" name="sponsor_pass" wire:model="sponsor_pass"/>
                                 @error('sponsor_pass') <span class="text-danger">{{ $message }}</span> @enderror
 
@@ -191,19 +205,43 @@
                                 @endif 
                              
                             </div>
-                        </div>
-                     
+                    </div>
+                     <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="photo">صورة شخصية<br>(ملف jpg/png 200x200 أقل من 2 ميجا بايت)</label>
+                                <input type="file" class="form-control" name="photo" wire:model="photo"/>
+                                @error('photo') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
                     </div>
                 </div>
-            
-
-              
-              
-                        <div class="form-group my-3 text-center">
+                      <div class="form-group my-3">
                                
-                                <input type="checkbox" class="form-check-input" name="add_accompany" wire:model="add_accompany"  id="add_accompany"/>
-                                <label for="add_accompany" class="form-label"> Add Accompany </label>
+                                <input type="checkbox" class="form-check-input" name="add_accompany" wire:model="add_accompany" onclick="hasAccompany(this)" />
+                                <label for="add_accompany" class="form-label"> Add Accompanying Person </label>
                         </div>
+            <div id="accompany" style="display:none;">
+                 <div class="row">
+                   <h4>Details of Accompanying Person</h4>
+                   <hr>
+                    <div class="col-lg-12 col-md-12 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="acc_name">الاسم باللغة العربية بحسب جواز السفر</label>
+                                <input type="text" class="form-control" name="acc_name" wire:model="acc_name"/>
+                                @error('acc_name') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                 </div>
+                <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="acc_passport_attachment">نسخة من جواز السفر<br>(ملف jpg/png/PDF أقل من 2 ميجا بايت)</label>
+                                <input type="file" class="form-control" name="acc_passport_attachment" wire:model="id_card"/>
+                                @error('acc_passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
+                                <label class="form-label fw-bold" for="name">نسخة من الهوية الاماراتية<br>(ملف PDF/JPG/PNG أقل من 2 ميجا بايت)</label>
+                                <input type="file" class="form-control" name="acc_emirate_id" wire:model="acc_emirate_id"/>
+                                @error('acc_emirate_id') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                </div>        
+            </div>
             <div class="form-group my-3 text-center">
                 <button class="btn buttom-effect">تقديم الطلب</button>
             </div> 
@@ -217,4 +255,13 @@ document.getElementById("days").addEventListener("input", function () {
         this.value = 30; // Force max value
     }
 });
+function hasAccompany(element)
+{
+    if(element.checked){
+        document.getElementById('accompany').style.display = 'block';
+    }
+    else{
+        document.getElementById('accompany').style.display = 'none';
+    }
+}
 </script>
