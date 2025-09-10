@@ -7,7 +7,7 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center">طلب إصدار إفادة لايحمل هوية</h2>
+    <h3 class="text-success w-100 text-center">لإصدار إفادة لمن لا يحمل بطاقة هوية، يرجى تعبئة جميع الحقول الإلزامية لإتمام الطلب</h3>
     <livewire:no-id-card-group/>
 
 

@@ -7,7 +7,7 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center" >طلب إصدار جواز سفر بدل فاقد</h2>
+    <h3 class="text-success w-100 text-center" >لإصدار جواز سفر بدل فاقد، يرجى تعبئة جميع الحقول الإلزامية لإتمام الطلب</h3>
     
 <div>
     

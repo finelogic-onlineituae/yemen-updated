@@ -7,7 +7,7 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center" >إفادة اثبات ميلاد</h2>
+    <h3 class="text-success w-100 text-center" >لإصدار إفادة إثبات ميلاد، يرجى تعبئة جميع الحقول الإلزامية لإتمام الطلب</h3>
     
 <div>
     

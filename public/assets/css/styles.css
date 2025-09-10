@@ -360,3 +360,13 @@ button:disabled {
   cursor: not-allowed !important;
   opacity: 1 !important;                /* some browsers reduce opacity by default */
 }
+
+.att-card{
+  padding-top: 40px;
+  background-color: #dbdbdb;
+  height: 150px;
+  color: brown;
+}
+.att-card:hover{
+  background-color: #f5f5f5;
+}

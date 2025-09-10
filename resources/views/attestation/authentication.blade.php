@@ -34,7 +34,7 @@
                             <br><br>
                             <div class="d-flex">
                                {{--  <a href="{{ route('attestation.failed') }}" class="btn btn-danger">No</a> --}}
-                               <form action="{{ route('attestation.create') }}">
+                               <form action="{{ route('attestation.choose-type') }}">
                                 <button class="btn btn-success mx-2" id="submit-btn" disabled>Yes, Proceed</button>
                                </form>
                             </div>

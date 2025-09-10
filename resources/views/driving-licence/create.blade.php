@@ -7,7 +7,7 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center" >إفادة تأكيد رخصة قيادة</h2>
+    <h3 class="text-success w-100 text-center" >لإصدار إفادة تأكيد رخصة قيادة، يرجى تعبئة جميع الحقول الإلزامية لإتمام الطلب</h3>
     
 <div>
     
@@ -44,49 +44,10 @@
                                         @error('passport_number') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">المهنة</label>
-                                        <input type="text" class="form-control" name="profession" value="{{ old('profession') }}" required/>
-                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
-                                        <input type="date" class="form-control" name="date_of_birth" value="{{ old('date_of_birth') }}" required/>
-                                        @error('date_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
                                 
                                 <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="country_of_birth"> محل الميلاد </label>
-                                        <select class="form-select" name="country_of_birth" required>
-                                            <option value="">Choose a Country</option>
-                                            @forelse ($countries as $country)
-                                                <option value="{{ $country->id }}" @selected(old('country_of_birth') == $country->id)>{{ $country->country_name }}</option>
-                                            @empty
-                                                
-                                            @endforelse
-                                        </select>
-                                        @error('country_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="city_of_birth">المحافظة - المدينة</label>
-                                        <input type="text" class="form-control" name="city_of_birth" value="{{ old('city_of_birth') }}" required/>
-                                        @error('city_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="row">
                                     
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">الجنس</label>
-                                        <select class="form-select" name="gender" required>
-                                            <option value="">Choose Gender</option>
-                                            <option value="Male" @selected(old('gender') == 'Male')>Male</option>
-                                            <option value="Female" @selected(old('gender') == 'Female')>Female</option>
-                                        </select>
-                                        @error('gender')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
+                                   
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_by">جهة إصدار جواز السفر</label>
                                         <select class="form-select" name="passport_center" required>

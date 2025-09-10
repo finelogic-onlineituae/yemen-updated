@@ -7,7 +7,7 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center">جواز سفر جديد</h2>
+    <h3 class="text-success w-100 text-center">لإصدار جواز سفر للمولود الجديد، يرجى تعبئة جميع الحقول الإلزامية لإتمام الطلب</h3>
    <div>
     
     <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">

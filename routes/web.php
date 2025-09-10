@@ -204,6 +204,7 @@ Route::middleware(['auth', 'email.verified'])->group(function () {
     Route::post('/applications/store-passport-name-change', [PassportNameChangeController::class, 'storePassportNameChange'])->name('passport-name-change.store');
    
     Route::get('/applications/attestation', [SchoolCertificateController::class, 'create'])->name('attestation.create');
+    Route::get('/applications/attestation/choose-type', [SchoolCertificateController::class, 'chooseType'])->name('attestation.choose-type');
     Route::get('/applications/attestation/prompt-requirements', [SchoolCertificateController::class, 'promptRequirement'])->name('attestation.prompt');
     Route::get('/applications/attestation/requirements-failed', [SchoolCertificateController::class, 'requirementFailure'])->name('attestation.failed');
     Route::post('/applications/store-attestation', [SchoolCertificateController::class, 'store'])->name('school-certificate.store');

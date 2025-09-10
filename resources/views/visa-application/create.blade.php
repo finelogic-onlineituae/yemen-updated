@@ -7,7 +7,7 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h2 class="text-success w-100 text-center"> التقدم بطلب للحصول على تأشيرة جديدة</h2>
+    <h3 class="text-success w-100 text-center">لإصدار تأشيرة، يرجى تعبئة جميع الحقول الإلزامية لإتمام الطلب</h3>
     <livewire:visa-application />
 
 

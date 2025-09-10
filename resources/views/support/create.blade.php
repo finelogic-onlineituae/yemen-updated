@@ -1,7 +1,7 @@
 <x-app-layout>
 <div>
     <div class="text-center w-100">
-        <h2>إفادة اعاله</h2>
+        <h3>لإصدار إفادة إعالة، يرجى تعبئة جميع الحقول الإلزامية لإتمام الطلب</h3>
     </div>
     <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
         <form action="{{ route('family-member.store') }}" enctype="multipart/form-data" method="POST" wire:submit.prevent="verifyApplication" id="family-member-form" class="w-100 align-items-center text-center d-flex justify-content-center">
@@ -147,7 +147,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="member_relation">صلة القرابة بمقدم الطلب</label>
+                                        <label class="form-label fw-bold" for="member_relation">صلة القرابة </label>
                                         <input type="text" class="form-control" name="member_relation[]" > 
                                     </div>
                                     

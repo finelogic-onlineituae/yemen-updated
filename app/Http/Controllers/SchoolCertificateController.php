@@ -17,6 +17,11 @@ class SchoolCertificateController extends Controller
         $passport_centers = PassportCenter::all();
         return view('attestation.create', ['countries' => $countries, 'passport_centers' => $passport_centers]);
     }
+    public function chooseType()
+    {
+        session([ 'category' => '5','app' => 'applications/attestation']);
+        return view('attestation.choose-type');
+    }
     public function promptRequirement()
     {
         session([ 'category' => '5','app' => 'applications/attestation']);
