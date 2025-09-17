@@ -130,21 +130,21 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="mother_name">اسم الأم الرباعي</label>
-                                        <input type="text" class="form-control" name="mother_name" value="{{ old('mother_name') }}" required/>
-                                        @error('mother_name')<span class="text-danger">{{ $message }}</span> @enderror
+                                        <label class="form-label fw-bold" for="father_name">اسم الأم الرباعي</label>
+                                        <input type="text" class="form-control" name="father_name" value="{{ old('father_name') }}" required/>
+                                        @error('father_name')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="profession">جنسية الأم</label>
-                                        <select class="form-select" name="mother_nationality" required>
+                                        <select class="form-select" name="father_nationality" required>
                                             <option value="">Choose a Country</option>
                                             @forelse ($countries as $country)
-                                                <option value="{{ $country->id }}" @if(old('mother_nationality')) @selected($country->id == old('mother_nationality')) @else @selected($country->country_code == 'YE') @endif>{{ $country->country_name }}</option>
+                                                <option value="{{ $country->id }}" @if(old('father_nationality')) @selected($country->id == old('father_nationality')) @else @selected($country->country_code == 'YE') @endif>{{ $country->country_name }}</option>
                                             @empty
                                                 
                                             @endforelse
                                         </select>
-                                        @error('mother_nationality')<span class="text-danger">{{ $message }}</span> @enderror
+                                        @error('father_nationality')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                             

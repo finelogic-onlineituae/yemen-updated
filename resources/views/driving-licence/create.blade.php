@@ -72,9 +72,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="row">
-                                    
-                                </div>
+                                
                             </div>
                     <div class="card text-start my-2">
                      <div class="card-header">
@@ -92,7 +90,7 @@
                                 <select class="form-select" name="driving_licence_center" value="{{ old('expire_on') }}">
                                     <option>جهة الإصدار</option>
                                     @foreach ($driving_licence_centers as $center)
-                                        <option value="{{ $center->id }}" @selected($center->id == old('expire_on'))>{{ $center->center_name }}</option>
+                                        <option value="{{ $center->id }}" @selected($center->id == old('driving_licence_center'))>{{ $center->center_name }}</option>
                                     @endforeach
                                 </select>
                                 @error('driving_licence_center')<span class="text-danger">{{ $message }}</span> @enderror
@@ -116,7 +114,7 @@
                                 <select class="form-select" name="vehicle_category">
                                     <option>	فئة المركبة</option>
                                     @foreach ($vehicle_categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                        <option value="{{ $category->id }}" @selected($center->id == old('vehicle_category'))>{{ $category->category_name }}</option>
                                     @endforeach
                                 </select>
                                 @error('vehicle_category')<span class="text-danger">{{ $message }}</span> @enderror

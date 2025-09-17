@@ -23,7 +23,6 @@ class BirthCertificateController extends Controller
     public function storeBirthCertificate(Request $request)
     {
          $request->validate([
-            'name_english' => 'required',
             
             'name_arabic' => 'required',
             'profession' => 'required',
@@ -32,7 +31,8 @@ class BirthCertificateController extends Controller
             'date_of_birth' => 'required|date',
             'mother_name' => 'required',
             'mother_nationality' => 'required|exists:countries,id',
-         
+            'father_name' => 'required',
+            'father_nationality' => 'required|exists:countries,id',
             'emirate_id_attachment' =>  $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
             'passport_number' => 'required|string|min:8',
             'expire_on' => 'required',
@@ -60,13 +60,14 @@ class BirthCertificateController extends Controller
         if($request->has('application')){
             $application = Form::findOrFail($request->application);
          //   dd($application->formable->passport);
-            $application->formable->name = $request->name_english;
             $application->formable->country_of_birth = $request->country_of_birth;
             $application->formable->city_of_birth = $request->city_of_birth;
             $application->formable->date_of_birth = $request->date_of_birth;
             $application->formable->profession = $request->profession;
             $application->formable->mother_name = $request->mother_name;
             $application->formable->mother_nationality = $request->mother_nationality;
+            $application->formable->father_name = $request->father_name;
+            $application->formable->father_nationality = $request->father_nationality;
             $application->formable->gender = $request->gender;
             $application->formable->passport->passport_number = $request->passport_number;
             $application->formable->passport->passport_center_id = $request->passport_center;
@@ -101,14 +102,15 @@ class BirthCertificateController extends Controller
             ]);
     
             $birthCertificate = BirthCertificate::create([
-                'name' => $request->name_english,
                 'name_arabic' => $request->name_arabic,
                 'profession' => $request->profession,
                 'date_of_birth' => $request->date_of_birth,
                 'country_of_birth' => $request->country_of_birth,
                 'city_of_birth' => $request->city_of_birth,
                 'mother_name' => $request->mother_name,
-                'mother_nationality' => $request->mothers_nationality,
+                'mother_nationality' => $request->mother_nationality,
+                'father_name' => $request->father_name,
+                'father_nationality' => $request->father_nationality,
                 'passport_id' => $passport->id,
                 'emirate_id_attachment' => $emirate_id_file_path,
                 'gender' => $request->gender,

@@ -19,21 +19,21 @@
                         <div class="row g-3 justify-content-center">
                             <div class="col-12 col-md-6 col-lg-4">
                                 <a href="{{ route('attestation.create') }}" class="att-card d-block text-decoration-none border rounded  text-center">
-                                    <div><i class="bi bi-file-check fs-4"></i></div>
+                                    <div><img src="{{ asset('assets/images/icons/Authentication-of-academic-certificates.png') }}" width="50"></div>
                                     <div>تصديق الشهادات الدراسية</div>
                                 </a>
                             </div>
 
                             <div class="col-12 col-md-6 col-lg-4">
                                 <a href="{{ route('attestation.create') }}" class="att-card d-block text-decoration-none border rounded  text-center">
-                                    <div><i class="bi bi-file-check fs-4"></i></div>
+                                    <div><img src="{{ asset('assets/images/icons/Marriage-contract-certification.png') }}" width="50"></div>
                                     <div>تصديق عقد الزواج</div>
                                 </a>
                             </div>
 
                             <div class="col-12 col-md-6 col-lg-4">
                                 <a href="{{ route('attestation.create') }}" class="att-card d-block text-decoration-none border rounded  text-center">
-                                    <div><i class="bi bi-file-check fs-4"></i></div>
+                                    <div><img src="{{ asset('assets/images/icons/birth-certificates.png') }}" width="50"></div>
                                     <div>شهادات الميلاد</div>
                                 </a>
                             </div>
@@ -41,21 +41,21 @@
                         <div class="row g-3 justify-content-center my-2">
                             <div class="col-12 col-md-6 col-lg-4">
                                 <a href="{{ route('attestation.create') }}" class="att-card d-block text-decoration-none border rounded  text-center">
-                                    <div><i class="bi bi-file-check fs-4"></i></div>
+                                    <div><img src="{{ asset('assets/images/icons/Medical-examination-results-certification.png') }}" width="50"></div>
                                     <div>تصديق نتيجة الفحص الطبي</div>
                                 </a>
                             </div>
 
                             <div class="col-12 col-md-6 col-lg-4">
                                 <a href="{{ route('attestation.create') }}" class="att-card d-block text-decoration-none border rounded  text-center">
-                                    <div><i class="bi bi-file-check fs-4"></i></div>
+                                    <div><img src="{{ asset('assets/images/icons/Certificate-of-good-conduct-certification.png') }}" width="50"></div>
                                     <div>تصديق شهادة حسن السيرة والسلوك</div>
                                 </a>
                             </div>
 
                             <div class="col-12 col-md-6 col-lg-4">
                                 <a href="{{ route('attestation.create') }}" class="att-card d-block text-decoration-none border rounded  text-center">
-                                    <div><i class="bi bi-file-check fs-4"></i></div>
+                                    <div><img src="{{ asset('assets/images/icons/Authentication-of-legal-and-legitimate-agencies.png') }}" width="50"></div>
                                     <div>تصديق الوكالات الشرعية والقانونية</div>
                                 </a>
                             </div>
@@ -63,14 +63,14 @@
                         <div class="row g-3 justify-content-center my-2">
                             <div class="col-12 col-md-6 col-lg-4">
                                 <a href="{{ route('attestation.create') }}" class="att-card d-block text-decoration-none border rounded text-center">
-                                    <div><i class="bi bi-file-check fs-4"></i></div>
+                                    <div><img src="{{ asset('assets/images/icons/Authentication-of-judicial-rulings.png') }}" width="50"></div>
                                     <div>تصديق الأحكام القضائية</div>
                                 </a>
                             </div>
 
                             <div class="col-12 col-md-6 col-lg-4">
                                 <a href="{{ route('attestation.create') }}" class="att-card d-block text-decoration-none border rounded text-center">
-                                    <div><i class="bi bi-file-check fs-4"></i></div>
+                                    <div><img src="{{ asset('assets/images/icons/Authentication-of-other-documents.png') }}" width="50"></div>
                                     <div>تصديق الوثائق الأخرى</div>
                                 </a>
                             </div>

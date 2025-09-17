@@ -31,19 +31,14 @@ class DrivingLicenceController extends Controller
     public function storeDrivingLicence(Request $request)
     {
         $request->validate([
-            'name_english' => 'required',
-            
             'name_arabic' => 'required',
-            'profession' => 'required',
-            'country_of_birth' => 'required|exists:countries,id',
-            'city_of_birth' => 'required',
-            'date_of_birth' => 'required|date',
             'driving_licence_number' => 'required',
-            'driving_licence_center_id' => 'required|exists:driving_licence_centers,id',
+            'driving_licence_center' => 'required|exists:driving_licence_centers,id',
             'vehicle_category_id' => 'requiredexists:vehicle_categories,id',
             'dl_issued_on' => 'required',
             'dl_expire_on' => 'required',
             'emirate_id_attachment' =>  $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
+            'driving_licence' =>  $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
             'passport_number' => 'required|string|min:8',
             'expire_on' => 'required',
             'passport_center' => 'required|exists:passport_centers,id',
@@ -57,28 +52,21 @@ class DrivingLicenceController extends Controller
         if($request->hasFile('emirate_id_attachment')) {
             $emirate_id_file_path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id());
         }
-       
+       if($request->hasFile('driving_licence')) {
+            $licence_file_path = $request->file('driving_licence')->store('uploads/user_' . auth()->id());
+        }
 
         if($request->has('application')){
             $application = Form::findOrFail($request->application);
 
-            
-            $application->formable->name = ucfirst($request->name_english);
             $application->formable->name_arabic = $request->name_arabic;
-            $application->formable->profession = $request->profession;
-            $application->formable->country_of_birth = $request->country_of_birth;
-            $application->formable->city_of_birth = $request->city_of_birth;
-            $application->formable->gender = $request->gender;
-            $application->formable->date_of_birth = $request->date_of_birth;
+          
             $application->formable->driving_licence_number = $request->driving_licence_number;
             $application->formable->driving_licence_center_id = $request->driving_licence_center;
             $application->formable->vehicle_category_id = $request->vehicle_category;
             $application->formable->dl_issued_on = $request->dl_issued_on;
             $application->formable->dl_expire_on = $request->dl_expire_on;
-           
-
-           
-
+        
             //update passport
             $application->formable->passport->passport_number = $request->passport_number;
             $application->formable->passport->passport_center_id = $request->passport_center;
@@ -90,6 +78,9 @@ class DrivingLicenceController extends Controller
             }
              if($request->hasFile('emirate_id_attachment')){
                 $application->formable->emirates_id_attachment = $emirate_id_file_path;
+            }
+            if($request->hasFile('driving_licence')){
+                $application->formable->driving_licence_attachment = $licence_file_path;
             }
 
             $application->formable->passport->save(); 
@@ -107,7 +98,6 @@ class DrivingLicenceController extends Controller
             ]);
     
             $drivingLicence = DrivingLicence::create([
-                'name' => ucwords($request->name_english),
                 'name_arabic' => $request->name_arabic,
                 'passport_id' => $passport->id,
                 'driving_licence_number' => $request->driving_licence_number,
@@ -115,11 +105,8 @@ class DrivingLicenceController extends Controller
                 'vehicle_category_id' => $request->vehicle_category,
                 'dl_issued_on' => $request->dl_issued_on,
                 'dl_expire_on' => $request->dl_expire_on,
-                'country_of_birth' => $request->country_of_birth,
-                'city_of_birth' => $request->city_of_birth,
-                'date_of_birth' => $request->date_of_birth,
-                'profession' => $request->profession,
-                'emirates_id_attachment' => $emirate_id_file_path
+                'emirates_id_attachment' => $emirate_id_file_path,
+                'driving_licence_attachment' => $licence_file_path
             ]);
 
             $application = $user->forms()->create([
