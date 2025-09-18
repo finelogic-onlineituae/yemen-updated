@@ -4,8 +4,9 @@
         <h3>لإصدار إفادة إعالة، يرجى تعبئة جميع الحقول الإلزامية لإتمام الطلب</h3>
     </div>
     <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
-        <form action="{{ route('family-member.store') }}" enctype="multipart/form-data" method="POST" wire:submit.prevent="verifyApplication" id="family-member-form" class="w-100 align-items-center text-center d-flex justify-content-center">
+        <form action="{{ route('support.store') }}" enctype="multipart/form-data" method="POST" id="family-member-form" class="w-100 align-items-center text-center d-flex justify-content-center">
             @csrf
+           @csrf
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -42,7 +43,7 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">الاسم</label>
-                                        <input type="text" name="applicant_name" class="form-control">
+                                        <input type="text" name="applicant_name" class="form-control" required>
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="nationality">الجنسية</label>
@@ -61,21 +62,21 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">  رقم جواز السفر</label>
-                                        <input type="text"  maxlength="8"  id="passportInput-"  name="applicant_passport_number" class="form-control">
+                                        <input type="text"  maxlength="8"  id="passportInput-"  name="applicant_passport_number" class="form-control" required>
                                             <small id="passportError-" class="text-danger d-none">
                                             Please enter a valid Passport Number
                                         </small>
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="applicant_issued_on"> تاريخ الإصدار</label>
-                                        <input type="date" name="applicant_issued_on" class="form-control">
+                                        <input type="date" name="applicant_issued_on" class="form-control" required>
                                     </div>
                                     
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name"> جهة الإصدار</label>
-                                        <select name="applicant_passport_center" class="form-control">                                              
+                                        <select name="applicant_passport_center" class="form-control" required>                                              
                                             <option value="">Select</option>
                                             @foreach ($passport_centers as $center)
                                                 <option value="{{ $center->id }}">{{ $center->center_name }}</option>
@@ -86,11 +87,11 @@
                                  <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                             <label class="form-label fw-bold" for="applicant_passport_attachment">نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
-                                            <input type="file" name="applicant_passport_attachment" class="form-control">
+                                            <input type="file" name="applicant_passport_attachment" class="form-control" required>
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                             <label class="form-label fw-bold" for="applicant_emirate_id_attachment"> نسخة من الهوية الاماراتيه (pdf ,jpg, png, jpeg)</label>
-                                            <input type="file" class="form-control" name="applicant_emirate_id_attachment" />
+                                            <input type="file" class="form-control" name="applicant_emirate_id_attachment" required/>
                                     </div>   
                             </div>   
                                
@@ -108,11 +109,11 @@
                                         <input type="text" name="member_name[]" class="form-control">
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="nationality">الجنسية</label>
-                                        <select class="form-select" name="nationality" required>
+                                        <label class="form-label fw-bold" for="member_nationality">الجنسية</label>
+                                        <select class="form-select" name="member_nationality[]" required>
                                             <option value="">Choose a Country</option>
                                             @forelse ($countries as $country)
-                                                <option value="{{ $country->id }}" @if(old('nationality')) @selected($country->id == old('nationality')) @else @selected($country->country_code == 'YE') @endif>{{ $country->country_name }}</option>
+                                                <option value="{{ $country->id }}" @if(old('member_nationality')) @selected($country->id == old('member_nationality')) @else @selected($country->country_code == 'YE') @endif>{{ $country->country_name }}</option>
                                             @empty
                                                 
                                             @endforelse
@@ -124,14 +125,14 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">  رقم جواز السفر</label>
-                                        <input type="text"  maxlength="8"  id="passportInput-"  name="member_passport_number[]" class="form-control">
+                                        <input type="text"  maxlength="8"  id="passportInput-"  name="member_passport_number[]" class="form-control" required>
                                             <small id="passportError-" class="text-danger d-none">
                                             Please enter a valid Passport Number
                                         </small>
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="member_issued_on"> تاريخ الإصدار</label>
-                                        <input type="date" name="member_issued_on[]" class="form-control">
+                                        <label class="form-label fw-bold" for="member_issued_on" > تاريخ الإصدار</label>
+                                        <input type="date" name="member_issued_on[]" class="form-control" required>
                                     </div>
                                     
                                 </div>
@@ -139,7 +140,7 @@
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name"> جهة الإصدار</label>
 
-                                        <select name="member_passport_center[]" class="form-control">                                              
+                                        <select name="member_passport_center[]" class="form-control" required>                                              
                                             <option value="">Select</option>
                                             @foreach ($passport_centers as $center)
                                                 <option value="{{ $center->id }}">{{ $center->center_name }}</option>
@@ -147,19 +148,19 @@
                                         </select>
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="member_relation">صلة القرابة </label>
-                                        <input type="text" class="form-control" name="member_relation[]" > 
+                                        <label class="form-label fw-bold" for="member_relation">صلة القرابة</label>
+                                        <input type="text" class="form-control" name="member_relation[]" required> 
                                     </div>
                                     
                                 </div>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="member_passport_attachment">نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
-                                        <input type="file" name="member_passport_attachment[]" class="form-control">
+                                        <input type="file" name="member_passport_attachment[]" class="form-control" required>
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="member_passport_attachment">نسخة من الهوية الاماراتية (إن وجدت)</label>
-                                        <input type="file" name="member_passport_attachment[]" class="form-control">
+                                        <label class="form-label fw-bold" for="member_emirate_id_attachment">نسخة من الهوية الاماراتية (إن وجدت)</label>
+                                        <input type="file" name="member_emirate_id_attachment[]" class="form-control" required>
                                     </div>
                                 </div>
                 </div>

@@ -97,6 +97,7 @@ Route::middleware(['auth', 'email.verified'])->group(function () {
     Route::post('/applications/store-family-member', [FamilyMemberController::class, 'storeFamilyMember'])->name('family-member.store');
 
     Route::get('/applications/support', [SupportController::class, 'create'])->name('support.create');
+     Route::post('/applications/store-support', [SupportController::class, 'store'])->name('support.store');
    
     Route::get('/applications/no-id-card-group', [NoIdCardGroupController::class, 'create'])->name('no-id-card-group.create');
     Route::post('/applications/store-no-id-card-group', [NoIdCardGroupController::class, 'store'])->name('no-id-card-group.store');
@@ -153,6 +154,11 @@ Route::middleware(['auth', 'email.verified'])->group(function () {
         Route::get('/applications/remove-family-member/{application_id}/{member_id}', [FamilyMemberController::class, 'removeFamilyMember'])->name('family-member.remove');
         Route::post('/applications/add-family-member/{application_id}', [FamilyMemberController::class, 'addFamilyMember'])->name('family-member.more');
         Route::get('/applications/edit-family-member/{application_id}', [FamilyMemberController::class, 'editFamilyMember'])->name('family-member.edit');
+
+        Route::get('/applications/verify-statement-above/{application_id}', [SupportController::class, 'verifySupport'])->name('support.verify');
+        Route::get('/applications/remove-statement-above/{application_id}/{member_id}', [SupportController::class, 'removeSupportMember'])->name('support.remove');
+        Route::post('/applications/add-statement-above/{application_id}', [SupportController::class, 'addSupportMember'])->name('support.more');
+        Route::get('/applications/edit-statement-above/{application_id}', [SupportController::class, 'editMember'])->name('support.edit');
 
         Route::get('/applications/verify-no-id-card-group/{application_id}', [NoIdCardGroupController::class, 'verify'])->name('no-id-card-group.verify');
         Route::get('/applications/edit-no-id-card-group/{application_id}', [NoIdCardGroupController::class, 'edit'])->name('no-id-card-group.edit');

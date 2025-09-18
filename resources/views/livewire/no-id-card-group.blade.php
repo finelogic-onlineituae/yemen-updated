@@ -38,42 +38,7 @@
                                     </div>
                                 </div>
                                 
-                                {{-- <div class="row">
-                                    
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
-                                        <input type="date" class="form-control" name="date_of_birth" wire:model="date_of_birth"/>
-                                        @error('date_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">جنس</label>
-                                        <select class="form-select" name="gender" wire:model="gender">
-                                            <option value="">Choose Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                        </select>
-                                        @error('profession')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="country_of_birth">بلد الميلاد</label>
-                                        <select class="form-select" name="country_of_birth" wire:model="country_of_birth">
-                                            <option value="">Choose a Country</option>
-                                            @forelse ($countries as $country)
-                                                <option value="{{ $country->id }}">{{ $country->country_name }}</option>
-                                            @empty
-                                                
-                                            @endforelse
-                                        </select>
-                                        @error('country_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="profession">مدينة الميلاد</label>
-                                        <input type="text" class="form-control" name="city_of_birth" wire:model="city_of_birth"/>
-                                        @error('city_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div> --}}
+                               
                                 <div class="row">
                                     
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">

@@ -2,7 +2,7 @@
 <div>
     <h2 class="text-success w-100 text-center" >قم بمراجعة طلبك</h2>
     <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
-        <form action="@if(request()->has('edit')) {{ route('family-member.store', ['application' => $application->id]) }} @else {{ route('application.confirm', ['application_id' => $application->id]) }}  @endif" enctype="multipart/form-data" method="POST" wire:submit.prevent="verifyApplication" id="family-member-form" class="w-100 align-items-center text-center d-flex flex-column justify-content-center">
+        <form action="@if(request()->has('edit')) {{ route('support.store', ['application' => $application->id]) }} @else {{ route('application.confirm', ['application_id' => $application->id]) }}  @endif" enctype="multipart/form-data" method="POST" id="family-member-form" class="w-100 align-items-center text-center d-flex flex-column justify-content-center">
             @csrf
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -66,7 +66,7 @@
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                             <div @class(["d-none" => !request('edit'), "mb-2"])>
                                 <label class="form-label fw-bold" for="applicant_passport_attachment"> جواز (ملف بي دي إف  ,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="applicant_passport_attachment"  @if(!request('edit')) disabled @endif/>
+                                <input type="file" class="form-control" name="applicant_passport_attachment"  @if(!request('edit')) disabled @endif required/>
                                  @error('applicant_passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                            <div>
@@ -82,6 +82,7 @@
                                             @else
                                             <iframe id="passport_iframe" src="/storage/{{ $application->formable->passport->attachment }}"></iframe>
                                             @endif
+                                            
                                         </div>
                                     </div>
                                     <!-- End Modal -->
@@ -90,7 +91,7 @@
                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <div @class(["d-none" => !request('edit'), "mb-2"])>
                                 <label class="form-label fw-bold" for="emirate_id_attachment"> الهوية الإماراتية (ملف بي دي إف  ,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="emirate_id_attachment"  @if(!request('edit')) disabled @endif  />
+                                <input type="file" class="form-control" name="emirate_id_attachment"  @if(!request('edit')) disabled @endif  required/>
                                 @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
                                  </div>
                            <div>
@@ -119,12 +120,12 @@
                         
                 <div class="card text-start my-2" >
                             <div class="card-body">
-                                @forelse ($application->formable->familyMembers as $member)
+                                @forelse ($application->formable->supportMembers as $member)
                                    
                                 <div class="border p-2 my-2">
-                                    @if(count($application->formable->familyMembers) > 1)
+                                    @if(count($application->formable->supportMembers) > 1)
                                     <div class="d-flex align-items-end justify-content-end">
-                                        <a href="{{ route('family-member.remove', ['application_id' => $application->id, 'member_id' => $member->id]) }}" onclick="return confirm('Are you sure want to remove member {{ strtoupper($member->name) }}?')" class="btn btn-sm btn-danger">X</a>
+                                        <a href="{{ route('support.remove', ['application_id' => $application->id, 'member_id' => $member->id]) }}" onclick="return confirm('Are you sure want to remove member {{ strtoupper($member->name) }}?')" class="btn btn-sm btn-danger">X</a>
                                     </div>
                                     @endif
                                 <div class="row">
@@ -184,7 +185,7 @@
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <div @class(["d-none" => !request('edit'), "mb-2"])>
                                         <label class="form-label fw-bold" for="passport_attachment"> جواز (ملف بي دي إف  ,jpg, png, jpeg)</label>
-                                        <input type="file" class="form-control" name="passport_attachment"  @if(!request('edit')) disabled @endif  required/>
+                                        <input type="file" class="form-control" name="passport_attachment"  @if(!request('edit')) disabled @endif/>
                                         @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div>
@@ -209,7 +210,7 @@
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <div @class(["d-none" => !request('edit'), "mb-2"])>
                                         <label class="form-label fw-bold" for="emirate_id_attachment"> الهوية الإماراتية (ملف بي دي إف  ,jpg, png, jpeg)</label>
-                                        <input type="file" class="form-control" name="emirate_id_attachment"  @if(!request('edit')) disabled @endif   required/>
+                                        <input type="file" class="form-control" name="emirate_id_attachment"  @if(!request('edit')) disabled @endif required/>
                                         @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div>
@@ -246,7 +247,7 @@
                     <button class="btn buttom-effect" id="submitBtn" >تغييرات التحديث</button>
                 @else
                     <button class="btn buttom-effect" id="submitBtn" >تأكيد التطبيق</button>
-                    <a class="btn btn-dark" id="submitBtn" href="{{ route('family-member.verify', ['application_id' => $application->id, 'edit'=> true]) }}">قم بإجراء التغييرات</a>
+                    <a class="btn btn-dark" id="submitBtn" href="{{ route('support.verify', ['application_id' => $application->id, 'edit'=> true]) }}">قم بإجراء التغييرات</a>
                 @endif
                 <a type="button"  onclick="openModal('member-form')" class="btn btn-success mx-2">إضافة عضو</a> 
             </div>
@@ -257,7 +258,7 @@
         <div id="member-form" class="modal">
             <div class="modal-content " style="height:auto !important;">
                 <span class="close" onclick="closeModal('member-form')">&times;</span>
-            <form action="{{ route('family-member.more', ['application_id' => $application->id]) }}" enctype="multipart/form-data" method="POST">
+            <form action="{{ route('support.more', ['application_id' => $application->id]) }}" enctype="multipart/form-data" method="POST">
                 @csrf
                         <div class="card text-start mt-5" >
                             <div class="card-header">إضافة عضو</div>
@@ -321,7 +322,7 @@
                                     </div>
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="member_emirate_id_attachment"> نسخة من الهوية الاماراتية (إن وجدت)</label>
-                                        <input type="file" class="form-control" name="member_emirate_id_attachment" required/>
+                                        <input type="file" class="form-control" name="member_emirate_id_attachment"  required/>
                                     </div>   
                                     
                                 </div>

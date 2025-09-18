@@ -7,6 +7,7 @@ use App\Models\Form;
 use App\Models\Country;
 use App\Models\PassportCenter;
 use App\Models\Kinship;
+use App\Models\Passport;
 use App\Models\FamilyMember;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,8 +22,10 @@ class FamilyMemberController extends Controller
 
     public function storeFamilyMember(Request $request)
     {
+       // dd($request->all());
         $validated = $request->validate([
             'applicant_name' => 'required|max:250',
+            'nationality' => 'required|exists:countries,id',
             'applicant_passport_number' => 'required|max:250',
             'applicant_passport_center.*' => 'required|exists:passport_centers,id',
             'applicant_issued_on.*' => 'required|date',
@@ -31,8 +34,9 @@ class FamilyMemberController extends Controller
             'member_passport_center.*' => 'required|exists:passport_centers,id',
             'member_issued_on.*' => 'required|date',
             'member_relation.*' => 'required',
+            'member_nationality.*' => 'required|exists:countries,id',
             'member_passport_attachment.*' =>  $request->has('application') ? 'nullable' : 'file|mimes:pdf,jpg,png,jpeg|max:2048',
-            'applicant_passport_attachment.*' => $request->has('application') ? 'nullable' : 'file|mimes:pdf,jpg,png,jpeg|max:2048',
+            'member_passport_attachment.*' => $request->has('application') ? 'nullable' : 'file|mimes:pdf,jpg,png,jpeg|max:2048',
             'applicant_emirate_id_attachment' => $request->has('application') ? 'nullable' : 'file|mimes:pdf,jpg,png,jpeg|max:2048',
             'applicant_passport_attachment' => $request->has('application') ? 'nullable' : 'file|mimes:pdf,jpg,png,jpeg|max:2048',
         ]);
@@ -52,6 +56,14 @@ class FamilyMemberController extends Controller
                 array_push($passport_file_paths, $file_path);
             }
         }
+        if($request->file('member_emirate_id_attachment') != null)
+        {
+            foreach($request->file('member_emirate_id_attachment') as $emirate_id)
+            {
+                $file_path = $emirate_id->store('uploads/user_' . auth()->id());
+                array_push($emirate_id_file_paths, $file_path);
+            }
+        }
         
       /*  if($request->file('member_emirate_id_attachment') != null)
         {
@@ -64,34 +76,41 @@ class FamilyMemberController extends Controller
 
        
         if($request->has('application')) {
-            dd('work under progress');
+           // dd('work under progress');
             $i = 0;
             $application = Form::where('id', $request->application)->first();
             //$application->formable
             $i = 0;
             foreach($request->member_id as $member_id){
-                $member = FamilyMember::where('id', decrypt($request->member_id))->first();
+                $member = FamilyMember::where('id', decrypt($member_id))->first();
                 if($member->kinship_id != $application->formable->id){
                     abort(403);
                 }
                 $passport = Passport::where('id', $member->passport_id)->first();
-                $attach = 'member_passport_attachment'.
                 $passport_attachment = null;
-                if($request->file('member_passport_attachment')[$i]){
+                if($request->hasFile("member_passport_attachment.$i")){
                     $passport_attachment_path = $request->file('member_passport_attachment')[$i]->store('uploads/user_' . auth()->id());
                 }
-                
+                if($request->hasFile("member_emirate_id_attachment.$i")){
+                    $emirate_id_attachment_path = $request->file('member_emirate_id_attachment')[$i]->store('uploads/user_' . auth()->id());
+                }
                 $passport->passport_number = $request->member_passport_number[$i];
-                $passport->issued_by = $request->member_passport_number[$i];
-                $passport->passport_center_id = $request->member_passport_number[$i];
-                $passport->issued_on = $request->member_passport_number[$i];
-                $passport->attachment = $request->passport_attachment_path;
-                   
-            
-                $member->member_name = $request->member_name[$i];
-                $member->member_passport = $request->member_name[$i];
-                $member->member_name = $request->member_name[$i];
-                $member->member_name = $request->member_name[$i];
+               // $passport->issued_by = $request->member_passport_number[$i];
+                $passport->passport_center_id = $request->member_passport_center[$i];
+                $passport->issued_on = $request->member_issued_on[$i];
+                if($request->hasFile("member_passport_attachment.$i")){
+                    $passport->attachment = $request->passport_attachment_path;
+                }
+          
+                $member->name = $request->member_name[$i];
+                $member->relationship = $request->member_relation[$i];
+                $member->nationality = $request->member_nationality[$i];
+                if($request->hasFile("member_emirate_id_attachment.$i")){
+                    $member->emirate_id_attachment = $emirate_id_attachment_path;
+                }
+                $passport->save();
+                $member->save();
+                $i++;
             }
         }
         
@@ -111,8 +130,9 @@ class FamilyMemberController extends Controller
             
             $kinship = Kinship::create([
                 'applicant_name' => $request->applicant_name,
+                'nationality' => $request->nationality,
                 'passport_id' => $applicant_passport->id,
-                'emirates_id_attachment' => $applicant_emirates_id_file
+                'emirate_id_attachment' => $applicant_emirates_id_file
             ]);
 
             $i=0;
@@ -126,8 +146,9 @@ class FamilyMemberController extends Controller
                 ]);
                 $member = FamilyMember::create([
                         'name' => $request->member_name[$i],
+                        'nationality' => $request->member_nationality[$i],
                         'relationship' => $request->member_relation[$i],
-                        //'emirates_id_attachment' => $emirate_id_file_paths[$i],
+                        'emirate_id_attachment' => $emirate_id_file_paths[$i],
                         'kinship_id' => $kinship->id,
                         'passport_id' => $passport->id
                 ]);
@@ -172,7 +193,7 @@ class FamilyMemberController extends Controller
         if(auth()->user()->id != $supporter->form->user_id){
             abort(403);
         }   
-        Storage::delete([ $member->passport->attachment, $member->emirates_id_attachment]);
+        Storage::delete([ $member->passport->attachment, $member->emirate_id_attachment]);
         $member->delete();
         return redirect()->route('family-member.verify', ['application_id' => $supporter->form->id]);
     }
@@ -190,14 +211,13 @@ class FamilyMemberController extends Controller
             'member_passport_number' => 'required|string|max:50',
             'member_passport_center' => 'required|exists:passport_centers,id',
             'member_issued_on' => 'required|date',
-            'member_expire_on' => 'required|date',
             'member_relation' => 'required',
-            'member_emirates_id_attachment' => 'file|mimes:pdf|max:2048',
-            'member_passport_attachment' => 'file|mimes:pdf|max:2048',
+            'member_emirate_id_attachment' => 'required|file|mimes:pdf|max:2048',
+            'member_passport_attachment' => 'required|file|mimes:pdf|max:2048',
         ]);
 
         $passport_path = $request->file('member_passport_attachment')->store('uploads/user_' . auth()->id());
-        $emirate_id_path = $request->file('member_emirates_id_attachment')->store('uploads/user_' . auth()->id());
+        $emirate_id_path = $request->file('member_emirate_id_attachment')->store('uploads/user_' . auth()->id());
 
         $passport = auth()->user()->passports()->create([
                     'passport_number' => $request->member_passport_number,
@@ -210,8 +230,9 @@ class FamilyMemberController extends Controller
 
         $member = FamilyMember::create([
                         'name' => $request->member_name,
+                        'nationality' => $request->member_nationality,
                         'relationship' => $request->member_relation,
-                        'emirates_id_attachment' => $emirate_id_path,
+                        'emirate_id_attachment' => $emirate_id_path,
                         'kinship_id' => $application->formable->id,
                         'passport_id' => $passport->id
                 ]);

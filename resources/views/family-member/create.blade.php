@@ -106,11 +106,11 @@
                                         <input type="text" name="member_name[]" class="form-control">
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="nationality">الجنسية</label>
-                                        <select class="form-select" name="nationality" required>
+                                        <label class="form-label fw-bold" for="member_nationality">الجنسية</label>
+                                        <select class="form-select" name="member_nationality[]" required>
                                             <option value="">Choose a Country</option>
                                             @forelse ($countries as $country)
-                                                <option value="{{ $country->id }}" @if(old('nationality')) @selected($country->id == old('nationality')) @else @selected($country->country_code == 'YE') @endif>{{ $country->country_name }}</option>
+                                                <option value="{{ $country->id }}" @if(old('member_nationality')) @selected($country->id == old('member_nationality')) @else @selected($country->country_code == 'YE') @endif>{{ $country->country_name }}</option>
                                             @empty
                                                 
                                             @endforelse
@@ -156,8 +156,8 @@
                                         <input type="file" name="member_passport_attachment[]" class="form-control">
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="member_passport_attachment">نسخة من الهوية الاماراتية (إن وجدت)</label>
-                                        <input type="file" name="member_passport_attachment[]" class="form-control">
+                                        <label class="form-label fw-bold" for="member_emirate_id_attachment">نسخة من الهوية الاماراتية (إن وجدت)</label>
+                                        <input type="file" name="member_emirate_id_attachment[]" class="form-control">
                                     </div>
                                 </div>
                 </div>
