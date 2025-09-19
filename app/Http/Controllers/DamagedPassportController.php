@@ -8,6 +8,7 @@ use App\Models\DamagedPassport;
 use App\Models\Country;
 use App\Models\PassportCenter;
 use Storage;
+use Carbon\Carbon;
 
 class DamagedPassportController extends Controller
 {
@@ -48,6 +49,11 @@ class DamagedPassportController extends Controller
             'cropped_image' =>  $request->has('application') ? 'nullable' : 'required',
         ]);
 
+        $date = Carbon::parse($request->expire_on);
+
+        if ($date->diffInMonths(now()) > 6) {
+            return redirect()->back()->with('old_passport', 'As the passport has expired more than six months ago, applicant should visit embassy in person and renew it first!');
+        }
         $user = auth()->user();
         
        // dd($request->cropped_image);

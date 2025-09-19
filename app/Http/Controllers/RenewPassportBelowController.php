@@ -98,6 +98,13 @@ class RenewPassportBelowController extends Controller
         if($request->hasFile('mother_id_card')) {
             $mother_id_card_file_path = $request->file('mother_id_card')->store('uploads/user_' . auth()->id());
         }
+        if($request->hasFile('father_passport')) {
+            $father_passport_file_path = $request->file('father_passport')->store('uploads/user_' . auth()->id());
+        }
+  
+        if($request->hasFile('mother_passport')) {
+            $mother_passport_file_path = $request->file('mother_passport')->store('uploads/user_' . auth()->id());
+        }
         // if($request->hasFile('applicante_id_card')) {
         //     $applicante_id_card_file_path = $request->file('applicante_id_card')->store('uploads/user_' . auth()->id());
         // }
@@ -150,12 +157,14 @@ class RenewPassportBelowController extends Controller
             if($request->hasFile('mother_id_card')) {
                 $application->formable->mother_id_card = $mother_id_card_file_path;
             }
-            // if($request->hasFile('applicante_id_card')) {
-            //     $application->formable->applicante_id_card = $applicante_id_card_file_path;
-            // }
-            // if($request->hasFile('emirates_id_copy')) {
-            //     $application->formable->emirates_id_copy = $emirates_id_copy_file_path;
-            // }
+            if($request->hasFile('father_passport')) {
+                $application->formable->father_passport = $father_passport_file_path;
+            }
+    
+            if($request->hasFile('mother_passport')) {
+                $application->formable->mother_passport = $mother_passport_file_path;
+            }
+
             if($request->hasFile('passport_attachment')){
                 $application->formable->passport->attachment = $passport_file_path;
             }
@@ -208,6 +217,8 @@ class RenewPassportBelowController extends Controller
                 'gender' => $request->gender,
                 'father_id_card' => $father_id_card_file_path,
                 'mother_id_card' => $mother_id_card_file_path,
+                'father_passport' => $father_passport_file_path,
+                'mother_passport' => $mother_passport_file_path,
             ]);
             $application = auth()->user()->forms()->create([
                 'status' => 'Initiated',

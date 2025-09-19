@@ -97,7 +97,7 @@ class LossPassportController extends Controller
 
             $application->formable->phone_number = $request->phone_number;
             $application->formable->emirates_id = $request->emirates_id;
-            $application->formable->name = $request->name;
+            $application->formable->name = $request->name_english;
             $application->formable->name_arabic = $request->name_arabic;
             $application->formable->country_of_birth = $request->country_of_birth;
             $application->formable->city_of_birth = $request->city_of_birth;
@@ -120,7 +120,7 @@ class LossPassportController extends Controller
             $application->formable->passport->passport_number = $request->passport_number;
             $application->formable->passport->issued_by = $request->issued_by;
             $application->formable->passport->issued_on = $request->issued_on;
-            $application->formable->passport->expires_on = $request->expires_on;
+            $application->formable->passport->expires_on = $request->expire_on;
             
             if($request->hasFile('passport_attachment')){
                 $application->formable->passport->attachment = $passport_file_path;

@@ -14,24 +14,30 @@
     <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
          <form action="{{ route('damaged-passport.store') }}" enctype="multipart/form-data" method="POST" id="renew-passport-above-form" class="w-100 align-items-center text-center d-flex justify-content-center">
             @csrf
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            
             <div class="manage-width-75 manage-width p-3 mx-2 rounded  align-items-center text-center form-scroll bg-ash ">
                 <div class="card text-start my-2">
+                    @if(session('old_passport') != null)
+                        <div class="alert alert-danger">
+                            {{ session('old_passport') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                    @endif
                      <div class="card-body">
                         <div class="card">
                             {{-- <div class="card-header">معلومات جواز السفر</div> --}}
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
+                                        <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
                                         <input type="text" class="form-control" name="name_arabic" value="{{ old('name_arabic') }}" required/>
                                         @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -59,7 +65,7 @@
                                 
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="country_of_birth"> محل الميلاد</label>
+                                        <label class="form-label fw-bold" for="country_of_birth">محل الميلاد</label>
                                         <select class="form-select" name="country_of_birth" required>
                                             <option value="">Choose a Country</option>
                                             @forelse ($countries as $country)

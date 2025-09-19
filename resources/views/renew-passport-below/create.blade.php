@@ -170,20 +170,20 @@
                         </div>    
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                            <label class="form-label fw-bold" for="father_id_card"> جواز سفر الأب (pdf ,jpg, png, jpeg)</label>
-                            <input type="file" class="form-control" name="father_id_card" required/>
-                            @error('father_id_card') <span class="text-danger">{{ $message }}</span> @enderror
+                            <label class="form-label fw-bold" for="father_passport"> جواز سفر الأب (pdf ,jpg, png, jpeg)</label>
+                            <input type="file" class="form-control" name="father_passport" required/>
+                            @error('father_passport') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="mother_id_card"> بطاقة هوية الأم (pdf ,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="mother_id_card" required/>
-                                @error('mother_id_card')<span class="text-danger">{{ $message }}</span> @enderror
+                                <label class="form-label fw-bold" for="mother_passport"> بطاقة هوية الأم (pdf ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control" name="mother_passport" required/>
+                                @error('mother_passport')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>   
                         </div>  
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="photo">صورة شخصية حديثة  (jpg, png, jpeg) (200x200)</label>
-                                <input type="file" class="form-control item-photo" id="imageInput"  accept="image/*">
+                                <input type="file" class="form-control item-photo" id="imageInput"  accept="image/*" required>
                                 @error('croppedPhoto')<span class="text-danger">{{ $message }}</span> @enderror
 
                                 <!-- Cropper Preview Modal -->
@@ -232,24 +232,24 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="relative_name">الاسم </label>
-                                        <input type="text" class="form-control" name="relative_name"  value="{{ old('relative_name') }}"/>
+                                        <input type="text" class="form-control" name="relative_name"  value="{{ old('relative_name') }}" required/>
                                         @error('relative_name')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="relative_relation">صلة القرابة</label>
-                                        <input type="text" class="form-control" name="relative_relation" value="{{ old('relative_relation') }}"/>
+                                        <input type="text" class="form-control" name="relative_relation" value="{{ old('relative_relation') }}" required/>
                                         @error('relative_relation')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="relative_address">العنوان</label>
-                                        <input type="text" class="form-control" name="relative_address" value="{{ old('relative_address') }}"/>
+                                        <input type="text" class="form-control" name="relative_address" value="{{ old('relative_address') }}" required/>
                                         @error('relative_address')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="relative_phone">رقم الهاتف</label>
-                                        <input type="text" class="form-control" name="relative_phone" value="{{ old('relative_phone') }}"/>
+                                        <input type="text" class="form-control" name="relative_phone" value="{{ old('relative_phone') }}" required/>
                                         @error('relative_phone')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
@@ -262,38 +262,38 @@
                                     <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="land_mark">معلم بارز</label>
-                                <input type="text" class="form-control" name="address_land_mark" value="{{ old('address_land_mark') }}"/>
+                                <input type="text" class="form-control" name="address_land_mark" value="{{ old('address_land_mark') }}" required/>
                                 @error('address_land_mark')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                              
                               <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="phone">الشارع</label>
-                                <input type="text" class="form-control" name="address_street" value="{{ old('address_street') }}"/>
+                                <input type="text" class="form-control" name="address_street" value="{{ old('address_street') }}" required/>
                                 @error('address_street') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="land_mark">المنطقه</label>
-                                <input type="text" class="form-control" name="address_area" value="{{ old('address_area') }}"/>
+                                <input type="text" class="form-control" name="address_area" value="{{ old('address_area') }}" required/>
                                 @error('address_area')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                              
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="phone">المنطقة - الإمارة</label>
-                                <input type="text" class="form-control" name="address_emirate" value="{{ old('address_emirate') }}"/>
+                                <input type="text" class="form-control" name="address_emirate" value="{{ old('address_emirate') }}" required/>
                                 @error('address_emirate') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="phone">رقم التليفون</label>
-                                    <input type="text" class="form-control" name="phone_number" value="{{ old('phone_number') }}"/>
+                                    <input type="text" class="form-control" name="phone_number" value="{{ old('phone_number') }}" required/>
                                     @error('phone_number') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="phone">رقم الهاتف البديل</label>
-                                    <input type="text" class="form-control" name="alt_phone_number" value="{{ old('alt_phone_number') }}"/>
+                                    <input type="text" class="form-control" name="alt_phone_number" value="{{ old('alt_phone_number') }}" required/>
                                     @error('alt_phone_number') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
