@@ -11,11 +11,11 @@
                     <div class="card-body">
                         <div class="d-flex form-group rounded w-100 p-2 justify-content-center align-items-center ">
                             <div class="form-check">
-                                <input type="radio" name="app_type" value="adult" class="form-check-input" onclick="changeAppType()" checked>
+                                <input type="radio" name="app_type" value="1" class="form-check-input" onclick="changeAppType()" checked>
                                 <label>Applicant age above 18</label>
                             </div>
                             <div class="form-check mx-2">
-                                <input type="radio" name="app_type" value="college" class="form-check-input" onclick="changeAppType()">
+                                <input type="radio" name="app_type" value="0" class="form-check-input" onclick="changeAppType()">
                                 <label>Applicant age below 18</label>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="form-check" id="has-wife-block">
-                                    <input type="checkbox" class="form-check-input" id="has-wife" onclick="changeAttachments()"> <span class="text-success fw-bold">إذا كانت مقدمة الطلب زوجة مواطن إماراتي</span>
+                                    <input type="checkbox" class="form-check-input" name="emirati-wife" id="has-wife" onclick="changeAttachments()"> <span class="text-success fw-bold">إذا كانت مقدمة الطلب زوجة مواطن إماراتي</span>
                                 </div>
                             </div>
                         </div>
@@ -81,13 +81,13 @@
                         <div id="general">
                             <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="attachment"> نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" wire:model="attachment" name="attachment" />
-                                @error('attachment') <span class="text-danger">{{ $message }}</span> @enderror
+                                <label class="form-label fw-bold" for="passport_attachment"> نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
+                                <input type="file" class="form-control"name="passport_attachment" required/>
+                                @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="licence_attachment">	نسخة من الهوية الاماراتية (pdf,jpg, png, jpeg)</label>
-                                    <input type="file" class="form-control" name="licence_attachment" wire:model="licence_attachment" />
+                                    <input type="file" class="form-control" name="licence_attachment" wire:model="licence_attachment" required/>
                                     @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>    
@@ -95,38 +95,38 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="fathers_passport"> نسخة من جواز سفر الأب  (pdf ,jpg, png, jpeg)</label>
-                                    <input type="file" class="form-control" wire:model="fathers_passport" name="fathers_passport" />
+                                    <input type="file" class="form-control" name="father_passport" required/>
                                     @error('fathers_passport') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <label class="form-label fw-bold" for="attachment">نسخة من الهوية الاماراتية للأب (pdf ,jpg, png, jpeg)</label>
-                                    <input type="file" class="form-control" wire:model="fathers_id" name="fathers_id" />
-                                    @error('fathers_id') <span class="text-danger">{{ $message }}</span> @enderror
+                                    <label class="form-label fw-bold" for="father_emirate_id">نسخة من الهوية الاماراتية للأب (pdf ,jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" wire:model="father_emirate_id" name="father_emirate_id" required/>
+                                    @error('father_emirate_id') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     
                                 </div> 
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="mothers_passport">نسخة من	جواز سفر الأم (pdf,jpg, png, jpeg)</label>
-                                        <input type="file" class="form-control" name="mothers_passport" wire:model="mothers_passport" />
-                                        @error('mothers_passport')<span class="text-danger">{{ $message }}</span> @enderror
+                                        <label class="form-label fw-bold" for="mother_passport">نسخة من	جواز سفر الأم (pdf,jpg, png, jpeg)</label>
+                                        <input type="file" class="form-control" name="mother_passport" required/>
+                                        @error('mother_passport')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                        <label class="form-label fw-bold" for="mothers_id">نسخة من الهوية الاماراتية للأم (pdf,jpg, png, jpeg)</label>
-                                        <input type="file" class="form-control" name="mothers_id" wire:model="mothers_id" />
-                                        @error('mothers_id')<span class="text-danger">{{ $message }}</span> @enderror
+                                        <label class="form-label fw-bold" for="mother_emirate_id">نسخة من الهوية الاماراتية للأم (pdf,jpg, png, jpeg)</label>
+                                        <input type="file" class="form-control" name="mother_emirate_id" required/>
+                                        @error('mother_emirate_id')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     
                                 </div> 
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="photo"> صورة شخصية  (jpg, png, jpeg)</label>
-                                    <input type="file" class="form-control" wire:model="photo" name="photo" />
+                                    <input type="file" class="form-control" wire:model="photo" name="photo" required/>
                                     @error('photo') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="birth_certificate">نسخة من	شهادة ميلاد (pdf,jpg, png, jpeg)</label>
-                                        <input type="file" class="form-control" name="birth_certificate" wire:model="birth_certificate" />
+                                        <input type="file" class="form-control" name="birth_certificate" required/>
                                         @error('birth_certificate')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div> 
@@ -135,9 +135,9 @@
                         <div id="yemeni-wife" style="display:none;">
                              <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <label class="form-label fw-bold" for="passport_attachment"> نسخة من جواز سفر - الزوج(pdf ,jpg, png, jpeg)</label>
-                                    <input type="file" class="form-control" name="passport_attachment" required/>
-                                    @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
+                                    <label class="form-label fw-bold" for="husband_passport"> نسخة من جواز سفر - الزوج(pdf ,jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" name="husband_passport" required/>
+                                    @error('husband_passport') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="passport_attachment"> نسخة من جواز سفر - الزوجة (pdf ,jpg, png, jpeg)</label>
@@ -148,9 +148,9 @@
                             <div class="row">
                                 
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                    <label class="form-label fw-bold" for="emirates_id_attachment"> نسخة من الهوية الاماراتية - الزوجة(pdf ,jpg, png, jpeg)</label>
-                                    <input type="file" class="form-control" name="emirates_id_attachment" required/>
-                                    @error('emirates_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
+                                    <label class="form-label fw-bold" for="emirate_id_attachment"> نسخة من الهوية الاماراتية - الزوجة(pdf ,jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" name="emirate_id_attachment" required/>
+                                    @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
                                 </div>   
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="marriage_document"> نسخة من عقد الزواج(pdf  ,jpg, png, jpeg)</label>
@@ -161,7 +161,7 @@
                             <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="photo"> صورة شخصية  (jpg, png, jpeg)</label>
-                                    <input type="file" class="form-control" wire:model="photo" name="photo" />
+                                    <input type="file" class="form-control" wire:model="photo" name="photo" required/>
                                     @error('photo') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
