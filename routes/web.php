@@ -26,6 +26,7 @@ use App\Http\Controllers\OtherCertificateController;
 use App\Http\Controllers\SchoolCertificateController;
 use App\Http\Controllers\UnivercityCertificateController;
 use App\Http\Controllers\SupportController;
+use App\Http\Controllers\AttestationController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -100,6 +101,7 @@ Route::middleware(['auth', 'email.verified'])->group(function () {
      Route::post('/applications/store-support', [SupportController::class, 'store'])->name('support.store');
    
     Route::get('/applications/no-id-card-group', [NoIdCardGroupController::class, 'create'])->name('no-id-card-group.create');
+    Route::get('/applications/no-id-card-group/remove-member', [NoIdCardGroupController::class, 'removeMember'])->name('nic-group.remove');
     Route::post('/applications/store-no-id-card-group', [NoIdCardGroupController::class, 'store'])->name('no-id-card-group.store');
    
     Route::get('/applications/renew-passport-above', [RenewPassportAboveController::class, 'createRenewPassportAbove'])->name('renew-passport-above.create');
@@ -209,11 +211,12 @@ Route::middleware(['auth', 'email.verified'])->group(function () {
     Route::get('/applications/passport-name-change', [PassportNameChangeController::class, 'createPassportNameChange'])->name('passport-name-change.create');
     Route::post('/applications/store-passport-name-change', [PassportNameChangeController::class, 'storePassportNameChange'])->name('passport-name-change.store');
    
-    Route::get('/applications/attestation', [SchoolCertificateController::class, 'create'])->name('attestation.create');
-    Route::get('/applications/attestation/choose-type', [SchoolCertificateController::class, 'chooseType'])->name('attestation.choose-type');
-    Route::get('/applications/attestation/prompt-requirements', [SchoolCertificateController::class, 'promptRequirement'])->name('attestation.prompt');
-    Route::get('/applications/attestation/requirements-failed', [SchoolCertificateController::class, 'requirementFailure'])->name('attestation.failed');
-    Route::post('/applications/store-attestation', [SchoolCertificateController::class, 'store'])->name('school-certificate.store');
+    Route::get('/applications/attestation', [AttestationController::class, 'create'])->name('attestation.create');
+    Route::get('/applications/attestation/choose-type', [AttestationController::class, 'chooseType'])->name('attestation.choose-type');
+    Route::get('/applications/attestation/prompt-requirements', [AttestationController::class, 'promptRequirement'])->name('attestation.prompt');
+    Route::get('/applications/attestation/requirements-failed', [AttestationController::class, 'requirementFailure'])->name('attestation.failed');
+    Route::get('/applications/attestation/verify-attestaion/{application_id}', [AttestationController::class, 'verifyAttestation'])->name('attestation.verify');
+    Route::post('/applications/store-attestation', [AttestationController::class, 'store'])->name('attestation.store');
     
     Route::get('/applications/marriage-certificate', [MarriageCertificateController::class, 'createMarriageCertificate'])->name('marriage-certificate.create');
     Route::post('/applications/store-marriage-certificate', [MarriageCertificateController::class, 'storeMarriageCertificate'])->name('marriage-certificate.store');

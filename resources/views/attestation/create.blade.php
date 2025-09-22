@@ -12,7 +12,7 @@
 <div>
     
     <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
-         <form action="{{ route('birth-certificate.store') }}" enctype="multipart/form-data" method="POST" id="renew-passport-above-form" class="w-100 align-items-center text-center d-flex justify-content-center">
+         <form action="{{ route('attestation.store') }}" enctype="multipart/form-data" method="POST" id="renew-passport-above-form" class="w-100 align-items-center text-center d-flex justify-content-center">
             @csrf
             <div class="manage-width-75 manage-width p-3 mx-2 rounded  align-items-center text-center form-scroll bg-ash ">
                 <div class="card text-start my-2">
@@ -20,18 +20,27 @@
                         <div class="card">
                             <div class="card-header">بيانات مقدم الطلب</div>
                             <div class="card-body">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="row">
                                         <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                            <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
-                                            <input type="text" class="form-control" name="name_arabic" value="{{ old('name_arabic') }}" required/>
-                                            @error('name_arabic')<span class="text-danger">{{ $message }}</span> @enderror
+                                            <label class="form-label fw-bold" for="name">الاسم باللغة العربية بحسب جواز السفر</label>
+                                            <input type="text" class="form-control" name="name" value="{{ old('name') }}" required/>
+                                            @error('name')<span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                            <label class="form-label fw-bold" for="issued_by">الجنسية</label>
-                                            <select name="issued_by" wire:model="issued_by" class="form-select">
+                                            <label class="form-label fw-bold" for="nationality">الجنسية</label>
+                                            <select name="nationality" class="form-select">
                                                 <option value="">Choose Country</option>
                                                 @foreach ($countries as $country)
-                                                    <option value="{{ $country->country_code }}">{{ $country->country_name.'('.$country->country_code.')' }}</option>
+                                                    <option value="{{ $country->id }}" @selected($country->id == old('nationality'))>{{ $country->country_name.'('.$country->country_code.')' }}</option>
                                                 @endforeach
                                             </select>
                                             @error('issued_by') <span class="text-danger">{{ $message }}</span> @enderror
@@ -88,16 +97,16 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                            <label class="form-label fw-bold" for="phone_number">نوع الوثيقة</label>
-                                            <input type="text" class="form-control" name="phone_number" value="{{ old('issued_on') }}" required/>
-                                            @error('phone_number')<span class="text-danger">{{ $message }}</span> @enderror
+                                            <label class="form-label fw-bold" for="document_type">نوع الوثيقة</label>
+                                            <input type="text" class="form-control" name="document_type" value="{{ old('document_type') }}" required/>
+                                            @error('document_type')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                            <label class="form-label fw-bold" for="issued_by">بلد إصدار الوثيقة</label>
-                                            <select name="issued_by" wire:model="issued_by" class="form-select">
+                                            <label class="form-label fw-bold" for="issuing_country">بلد إصدار الوثيقة</label>
+                                            <select name="issuing_country" class="form-select">
                                                 <option value="">Choose Country</option>
                                                 @foreach ($countries as $country)
-                                                    <option value="{{ $country->country_code }}">{{ $country->country_name.'('.$country->country_code.')' }}</option>
+                                                    <option value="{{ $country->id }}">{{ $country->country_name.'('.$country->country_code.')' }}</option>
                                                 @endforeach
                                             </select>
                                             @error('issued_by') <span class="text-danger">{{ $message }}</span> @enderror
@@ -117,15 +126,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                        
                     </div>
             <div class="form-group my-3 text-center">
                 <button class="btn buttom-effect" id="submitBtn">تقديم الطلب</button>

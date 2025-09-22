@@ -1,4 +1,42 @@
 <x-app-layout>
+    <style>
+/* Mobile card style */
+@media (max-width: 768px) {
+  table.table {
+    border: 0;
+  }
+  table.table thead {
+    display: none; /* hide table header */
+  }
+  table.table tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding: 0.75rem;
+  }
+  table.table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border: none;
+    border-bottom: 1px solid #f1f1f1;
+  }
+  table.table td:last-child {
+    border-bottom: none;
+  }
+  table.table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    margin-right: 1rem;
+    color: #555;
+  }
+  table.table td[data-label="Sl No"] {
+    display: none;
+  }
+}
+</style>
     <x-slot name="header">
         <div class="w-100 text-center">
         <h2 class="">
@@ -8,21 +46,53 @@
     </div>
     </x-slot>
     <h3 class="text-success w-100 text-center">لإصدار إفادة لمن لا يحمل بطاقة هوية، يرجى تعبئة جميع الحقول الإلزامية لإتمام الطلب</h3>
-    <div>
     
-    <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
-        @if(request()->has('batch'))
-            <table class="table table-striped">
-                <tr><th>Sl NO</th><th>Name</th><th>Passport Number</th><th>Issued On</th><th>Expire On</th><th>Issued From</th><th>Is Above 18</th><th>Wife of Emirate Citizen</th></tr>
-                @foreach($application->formable->groupIdCardMembers as $member)
-                <tr><td>{{ $loop->iteration }}</td><td>{{ $member->name_arabic }}</td><td>{{ $member->passport->passport_number }}</td><td>{{ $member->passport->issued_on }}</td><td>{{ $member->passport->expire_on }}</td><td>{{ $member->passport->passportCenter->center_name }}</td><td>{{ $member->is_above_18 ? 'Yes' : 'No' }}</td><td>{{ $member->is_emirati_wife ? 'Yes' : 'No' }}</td></tr>
-                @endforeach
+     @if(request()->has('batch'))
+            <table class="table table-striped table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Passport Number</th>
+                        <th>Issued On</th>
+                        <th>Expire On</th>
+                        <th>Issued From</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($application->formable->groupIdCardMembers as $member)
+                    <tr>
+                        <td data-label="Photo">@if($member->photo) <img src="/storage{{$member->photo}}" width="100"> @else NA  @endif</td>
+                        <td data-label="Name">{{ $member->name_arabic }}</td>
+                        <td data-label="Passport Number">{{ $member->passport->passport_number }}</td>
+                        <td data-label="Issued On">{{ $member->passport->issued_on }}</td>
+                        <td data-label="Expire On">{{ $member->passport->expires_on }}</td>
+                        <td data-label="Issued From">{{ $member->passport->passportCenter->center_name }}</td>
+                        <td data-label="Remove"><a href="{{ route('nic-group.remove',['member' => $member->id, 'application'=> $application->id]) }}" class="btn btn-danger" onclick="return confirm('Are you sure want to Remove member ?')">X</a></td>
+                    </tr>
+                    @empty
+                    @endforelse
+                </tbody>
             </table>
+            <div class="w-100 d-flex justify-content-center">
+                <form action="{{ route('application.confirm', ['application_id' => $application->id]) }}" method="POST">
+                    @csrf
+                    <button class="btn btn-success" onclick="return confirm('Are you sure want to submit finally?')">Final Submit</button>
+                </form>
+            </div>
         @endif
+        <div>
+    <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
+       
         <form action="{{ route('no-id-card-group.store') }}" enctype="multipart/form-data" method="POST" id="no-id-card-group-form" class="w-100 align-items-center text-center d-flex justify-content-center">
             @csrf
+            @if(request()->has('batch'))
+            <input type="hidden" name="batch" value="{{ request('batch') }}">
+            @endif
             <div class="manage-width-75 manage-width p-3 mx-2 rounded  align-items-center text-center form-scroll bg-ash ">
                 
+       
                 @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -91,7 +161,7 @@
                                     </div>
                                 </div>
                                 <div class="form-check" id="has-wife-block">
-                                    <input type="checkbox" class="form-check-input" id="has-wife" onclick="changeAttachments()"> <span class="text-success fw-bold">إذا كانت مقدمة الطلب زوجة مواطن إماراتي</span>
+                                    <input type="checkbox" class="form-check-input" name="emirati_wife" id="has-wife" onclick="changeAttachments()"> <span class="text-success fw-bold">إذا كانت مقدمة الطلب زوجة مواطن إماراتي</span>
                                 </div>
                             </div>
                         </div>
@@ -107,12 +177,12 @@
                             <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="passport_attachment"> نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="passport_attachment" required/>
+                                <input type="file" class="form-control general" name="passport_attachment"/>
                                 @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="emirate_id_attachment">	نسخة من الهوية الاماراتية (pdf,jpg, png, jpeg)</label>
-                                    <input type="file" class="form-control" name="emirate_id_attachment" required/>
+                                    <input type="file" class="form-control general" name="emirate_id_attachment"/>
                                     @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>    
@@ -143,7 +213,7 @@
                                     </div>
                                     
                                 </div> 
-                                <div class="row">
+                               {{--  <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="photo">صورة شخصية (jpg, png, jpeg) (200x200)</label>
                                         <input type="file" class="form-control child-only item-photo" name="photo" id="imageInput"  accept="image/*">
@@ -169,7 +239,7 @@
                                         <input type="hidden" name="cropped_image" id="croppedImage">
                                     </div>
                             
-                                </div>       
+                                </div>    --}}    
                                 <div class="row">
                                     
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
@@ -206,33 +276,34 @@
                                         @error('marriage_document') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>    
-                            <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="photo">صورة شخصية (jpg, png, jpeg) (200x200)</label>
-                                <input type="file" class="form-control item-photo yemeni-wife" id="imageInput" name="photo" accept="image/*">
-                                @error('croppedPhoto')<span class="text-danger">{{ $message }}</span> @enderror
-
-                                <!-- Cropper Preview Modal -->
-                                <div class="d-flex mt-2">
-                                    <div style="width: 200px; height: 200px;" id="crop-platform" class="d-none">
-                                        <img id="previewImage" style="max-width: 100%;">
-                                        <p>Crop Your Photo Here!</p>
-                                    </div>
-                                    <div>
-                                        <button type="button" class=" mx-2 btn btn-info" id="cropButton" style="display: none;">Crop</button>
-                                    </div>
-                                    <br><br>
-                                </div>
-                            </div>
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12" id="preview-crop" style="display: none;">
-                                    <!-- Show Cropped Result -->
-                                    <p><strong>Cropped Preview:</strong></p>
-                                    <img id="croppedPreview" width="200" height="200" style="border: 1px solid #aaa;">
-                                    <br><br>
-                                    <input type="hidden" name="cropped_image" id="croppedImage">
-                            </div>
                             
-                        </div>       
+                            </div>       
+                        
+                        <div class="row" id="photo-section" style="display:none;" class="w-100">
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 border">
+                                    <label class="form-label fw-bold" for="photo">صورة شخصية (jpg, png, jpeg) (200x200)</label>
+                                    <input type="file" class="form-control item-photo yemeni-wife" id="imageInput" name="photo" accept="image/*">
+                                    @error('croppedPhoto')<span class="text-danger">{{ $message }}</span> @enderror
+
+                                    <!-- Cropper Preview Modal -->
+                                    <div class="d-flex mt-2">
+                                        <div style="width: 200px; height: 200px;" id="crop-platform" class="d-none">
+                                            <img id="previewImage" style="max-width: 100%;">
+                                            <p>Crop Your Photo Here!</p>
+                                        </div>
+                                        <div>
+                                            <button type="button" class=" mx-2 btn btn-info" id="cropButton" style="display: none;">Crop</button>
+                                        </div>
+                                        <br><br>
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-lg-4 col-xl-4 col-md-4 col-sm-12" id="preview-crop" style="display: none;">
+                                        <!-- Show Cropped Result -->
+                                        <p><strong>Cropped Preview:</strong></p>
+                                        <img id="croppedPreview" width="200" height="200" style="border: 1px solid #aaa;">
+                                        <br><br>
+                                        <input type="hidden" name="cropped_image" id="croppedImage">
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -308,25 +379,30 @@ function changeAppType()
 {
     const selected = document.querySelector('input[name="app_type"]:checked');
     const elements = document.querySelectorAll(`.child-only`);
-   
+    const generalElements = document.querySelectorAll(`.general`);
+    generalElements.forEach(element => {
+                element.setAttribute('required', 'true');
+        });
     if(selected.value == 'adult'){
         elements.forEach(element => {
                 element.removeAttribute('required');
         });
         
      document.getElementById('for-child-only').style.display = 'none';
+     document.getElementById('photo-section').style.display = 'none';
      document.getElementById('has-wife-block').style.display = 'block';
      document.getElementById('has-wife').checked = false;
     }
     else{
-
         document.getElementById('general').style.display = 'block';
         document.getElementById('yemeni-wife').style.display = 'none';
         document.getElementById('has-wife-block').style.display = 'none';
         document.getElementById('for-child-only').style.display = 'block';
+        document.getElementById('photo-section').style.display = 'block';
         elements.forEach(element => {
                 element.setAttribute('required', 'true');
         });
+        
     }
 }
 function changeAttachments()
@@ -334,12 +410,18 @@ function changeAttachments()
     hasWife = document.getElementById('has-wife');
     const selected = document.querySelector('input[name="app_type"]:checked');
     const elements = document.querySelectorAll(`.yemeni-wife`);
+    const generalElements = document.querySelectorAll(`.general`);
     if(hasWife.checked){
         document.getElementById('general').style.display = 'none';
         document.getElementById('yemeni-wife').style.display = 'block';
+        document.getElementById('photo-section').style.display = 'block';
         elements.forEach(element => {
                 element.setAttribute('required', 'true');
         });
+        generalElements.forEach(element => {
+                element.removeAttribute('required');
+        });
+        
     }
     else{
         elements.forEach(element => {

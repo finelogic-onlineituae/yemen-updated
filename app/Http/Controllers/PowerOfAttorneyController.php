@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Form;
 use App\Models\PowerOfAttorney;
+use App\Models\Country;
+use App\Models\PassportCenter;
 
 class PowerOfAttorneyController extends Controller
 {
@@ -15,96 +17,101 @@ class PowerOfAttorneyController extends Controller
         {
             session()->forget(['edit_application', 'application_id']);
         }
-
-        return view('power-of-attorney.create');
+        
+        return view('power-of-attorney.create', ['countries' => Country::all(), 'passport_centers' => PassportCenter::all()]);
     }
 
     public function store(Request $request)
     {
-        if($request->hasFile('client_passport_attachment')) {
-            $client_passport_file_path = $request->file('client_passport_attachment')->store('uploads/user_' . auth()->id());
-        }
-        if($request->hasFile('agent_passport_attachment')) {
-            $agent_passport_file_path = $request->file('agent_passport_attachment')->store('uploads/user_' . auth()->id());
-        }
 
+        $request->validate([
+                'client_name' => 'required|max:255',
+                'nationality' => 'required|exists:countries,id',
+                'agent_name' => 'required|max:255',
+                'agent_id_number' => 'required|max:255',
+                'passport_number' => 'required',
+                'passport_center' => 'required|exists:passport_centers,id',
+                'issued_on' => 'required|date',
+                'expire_on' => 'required|date',
+                'passport_attachment' =>  $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
+                'emirate_id_attachment' =>  $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
+                'purpose' => 'required',
+                'agent_id_attachment' =>  $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
+                'poa_document' =>  $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
+        ]);
+        if($request->hasFile('passport_attachment')) {
+            $client_passport_file_path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id());
+        }
+        if($request->hasFile('emirate_id_attachment')) {
+            $client_emirate_id_file_path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id());
+        }
+        if($request->hasFile('agent_id_attachment')) {
+            $agent_id_file_path = $request->file('agent_id_attachment')->store('uploads/user_' . auth()->id());
+        }
         if($request->hasFile('poa_document')) {
             $poa_document_file_path = $request->file('poa_document')->store('uploads/user_' . auth()->id());
         }
         
-        if($request->hasFile('residance_permit')) {
-            $residance_permit_file_path = $request->file('residance_permit')->store('uploads/user_' . auth()->id());
-        }
+        
 
         if($request->has('application')){
             $application = Form::findOrFail($request->application);
 
             $application->formable->client_name = ucfirst($request->client_name);
+            $application->formable->nationality = $request->nationality;
             $application->formable->agent_name = ucfirst($request->agent_name);
-            $application->formable->phone_number = $request->phone_number;
-            $application->formable->emirate_id = $request->emirate_id;
+            $application->formable->agent_id_number = $request->agent_id_number;
             $application->formable->purpose = $request->purpose;
-
-            if($request->hasFile('residance_permit')) {
-            $application->formable->residance_permit = $residance_permit_file_path;
-            }
                 
+            if($request->hasFile('agent_id_attachment')) {
+            $application->formable->agent_id_attachment = $agent_id_file_path;
+            }
+            if($request->hasFile('emirate_id_attachment')) {
+            $application->formable->emirate_id_attachment = $client_emirate_id_file_path;
+            }
             if($request->hasFile('poa_document')) {
             $application->formable->poa_document = $poa_document_file_path;
+            }
+            if($request->hasFile('passport_attachment')) {
+            $application->formable->clientPassport->passport_attachment = $client_passport_file_path;
             }
             $application->formable->save();    
 
             //update client passport
-            $application->formable->clientPassport->passport_number = $request->client_passport_number;
-            $application->formable->clientPassport->passport_center_id = $request->client_passport_center;
-            $application->formable->clientPassport->issued_on = $request->client_issued_on;
+            $application->formable->clientPassport->passport_number = $request->passport_number;
+            $application->formable->clientPassport->passport_center_id = $request->passport_center;
+            $application->formable->clientPassport->issued_on = $request->issued_on;
+            $application->formable->clientPassport->expires_on = $request->expire_on;
 
-            if($request->hasFile('client_passport_attachment')){
+            if($request->hasFile('passport_attachment')){
                 $application->formable->clientPassport->attachment = $client_passport_file_path;
             }
 
             $application->formable->clientPassport->save(); 
-            //update agent passport
-            $application->formable->agentPassport->passport_number = $request->agent_passport_number;
-            $application->formable->agentPassport->passport_center_id = $request->agent_passport_center;
-            $application->formable->agentPassport->issued_on = $request->agent_issued_on;
-            $application->formable->agentPassport->expires_on = $request->agent_expire_on;
-
-            if($request->hasFile('agent_passport_attachment')){
-                $application->formable->agentPassport->attachment = $agent_passport_file_path;
-            }
-
-            $application->formable->agentPassport->save();       
+             
         }
         else{
             $user = auth()->user();
             $client_passport = $user->passports()->create([
-                'passport_number' => $request->client_passport_number,                                             
+                'passport_number' => $request->passport_number,                                             
                 'issued_by' => 'YE',
-                'passport_center_id' => $request->client_passport_center,
-                'issued_on' => $request->client_issued_on,
-                'expires_on' => $request->client_expire_on,
+                'passport_center_id' => $request->passport_center,
+                'issued_on' => $request->issued_on,
+                'expires_on' => $request->expire_on,
                 'attachment' => $client_passport_file_path
             ]);
 
-            $agent_passport = $user->passports()->create([
-                'passport_number' => $request->agent_passport_number,
-                'issued_by' => 'YE',
-                'passport_center_id' => $request->agent_passport_center,
-                'issued_on' => $request->agent_issued_on,
-                'expires_on' => $request->agent_expire_on,
-                'attachment' => $agent_passport_file_path
-            ]);
+          
     
             $powerOfAttorney = PowerOfAttorney::create([
                 'client_name' => ucwords($request->client_name),
+                'nationality' => $request->nationality,
                 'agent_name' => ucwords($request->agent_name),
-                'phone_number' => $request->phone_number,
+                'agent_id_number' => $request->agent_id_number,
                 'client_passport_id' => $client_passport->id,
-                'agent_passport_id' => $agent_passport->id,
-                'emirate_id' => $request->emirate_id,
+                'emirate_id_attachment' => $client_emirate_id_file_path,
                 'purpose' => $request->purpose,
-                'residance_permit' => $residance_permit_file_path,
+                'agent_id_attachment' => $agent_id_file_path,
                 'poa_document' => $poa_document_file_path
             ]);
 
@@ -116,15 +123,13 @@ class PowerOfAttorneyController extends Controller
             ]); 
         }
        
-        return redirect()->route('power-of-attorney.verify', ['application_id' => encrypt($application->id)]);
+        return redirect()->route('power-of-attorney.verify', ['application_id' => $application->id]);
     }
     public function verify(Request $request)
     {
-        $application_id = decrypt($request->application_id);
-        $application = Form::findOrFail($application_id);
-
-       // dd($application);
-        return view('power-of-attorney.verify-power-of-attorney', ['application' => $application]);
+        $application = Form::findOrFail($request->application_id);
+        
+        return view('power-of-attorney.verify-power-of-attorney', ['application' => $application, 'countries' => Country::all(), 'passport_centers' => PassportCenter::all()]);
     }
 
     public function edit(Request $request)

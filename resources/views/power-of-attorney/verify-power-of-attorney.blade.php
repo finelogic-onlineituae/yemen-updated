@@ -7,87 +7,119 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h3 class="text-success w-100 text-center">	توكيل </h3>
-
-    <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 ">
-        <div class="w-100 align-items-center text-center d-flex justify-content-center verfiy-form">
+    <h3 class="text-success w-100 text-center">إصدار إفادة إعالة، يرجى تعبئة جميع الحقول الإلزامية لإتمام الطلب</h3>
+    <div>
+    
+    <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
+        <form  action="@if(request()->has('edit')) {{ route('power-of-attorney.store', ['application' => $application->id]) }} @else {{ route('application.confirm', ['application_id' => $application->id]) }}  @endif" enctype="multipart/form-data" method="POST" id="power-of-attorney-form" class="w-100 align-items-center text-center d-flex justify-content-center">
             @csrf
             <div class="manage-width-75 manage-width p-3 mx-2 rounded  align-items-center text-center form-scroll bg-ash ">
                 
                 <div class="card text-start my-2">
                     <div class="card-header">
-                       معلومات العميل
+                       بيانات الموكل
                     </div>
-                    <div class="card-body">
-                        <div class="py-2 text-start">
-                            <div class="row">
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                                    <label class="form-label fw-bold" for="client_name">اسم العميل</label>
-                                    <span>:{{ $application->formable->client_name }}</span>
+                      <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="client_name">الاسم الكامل (كما هو مذكور في جواز السفر)</label>
+                                        <input type="text" class="form-control" name="client_name" value="{{ $application->formable->client_name }}"  @if(!request('edit')) disabled @endif required/>
+                                        @error('client_name')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="nationality">الجنسية</label>
+                                        <select class="form-select" name="nationality" @if(!request('edit')) disabled @endif >
+                                            <option value="">Choose a Country</option>
+                                            @forelse ($countries as $country)
+                                                <option value="{{ $country->id }}" @selected($application->formable->nationality == $country->id)>{{ $country->country_name }}</option>
+                                            @empty
+                                                
+                                            @endforelse
+                                        </select>
+                                        @error('nationality')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                                    <label class="form-label fw-bold" for="phone">رقم الهاتف المحمول</label>
-                                    <span>:{{ $application->formable->phone_number }}</span>
+                                <div class="row">
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                    
+                                        <label class="form-label fw-bold"  for="passport_number">رقم جواز السفر</label>
+                                        
+                                        <input type="text" id="passportInput-" maxlength="8" class="form-control" name="passport_number" @if(!request('edit')) disabled @endif   value="{{ $application->formable->clientPassport->passport_number }}" required/>
+                                        <small id="passportError-" class="text-danger d-none"> Please enter a valid Passport Number</small>
+                                        @error('passport_number') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="passport_center">جهة الإصدار</label>
+                                        <select class="form-select" name="passport_center" @if(!request('edit')) disabled @endif >
+                                            <option>Issuing Authority</option>
+                                            @foreach ($passport_centers as $center)
+                                                <option value="{{ $center->id }}"@selected($application->formable->clientPassport->passport_center_id == $center->id)>{{ $center->center_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('passport_center') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="row">
+                                    
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="issued_on">تاريخ إصدار جواز السفر</label>
+                                        <input type="date" class="form-control" name="issued_on" @if(!request('edit')) disabled @endif   value="{{ $application->formable->clientPassport->issued_on }}" required/>
+                                        @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء جواز السفر</label>
+                                        <input type="date" class="form-control" name="expire_on" @if(!request('edit')) disabled @endif  value="{{ $application->formable->clientPassport->expires_on }}" required/>
+                                        @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
                             
-                        </div>
-                        <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                                <label class="form-label fw-bold" for="emirate_id">رقم الهوية الإماراتية</label>
-                                <span>:{{ $application->formable->phone_number }}</span>
-                            </div>
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                                <span><a class="btn btn-dark me-2 rounded-5 mt-3" onclick="openModal('pdfModal-residance-permit')">تحميل تصريح الإقامة</a></span>
-                                        <!-- Modal -->
-                                        <div id="pdfModal-residance-permit" class="modal">
-                                            <div class="modal-content">
-                                                <span class="close" onclick="closeModal('pdfModal-residance-permit')">&times;</span>
-                                                <iframe id="pdfViewer-verify-passport" src="{{ generate_signed_storage_url($application->formable->residance_permit) }}"></iframe>
-                                            </div>
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <div  @class(["d-none" => !request('edit'), "mb-2"])>
+                                    <label class="form-label fw-bold" for="passport_attachment">نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" name="passport_attachment" />
+                                    @error('passport_attachment')<span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div>
+                                <a onclick="openModal('passport_attachment')" class="btn btn-dark">View Client Passport</a>
+                                <!-- Modal -->
+                                    <div id="passport_attachment" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" onclick="closeModal('passport_attachment')">&times;</span>
+                                            <iframe id="passport_iframe" src="/storage/{{ $application->formable->clientPassport->attachment }}"></iframe>
                                         </div>
-                                        <!-- End Modal -->
+                                    </div>
+                                    <!-- End Modal -->
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <div @class(["d-none" => !request('edit'), "mb-2"])>
+                                    <label class="form-label fw-bold" for="emirate_id_attachment">نسخة من الهوية الاماراتيه(pdf ,jpg, png, jpeg)</label>
+                                    <input type="file" class="form-control" name="emirate_id_attachment" />
+                                    @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div>
+                                <a onclick="openModal('emirate_id_attachment')" class="btn btn-dark">View Client Emirate ID</a>
+                                <!-- Modal -->
+                                    <div id="emirate_id_attachment" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" onclick="closeModal('emirate_id_attachment')">&times;</span>
+                                            <iframe id="passport_iframe" src="/storage/{{ $application->formable->emirate_id_attachment }}"></iframe>
+                                        </div>
+                                    </div>
+                                    <!-- End Modal -->
+                            </div>
+                            </div>
+                        </div>
                                 
                             </div>
                         </div>
                 
-                {{-- Client Passport --}}
-                    <div class="row">
-                        <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                            <label class="form-label fw-bold" for="client_passport_number">رقم جواز السفر</label>
-                            <span>:{{$application->formable->clientPassport->passport_number}}</span>
-                        </div>
-                        <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                            <label class="form-label fw-bold" for="client_issued_by">صادرة عن</label>
-                                
-                            <span>:{{$application->formable->clientPassport->passportCenter->center_name}}</span>
-                               
-                        </div>
-                    </div>
-        
-                    <div class="row">
-                        <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex">
-                            <label class="form-label fw-bold" for="client_issued_on">صدر بتاريخ</label>
-                            <span>:{{$application->formable->clientPassport->issued_on}}</span>
-                        </div>
-                        <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                              <span><a class="btn btn-dark me-2 rounded-5 mt-3" onclick="openModal('pdfModal-verify-client-passport')">عرض جواز السفر</a></span>
-                                    <!-- Modal -->
-                                    <div id="pdfModal-verify-client-passport" class="modal">
-                                        <div class="modal-content">
-                                            <span class="close" onclick="closeModal('pdfModal-verify-client-passport')">&times;</span>
-                                            <iframe id="pdfViewer-verify-passport" src="{{ generate_signed_storage_url($application->formable->clientPassport->attachment) }}"></iframe>
-                                        </div>
-                                    </div>
-                                    <!-- End Modal -->
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
+               
+               
             <div class="card text-start my-2">
                 <div class="card-header">
-                   	معلومات الوكيل
+                   	بيانات الوكيل
                 </div>
                 <div class="card-body">
                     {{-- Agent Passport --}}
@@ -95,90 +127,93 @@
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="agent_name">	اسم الوكيل</label>
-                                <span>:{{$application->formable->agent_name}}</span>    
+                                <input type="text" class="form-control" name="agent_name" @if(!request('edit')) disabled @endif   value="{{ $application->formable->agent_name }}" required/>
+                                @error('agent_name')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="agent_passport_number">رقم جواز السفر</label>
-                                <span>:{{$application->formable->agentPassport->passport_number}}</span>
+                                <label class="form-label fw-bold" for="agent_id_number">رقم البطاقة الشخصية/ رقم جواز السفر</label>
+                                <input type="text" class="form-control" name="agent_id_number" @if(!request('edit')) disabled @endif  value="{{ $application->formable->agent_id_number }}" required/>
+                                @error('agent_id_number')<span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                           
+                        </div>
+                        <div class="row">
+                            
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <label class="form-label fw-bold" for="purpose">	الغرض من الوكالة</label>
+                                <input type="text" class="form-control" name="purpose" @if(!request('edit')) disabled @endif   value="{{ $application->formable->purpose }}" required/>
+                                @error('purpose')<span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <div @class(["d-none" => !request('edit'), "mb-2"])>
+                                    <label class="form-label fw-bold" for="poa_document">	يرجى إرفاق صورة من سند الملكية أو أي وثيقة ذات صلة بالوكالة</label>
+                                    <input type="file" class="form-control" name="poa_document"/>
+                                    @error('poa_document')<span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div>
+                                <a onclick="openModal('poa_document')" class="btn btn-dark">View POA Document</a>
+                                <!-- Modal -->
+                                        <div id="poa_document" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close" onclick="closeModal('poa_document')">&times;</span>
+                                                <iframe id="passport_iframe" src="/storage/{{ $application->formable->poa_document }}"></iframe>
+                                            </div>
+                                        </div>
+                                        <!-- End Modal -->
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                                <div @class(["d-none" => !request('edit'), "mb-2"])>
+                                    <label class="form-label fw-bold" for="agent_id_attachment">	تحميل الهوية / جواز السفر</label>
+                                    <input type="file" class="form-control" name="agent_id_attachment"/>
+                                    @error('agent_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div>
+                                <a onclick="openModal('agent_id_attachment')" class="btn btn-dark">View Agent ID</a>
+                                <!-- Modal -->
+                                        <div id="agent_id_attachment" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close" onclick="closeModal('agent_id_attachment')">&times;</span>
+                                                <iframe id="passport_iframe" src="/storage/{{ $application->formable->agent_id_attachment }}"></iframe>
+                                            </div>
+                                        </div>
+                                        <!-- End Modal -->
+                                </div>
                             </div>
                         </div>
                          
-                        <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="agent_issued_by">صادرة عن</label>
-                                <span>:{{$application->formable->agentPassport->passportCenter->center_name}}</span>
-
-                            </div>
-                        
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="issued_on">صدر بتاريخ</label>
-                                <span>:{{$application->formable->agentPassport->issued_on}}</span>    
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-                                <label class="form-label fw-bold" for="agent_expire_on">تنتهي صلاحيته</label>
-                                <span>:{{$application->formable->agentPassport->expires_on}}</span>    
-                            </div>
-                            <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
-
-                                  <span><a class="btn btn-dark me-2 rounded-5 mt-3" onclick="openModal('pdfModal-verify-agent_passport')">عرض جواز السفر</a></span>
-                                        <!-- Modal -->
-                                        <div id="pdfModal-verify-agent_passport" class="modal">
-                                            <div class="modal-content">
-                                                <span class="close" onclick="closeModal('pdfModal-verify-agent_passport')">&times;</span>
-                                                <iframe id="pdfViewer-verify-passport" src="{{ generate_signed_storage_url($application->formable->agentPassport->attachment) }}"></iframe>
-                                            </div>
-                                        </div>
-                                        <!-- End Modal -->     
-                            </div>
-                            
-                        </div>
-                         <div class="row">
-                           
-                            <div class="form-group mb-3 col-lg-12 col-xl-12 col-md-12 col-sm-12">
-                                <span><a class="btn btn-dark me-2 rounded-5 mt-3" onclick="openModal('pdfModal-verify-power-of-attorney')">	الغرض من الوكالة</a></span>
-                                        <!-- Modal -->
-                                        <div id="pdfModal-verify-power-of-attorney" class="modal">
-                                            <div class="modal-content">
-                                                <span class="close" onclick="closeModal('pdfModal-verify-power-of-attorney')">&times;</span>
-                                                <iframe id="pdfViewer-verify-passport" src="{{ generate_signed_storage_url($application->formable->poa_document) }}"></iframe>
-                                            </div>
-                                        </div>
-                                        <!-- End Modal --> 
-                            </div>
-                              <div class="form-group mb-3 col-lg-12 col-xl-12 col-md-12 col-sm-12">
-                                <label class="form-label fw-bold" for="name">غرض الوكالة</label>
-                                <p>{{ $application->formable->purpose }}</p>
-                            </div>
-                        </div>
+                      
                     </div>
                 </div>
-            {{-- <div class="card text-start my-2">
-                
-                    <div class="card-body">
-                        <div class="row">
-                          
-                        </div>
-                        <div class="row">
-                          
-                        </div>
-                    </div>
-                </div> --}}
-           
-            <livewire:signature :application_id="$application->id"/>
-
-            <div class="form-group gap-2 my-3 text-center d-flex">
-                <form method="POST" action="{{ route('application.confirm', ['application_id' => encrypt($application->id)]) }}">
-                    @csrf
-                    <button class="btn btn-success" id="final-submit" disabled>تقديم الطلب</button>
-                </form>
-                {{-- <a href="#" class="btn btn-dark">Make Changes</a> --}}
-                 <a href="{{ route('power-of-attorney.edit', ['application_id' => encrypt($application->id)]) }}" class="btn btn-dark">Make Changes</a>
+            
+            <div class="form-group my-3 text-center">
+                @if(request()->has('edit'))
+                    <button class="btn buttom-effect" id="submitBtn" >تغييرات التحديث</button>
+                @else
+                    <button class="btn buttom-effect" id="submitBtn" >تأكيد التطبيق</button>
+                @endif
+                <a class="btn btn-dark" id="submitBtn" href="{{ route('power-of-attorney.verify', ['application_id' => $application->id, 'edit'=> true]) }}">قم بإجراء التغييرات</a>
             </div>
             </div>
-        </div>
+        </form>
     </div>
+
 </div>
-</div>
+
+
+
 </x-app-layout>
+
+
+
+
+<script>
+// Get today's date in YYYY-MM-DD format
+const today = new Date().toISOString().split('T')[0];
+  // Set max attribute to today's date
+  document.getElementById('issued_on').setAttribute('max', today);
+</script>
+
