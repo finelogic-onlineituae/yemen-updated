@@ -20,6 +20,15 @@
                         <div class="card">
                             
                             <div class="card-body">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name_arabic">الاسم باللغة العربية بحسب جواز السفر</label>
@@ -301,15 +310,7 @@
                 </div>
                 </div>
             </div>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            
             <div class="form-group my-3 text-center">
                 <button class="btn buttom-effect" id="submitBtn" disabled>تقديم الطلب</button>
             </div>

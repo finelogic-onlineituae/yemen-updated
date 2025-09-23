@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                             <label class="form-label fw-bold" for="phone_number">رقم الهاتف</label>
-                                            <input type="tel" class="form-control" name="phone_number" value="{{ old('issued_on') }}" required/>
+                                            <input type="tel" class="form-control" name="phone_number" value="{{ old('phone_number') }}" required/>
                                             @error('phone_number')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
