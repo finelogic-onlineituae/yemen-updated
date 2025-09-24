@@ -4,7 +4,7 @@
     
     <style>
         body { font-family: 'Arial, sans-serif'; }
-        .container { margin: 20px; height:730px; align-items: center;}
+        .container { margin: 20px; height:600px; align-items: center;}
         .flex-between {
   display: flex;
   justify-content: space-between;
@@ -31,6 +31,10 @@ tr:nth-child(odd) {
 </head>
 <body>
     <img src="{{ public_path('assets/images/letter-head-top.jpg') }}" width="100%"/>
+    
+    <div style="width:100%; text-align:center;">
+      <h2>Application Acknowledgement</h2>
+    </div>
     <hr>
     <div class="container">
         <span>
@@ -43,10 +47,11 @@ tr:nth-child(odd) {
         نوع التطبيق:
         <h4 class="text-primary">{{ $application->form_type->application_name_arabic }}</h4>
         <h4 class="text-primary">{{ $application->form_type->application_name }}</h4>
-        {{ $slot }}
-        
         </span>
         <hr>
+        {{ $slot }}
+        <p>Your Application has been submitted successfully</p>
+        
     </div>
         <hr>
         <img src="{{ public_path('assets/images/letter-head-bottom.jpg') }}" width="100%"/>

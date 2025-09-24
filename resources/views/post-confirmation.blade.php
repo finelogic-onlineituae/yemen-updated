@@ -17,7 +17,7 @@
                         <div class="card-body">
                             <h4 class="text-success mt-5">لقد تم تقديم طلبك بنجاح!</h4>
                             <div class="text-center my-3 mt-1 d-flex gap-2 pt-3 border-dark border-top ">
-                                <a href="{{ route('download-app', ['application_id'=> encrypt($application_id)]) }}" class="btn btn-danger">قم بتنزيل التطبيق الخاص بك</button> 
+                                <a href="{{ route('download-app', ['application_id'=> $application_id]) }}" target="_blank" class="btn btn-danger">قم بتنزيل التطبيق الخاص بك</button> 
                                     {{-- <a href="#" class="btn btn-danger">قم بتنزيل التطبيق الخاص بك</button> --}}
                                 <a href="{{ route('applications.index') }}"><button class="btn btn-dark">عرض جميع تطبيقاتك</button></a>
                             </div>
