@@ -123,6 +123,7 @@ class VisaApplicationController extends Controller
 
     public function storeVisaApplication(Request $request)
     {
+        //dd($request->issued_by);
         $request->validate([
                 'name_arabic' => 'required|max:255',
                 'name_english' => 'required|max:255',
@@ -139,6 +140,11 @@ class VisaApplicationController extends Controller
                 'address_in_roy' => 'required|max:500',
                 'sponsor_name' => 'required|max:255',
                 
+                'passport_number' => 'required',
+                'issued_by' => 'required|exists:countries,id',
+                'issued_on' => 'required',
+                'expire_on' => 'required',
+
                 'sponsor_address' => 'required|max:500',
                 'accompany_name' => $request->has('accompany') ? 'required|max:255' : 'nullable',
                 'previous_visit_1' => 'required|date|before:today',
@@ -147,8 +153,8 @@ class VisaApplicationController extends Controller
                 'passport_attachment' => $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
                 'sponsor_pass' => $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
                 'sponsor_passport' => $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
-                'accompany_passport' => !$request->has('accompany') ? 'nullable' : ($request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048'),
-                'accompany_id_card' => !$request->has('accompany') ? 'nullable' : ($request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048'),
+                'accompany_passport' => !$request->has('has_accompany') ? 'nullable' : ($request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048'),
+                'accompany_id_card' => !$request->has('has_accompany') ? 'nullable' : ($request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048'),
         ]);
       
         $file_path = null;
@@ -234,7 +240,14 @@ class VisaApplicationController extends Controller
             $application->formable->passport->passport_center_id = $request->passport_center;
             $application->formable->passport->issued_on = $request->issued_on;
             $application->formable->passport->expires_on = $request->expire_on;
+            $application->formable->passport->issued_by = $request->issued_by;
          
+            
+            if($request->has('has_accompany')){
+                $application->formable->has_accompany = $request->has_accompany ? true : false;
+                $application->formable->accompany_name = $request->accompany_name;
+            }
+
             if($request->hasFile('id_card')) {
                 $application->formable->id_card = $id_card_file_path;
             } 
@@ -275,7 +288,7 @@ class VisaApplicationController extends Controller
                 'issued_by' => $request->issued_by, 
                 'passport_center_id' => $request->passport_center,
                 'issued_on' => $request->issued_on,
-                'expires_on' => $request->expires_on,
+                'expires_on' => $request->expire_on,
                 'attachment' => $file_path
             ]);
 
@@ -296,8 +309,8 @@ class VisaApplicationController extends Controller
                 'roy_address' => $request->address_in_roy,
                 'sponsor_name' => $request->sponsor_name,
                 'sponsor_address' => $request->sponsor_address,
-                'previous_visit_1' => $request->previous_visit_date_1,
-                'previous_visit_2' => $request->previous_visit_date_2,
+                'previous_visit_1' => $request->previous_visit_1,
+                'previous_visit_2' => $request->previous_visit_2,
                 'emirate_id_attachment' => $id_card_file_path,
                 'sponsor_noc' => $sponsor_noc_file_path,
                 'sponsor_passport' => $sponsor_passport_file_path,

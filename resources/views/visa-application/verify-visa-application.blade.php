@@ -7,7 +7,7 @@
         <p>( على أساس جواز السفر )</p>
     </div>
     </x-slot>
-    <h3 class="text-success w-100 text-center">لإصدار تأشيرة، يرجى تعبئة جميع الحقول الإلزامية لإتمام الطلب</h3>
+    <h3 class="text-success w-100 text-center">قم بمراجعة طلبك</h3>
     <div>
     
     <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
@@ -49,10 +49,10 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
                                         <label class="form-label fw-bold" for="issued_by">جهة إصدار جواز السفر</label>
-                                        <select name="issued_by" wire:model="issued_by" class="form-select" @if(!request('edit')) disabled @endif>
+                                        <select name="issued_by" class="form-select" @if(!request('edit')) disabled @endif required>
                                             <option value="">Choose Country</option>
                                             @foreach ($countries as $country)
-                                                <option value="{{ $country->country_id }}" @selected($application->formable->passport->issued_by == $country->id)>{{ $country->country_name }}</option>
+                                                <option value="{{ $country->id }}" @selected($application->formable->passport->issued_by == $country->id)>{{ $country->country_name }}</option>
                                             @endforeach
                                         </select>
                                         @error('issued_by') <span class="text-danger">{{ $message }}</span> @enderror
@@ -116,14 +116,14 @@
                                 <label class="form-label fw-bold" for="address_uae">العنوان في الإمارات العربية المتحدة</label>
                                 <textarea type="date" class="form-control" rows="4" name="address_uae" id="address_uae" @if(!request('edit')) disabled @endif required> {{ $application->formable->uae_address }}</textarea>
                                 @error('address_uae') <span class="text-danger">{{ $message }}</span> @enderror
-                                <input type="checkbox" class="form-check-input" name="same_address" id="same_address" @if(!request('edit')) disabled @endif/>
+                                <input type="checkbox" class="form-check-input" name="same_address" id="same_address" onclick="copyAddress()" @if(!request('edit')) disabled @endif/>
                                 <label for="same_address" class="form-label">نفس العنوان الدائم</label>
                             </div>
                         </div>
                          <div class="row">
                             <div class="col-lg-8 col-md-8 col-sm-12 mb-3 mb-lg-0 mb-md-0">
                                 <label class="form-label fw-bold" for="name">الغرض من السفر إلى الجمهورية اليمنية</label>
-                                <input type="text" class="form-control" name="purpose_of_travel" value="{{ $application->formable->name_arabic }}" @if(!request('edit')) disabled @endif required/>
+                                <input type="text" class="form-control" name="purpose_of_travel" value="{{ $application->formable->travel_purpose }}" @if(!request('edit')) disabled @endif required/>
                                 @error('purpose_of_travel') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
@@ -303,7 +303,7 @@
 
                 </div>
                       <div class="form-group my-3">
-                                <input type="checkbox" class="form-check-input" name="has_accompany"  @if(!request('edit')) disabled @endif required onclick="hasAccompany(this)" @if($application->formable->has_accompany) checked @endif/>
+                                <input type="checkbox" class="form-check-input" name="has_accompany"  @if(!request('edit')) disabled @endif onclick="hasAccompany(this)" @if($application->formable->has_accompany) checked @endif/>
                                 <label for="add_accompany" class="form-label"> Add Accompanying Person </label>
                         </div>
             <div id="accompany" @if(!$application->formable->has_accompany) style="display:none;" @endif>
@@ -312,7 +312,7 @@
                    <hr>
                     <div class="col-lg-12 col-md-12 col-sm-12 mb-3 mb-lg-0 mb-md-0">
                                 <label class="form-label fw-bold" for="accompany_name">الاسم باللغة العربية بحسب جواز السفر</label>
-                                <input type="text" class="form-control" name="accompany_name" value="{{ $application->formable->accompany_name }}" @if(!request('edit')) disabled @endif required/>
+                                <input type="text" class="form-control" name="accompany_name" value="{{ $application->formable->accompany_name }}" @if(!request('edit')) disabled @endif/>
                                 @error('accompany_name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                  </div>
@@ -402,11 +402,7 @@ function hasAccompany(element)
 </x-app-layout>
 
 
-<script>
-    Livewire.on('submitVisaApplicationForm', () => {
-        document.getElementById('visa-application-form').submit();
-    });
-</script>
+
 
 <script>
 // Get today's date in YYYY-MM-DD format
@@ -464,8 +460,7 @@ const today = new Date().toISOString().split('T')[0];
             cropPreview.style.display="block";
             submitBtn.disabled = false;
         });
-    </script>
-<script>
+
     const form = document.querySelector('form');
 
     form.addEventListener('submit', function (e) {
@@ -476,4 +471,14 @@ const today = new Date().toISOString().split('T')[0];
             alert("Please crop the image before submitting.");
         }
     });
+    
+    function copyAddress()
+    {
+       // console.log('tesdt');
+        const address = document.querySelector('#same_address');
+       // alert(address.checked);
+        if(address.checked){
+            document.getElementById("address_uae").value = document.getElementById("address").value;
+        }
+    }
 </script>

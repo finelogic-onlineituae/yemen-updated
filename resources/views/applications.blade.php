@@ -76,7 +76,7 @@
                             <td>{{  $application->form_type->application_name_arabic }}</td>
                             <td>{{ $application->created_at }}</td>
                             <td>{{ $application->status }}</td>
-                            <td><a href="{{url('download-application',encrypt($application->id))}}"><button class="btn btn-sm btn-primary">منظر</button></a></td>
+                            <td><a href="{{url('download-application',$application->id)}}" target="_blank"><button class="btn btn-sm btn-primary">منظر</button></a></td>
                             <td>
                             {{-- @if($application->status=='approved')
                             @endif

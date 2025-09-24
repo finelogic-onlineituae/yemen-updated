@@ -13,12 +13,13 @@ class PDFController extends Controller
     public function generate($id)
     {
 
-        $application = Form::findOrFail(decrypt($id));
+        $application = Form::findOrFail($id);
    
          $data = [
             'application' => $application,
         ];
-        switch ($application->form_type_id) {
+        $html = view('pdf.common', $data)->render();
+      /*  switch ($application->form_type_id) {
             case '1':
                 $html = view('pdf.birth-certificate', $data)->render();
                 break;
@@ -81,7 +82,7 @@ class PDFController extends Controller
                 abort(403);
                 break;
         }
-        
+        */
         // return $html;
             $mpdf = new Mpdf([
             'margin_top'    => 5,

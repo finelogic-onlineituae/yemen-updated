@@ -49,10 +49,10 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
                                         <label class="form-label fw-bold" for="issued_by">جهة إصدار جواز السفر</label>
-                                        <select name="issued_by" wire:model="issued_by" class="form-select">
+                                        <select name="issued_by" class="form-select" required>
                                             <option value="">Choose Country</option>
                                             @foreach ($countries as $country)
-                                                <option value="{{ $country->country_id }}" @selected(old('issued_by') == $country->id)>{{ $country->country_name }}</option>
+                                                <option value="{{ $country->id }}" @selected(old('issued_by') == $country->id)>{{ $country->country_name }}</option>
                                             @endforeach
                                         </select>
                                         @error('issued_by') <span class="text-danger">{{ $message }}</span> @enderror
@@ -116,7 +116,7 @@
                                 <label class="form-label fw-bold" for="address_uae">العنوان في الإمارات العربية المتحدة</label>
                                 <textarea type="date" class="form-control" rows="4" name="address_uae" id="address_uae" required> {{ old('address_uae') }}</textarea>
                                 @error('address_uae') <span class="text-danger">{{ $message }}</span> @enderror
-                                <input type="checkbox" class="form-check-input" name="same_address" id="same_address"/>
+                                <input type="checkbox" class="form-check-input" name="same_address" onclick="copyAddress()" id="same_address"/>
                                 <label for="same_address" class="form-label">نفس العنوان الدائم</label>
                             </div>
                         </div>
@@ -337,8 +337,7 @@ const today = new Date().toISOString().split('T')[0];
             cropPreview.style.display="block";
             submitBtn.disabled = false;
         });
-    </script>
-<script>
+  
     const form = document.querySelector('form');
 
     form.addEventListener('submit', function (e) {
@@ -349,4 +348,13 @@ const today = new Date().toISOString().split('T')[0];
             alert("Please crop the image before submitting.");
         }
     });
+    function copyAddress()
+    {
+        console.log('tesdt');
+        const address = document.querySelector('#same_address');
+       // alert(address.checked);
+        if(address.checked){
+            document.getElementById("address_uae").value = document.getElementById("address").value;
+        }
+    }
 </script>

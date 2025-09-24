@@ -39,14 +39,13 @@ tr:nth-child(odd) {
             <div>تطبق على: {{ $application->applied_on }}</div>
             <div>حالة:  {{ $application->status }}</div>
 
-
-        نوع التطبيق:
-        <h4 class="text-primary">{{ $application->form_type->application_name_arabic }}</h4>
-        <h4 class="text-primary">{{ $application->form_type->application_name }}</h4>
-        {{ $slot }}
-        
         </span>
         <hr>
+       
+        <h1 class="text-primary">{{ $application->form_type->application_name_arabic ?  $application->form_type->application_name_arabic : $application->form_type->application_name}}</h1>
+        {{ $slot }}
+        
+        
     </div>
         <hr>
         <img src="{{ public_path('assets/images/letter-head-bottom.jpg') }}" width="100%"/>
