@@ -198,7 +198,7 @@ Route::middleware(['auth', 'email.verified'])->group(function () {
         Route::post('/applications/confirm-application/{application_id}', [ApplicationController::class, 'confirmApplication'])->name('application.confirm');
         Route::get('/applications/post-confirmation/{application_id}', [ApplicationController::class, 'postConfirmation'])->name('post-confirmation');
 
-        Route::get('/download-application/{application_id}', [PDFController::class, 'generate'])->name('download-app');
+       
 
     });
 
@@ -241,7 +241,7 @@ Route::get('/download-file', [DownloadfileController::class, 'download'])
 
 Route::get('/secure-pdf', [DownloadfileController::class, 'servePdf'])->name('secure.pdf')->middleware('signed');
 
-
+ Route::get('/download-application/{application_id}', [PDFController::class, 'generate'])->name('download-app');
 });
 
 require __DIR__.'/auth.php';

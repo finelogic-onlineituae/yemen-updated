@@ -236,8 +236,8 @@
                  </div>
                 <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
-                                <label class="form-label fw-bold" for="acc_passport_attachment">نسخة من جواز السفر<br>(ملف jpg/png/PDF أقل من 2 ميجا بايت)</label>
-                                <input type="file" class="form-control" name="acc_passport_attachment" wire:model="id_card"/>
+                                <label class="form-label fw-bold" for="accompany_passport">نسخة من جواز السفر<br>(ملف jpg/png/PDF أقل من 2 ميجا بايت)</label>
+                                <input type="file" class="form-control" name="accompany_passport" wire:model="id_card"/>
                                 @error('accompany_passport') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">

@@ -173,7 +173,7 @@ class LossPassportController extends Controller
                 'emirate' => $request->address_emirate,
                 //'present_passholder' => $request->present_passholder,
                 'passport_id' => $passport->id,
-               
+                'emirates_id_attachment' => $emirate_id_file_path,
                 //'id_card' => $id_card_file_path,
                
                 'notice_in_newpaper' => $notice_in_newpaper_file_path,

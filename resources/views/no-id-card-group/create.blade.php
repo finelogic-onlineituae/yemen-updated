@@ -280,7 +280,7 @@
                             </div>       
                         
                         <div class="row" id="photo-section" style="display:none;" class="w-100">
-                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12 border">
+                                <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="photo">صورة شخصية (jpg, png, jpeg) (200x200)</label>
                                     <input type="file" class="form-control item-photo yemeni-wife" id="imageInput" name="photo" accept="image/*">
                                     @error('croppedPhoto')<span class="text-danger">{{ $message }}</span> @enderror
@@ -380,6 +380,7 @@ function changeAppType()
     const selected = document.querySelector('input[name="app_type"]:checked');
     const elements = document.querySelectorAll(`.child-only`);
     const generalElements = document.querySelectorAll(`.general`);
+    const wifeelements = document.querySelectorAll(`.yemeni-wife`);
     generalElements.forEach(element => {
                 element.setAttribute('required', 'true');
         });
@@ -401,6 +402,9 @@ function changeAppType()
         document.getElementById('photo-section').style.display = 'block';
         elements.forEach(element => {
                 element.setAttribute('required', 'true');
+        });
+        wifeelements.forEach(element => {
+                element.removeAttribute('required');
         });
         
     }
@@ -429,6 +433,7 @@ function changeAttachments()
         });
         document.getElementById('general').style.display = 'block';
         document.getElementById('yemeni-wife').style.display = 'none';
+        document.getElementById('photo-section').style.display = 'none';
     }
 }
 </script>

@@ -289,8 +289,8 @@
                                     </div>
                                     <br><br>
                                 </div>
-                                <img src="/storage/{{ $application->formable->photo }}" width="200" class="img-thumbnail">
                             </div>
+                            
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12" id="preview-crop" style="display: none;">
                                     <!-- Show Cropped Result -->
                                     <p><strong>Cropped Preview:</strong></p>
@@ -298,6 +298,9 @@
                                     <br><br>
                                     <input type="hidden" name="cropped_image" id="croppedImage">
                             </div>
+                        </div>
+                        <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                        <img src="/storage/{{ $application->formable->photo }}" width="200" class="img-thumbnail">
                         </div>
                     </div>       
 
