@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
-                                        <input type="date" class="form-control" name="date_of_birth" value="{{ old('date_of_birth') }}" required/>
+                                        <input type="date" min="1900-01-01" max="2099-12-31" class="form-control" name="date_of_birth" value="{{ old('date_of_birth') }}" required/>
                                         @error('date_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     
@@ -96,12 +96,12 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_on">تاريخ الإصدار</label>
-                                        <input type="date" class="form-control" name="issued_on" value="{{ old('issued_on') }}" required/>
+                                        <input type="date" min="1900-01-01" max="2099-12-31" class="form-control" name="issued_on" value="{{ old('issued_on') }}" required/>
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="expire_on">تاريخ الانتهاء</label>
-                                        <input type="date" class="form-control" name="expire_on" value="{{ old('expire_on') }}" required/>
+                                        <input type="date" class="form-control" id="expire_on" name="expire_on" value="{{ old('expire_on') }}" required/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>

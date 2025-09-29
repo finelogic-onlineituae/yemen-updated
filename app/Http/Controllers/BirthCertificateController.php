@@ -35,7 +35,7 @@ class BirthCertificateController extends Controller
             'father_nationality' => 'required|exists:countries,id',
             'emirate_id_attachment' =>  $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
             'passport_number' => 'required|string|min:8',
-            'expire_on' => 'required',
+            'expire_on' => 'required|after_or_equal:' . now()->subMonths(6)->toDateString(),
             'passport_center' => 'required|exists:passport_centers,id',
             'issued_on' => 'required|before:tomorrow',
             'passport_attachment' => $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',

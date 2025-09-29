@@ -62,17 +62,15 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_on">تاريخ إصدار جواز السفر</label>
-                                        <input type="date" class="form-control" name="issued_on" value="{{ old('issued_on') }}" required/>
+                                        <input type="date" class="form-control" name="issued_on" min="1900-01-01" max="2099-12-31" value="{{ old('issued_on') }}" required/>
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء جواز السفر</label>
-                                        <input type="date" class="form-control" name="expire_on" value="{{ old('expire_on') }}" required/>
+                                        <input type="date" class="form-control" id="expire_on" name="expire_on" min="1900-01-01" max="2099-12-31" value="{{ old('expire_on') }}" required/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
-                                
-                                
                             </div>
                     <div class="card text-start my-2">
                      <div class="card-header">
@@ -99,12 +97,12 @@
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="dl_issued_on">تاريخ الإصدار</label>
-                                <input type="date" class="form-control" name="dl_issued_on" value="{{ old('dl_issued_on') }}" />
+                                <input type="date" class="form-control" name="dl_issued_on" min="1900-01-01" max="2099-12-31" value="{{ old('dl_issued_on') }}" />
                                 @error('dl_issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="dl_expire_on">تاريخ الانتهاء</label>
-                                <input type="date" class="form-control" name="dl_expire_on" value="{{ old('dl_expire_on') }}" />
+                                <input type="date" class="form-control" name="dl_expire_on" min="1900-01-01" max="2099-12-31" value="{{ old('dl_expire_on') }}" />
                                 @error('dl_expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>

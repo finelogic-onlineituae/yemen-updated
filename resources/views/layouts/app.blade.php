@@ -95,12 +95,15 @@
                     </div>
 
                 @endauth
-            
+                    
                 
                     <!-- Main Content -->
-                    <div class="main-content   rounded ">
-                  
+                    <div class="main-content rounded ">
+                  <div  class="bg-warning p-2 pt-3 m-2 rounded text-center">
+                      <h6 class="text-dark">Applicants with passport expired 6 months ago should directly visit embassy for application</h6>
+                      </div>
                     <div class="{{ request()->is('dashboard') || request()->is('applications/post-confirmation*') ? '' : 'form-border' }}">
+                      
                         {{$slot}}
                     </div>
 
@@ -223,9 +226,6 @@ document.getElementById('signatureInputtype').addEventListener('change', functio
     }
 });
 
-
-
-
 </script>
 
 
@@ -306,7 +306,29 @@ document.getElementById('signatureInputtype').addEventListener('change', functio
 }
 
 </script>
+<script>
+  const dateInput = document.getElementById("expire_on");
 
+  // Get today's date
+  let today = new Date();
+
+  // Subtract 6 months
+  let sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(today.getMonth() - 6);
+
+  // Format date as YYYY-MM-DD (for input[type=date])
+  const formatDate = (date) => {
+    let year = date.getFullYear();
+    let month = String(date.getMonth() + 1).padStart(2, '0');
+    let day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  // Set min attribute
+  dateInput.min = formatDate(sixMonthsAgo);
+  console.log(dateInput.min);
+  
+</script>
 
 
 

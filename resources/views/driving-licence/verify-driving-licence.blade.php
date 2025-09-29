@@ -59,12 +59,12 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_on">تاريخ إصدار جواز السفر</label>
-                                        <input type="date" class="form-control" name="issued_on" value="{{ $application->formable->passport->issued_on }}"  @if(!request('edit')) disabled @endif  required/>
+                                        <input type="date" class="form-control" name="issued_on" min="1900-01-01" max="2099-12-31" value="{{ $application->formable->passport->issued_on }}"  @if(!request('edit')) disabled @endif  required/>
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء جواز السفر</label>
-                                        <input type="date" class="form-control" name="expire_on"  value="{{ $application->formable->passport->expires_on }}"  @if(!request('edit')) disabled @endif   required/>
+                                        <input type="date" class="form-control" id="expire_on" min="1900-01-01" max="2099-12-31" name="expire_on"  value="{{ $application->formable->passport->expires_on }}"  @if(!request('edit')) disabled @endif   required/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
@@ -93,12 +93,12 @@
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="dl_issued_on">تاريخ الإصدار</label>
-                                <input type="date" class="form-control" name="dl_issued_on" value="{{  $application->formable->dl_issued_on }}"   @if(!request('edit')) disabled @endif  />
+                                <input type="date" class="form-control" name="dl_issued_on" min="1900-01-01" max="2099-12-31" value="{{  $application->formable->dl_issued_on }}"   @if(!request('edit')) disabled @endif  />
                                 @error('dl_issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="dl_expire_on">تاريخ الانتهاء</label>
-                                <input type="date" class="form-control" name="dl_expire_on" value="{{$application->formable->dl_expire_on }}"   @if(!request('edit')) disabled @endif  />
+                                <input type="date" class="form-control" name="dl_expire_on" min="1900-01-01" max="2099-12-31" value="{{$application->formable->dl_expire_on }}"   @if(!request('edit')) disabled @endif  />
                                 @error('dl_expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>

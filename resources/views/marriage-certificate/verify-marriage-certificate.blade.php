@@ -46,7 +46,7 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="husband_passport_issued_on">تاريخ إصدار جواز السفر</label>
-                                        <input type="date" class="form-control" name="husband_passport_issued_on" value="{{ $application->formable->husband_passport_issued_on }}" @if(!request('edit')) disabled @endif required/>
+                                        <input type="date" class="form-control" min="1900-01-01" max="2099-12-31" name="husband_passport_issued_on" value="{{ $application->formable->husband_passport_issued_on }}" @if(!request('edit')) disabled @endif required/>
                                         @error('husband_passport_issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>   
                                 </div>
@@ -73,7 +73,7 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="wife_passport_issued_on">تاريخ إصدار جواز السفر</label>
-                                        <input type="date" class="form-control" name="wife_passport_issued_on" value="{{ $application->formable->wife_passport_issued_on }}" @if(!request('edit')) disabled @endif required/>
+                                        <input type="date" class="form-control" min="1900-01-01" max="2099-12-31" name="wife_passport_issued_on" value="{{ $application->formable->wife_passport_issued_on }}" @if(!request('edit')) disabled @endif required/>
                                         @error('wife_passport_issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>   
                                 </div>
@@ -106,7 +106,7 @@
                                 </div>    --}} 
                                  <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold" for="date_of_marriage">تاريخ الزواج </label>
-                                    <input  type="date" class="form-control" wire:model="date_of_marriage"  name="date_of_marriage" value="{{ $application->formable->date_of_marriage }}" @if(!request('edit')) disabled @endif required/>
+                                    <input  type="date" class="form-control" min="1900-01-01" max="2099-12-31"  name="date_of_marriage" value="{{ $application->formable->date_of_marriage }}" @if(!request('edit')) disabled @endif required/>
                                     @error('date_of_marriage') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div> 
                               

@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
-                                        <input type="date" class="form-control" name="date_of_birth" value="{{ $application->formable->date_of_birth }}"  @if(!request('edit')) disabled @endif  required/>
+                                        <input type="date" class="form-control" name="date_of_birth" min="1900-01-01" max="2099-12-31" value="{{ $application->formable->date_of_birth }}"  @if(!request('edit')) disabled @endif  required/>
                                         @error('date_of_birth')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
@@ -100,12 +100,12 @@
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_on">تاريخ إصدار جواز السفر</label>
-                                        <input type="date" class="form-control" name="issued_on" value="{{ $application->formable->passport->issued_on }}"  @if(!request('edit')) disabled @endif  required/>
+                                        <input type="date" class="form-control" name="issued_on" min="1900-01-01" max="2099-12-31" value="{{ $application->formable->passport->issued_on }}"  @if(!request('edit')) disabled @endif  required/>
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء جواز السفر</label>
-                                        <input type="date" class="form-control" name="expire_on"  value="{{ $application->formable->passport->expires_on }}"  @if(!request('edit')) disabled @endif   required/>
+                                        <input type="date" class="form-control" id="expire_on" name="expire_on" min="1900-01-01" max="2099-12-31"  value="{{ $application->formable->passport->expires_on }}"  @if(!request('edit')) disabled @endif   required/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>

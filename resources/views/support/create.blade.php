@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="applicant_issued_on"> تاريخ الإصدار</label>
-                                        <input type="date" name="applicant_issued_on" class="form-control" required>
+                                        <input type="date" name="applicant_issued_on" min="1900-01-01" max="2099-12-31" class="form-control" required>
                                     </div>
                                     
                                 </div>
@@ -132,7 +132,7 @@
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="member_issued_on" > تاريخ الإصدار</label>
-                                        <input type="date" name="member_issued_on[]" class="form-control" required>
+                                        <input type="date" name="member_issued_on[]" min="1900-01-01" max="2099-12-31" class="form-control" required>
                                     </div>
                                     
                                 </div>
