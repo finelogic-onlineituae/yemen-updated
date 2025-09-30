@@ -61,12 +61,12 @@
                         <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_on">تاريخ إصدار جواز السفر</label>
-                                        <input type="date" class="form-control" name="issued_on" value="{{ old('issued_on') }}" required/>
+                                        <input type="date" min="1900-01-01" max="2099-12-31" class="form-control" name="issued_on" value="{{ old('issued_on') }}" required/>
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء جواز السفر</label>
-                                        <input type="date" class="form-control" id="expire_on" name="expire_on" value="{{ old('expire_on') }}" required/>
+                                        <input type="date"  min="1900-01-01" max="2099-12-31"class="form-control" id="expire_on" name="expire_on" value="{{ old('expire_on') }}" required/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                          <div class="row">
                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
                                 <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
-                                <input type="date" class="form-control" name="date_of_birth" value="{{ old('date_of_birth') }}" required/>
+                                <input type="date" class="form-control" min="1900-01-01" max="2099-12-31" name="date_of_birth" value="{{ old('date_of_birth') }}" required/>
                                 @error('date_of_birth') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
@@ -109,12 +109,12 @@
                        <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
                                 <label class="form-label fw-bold" for="name">العنوان الدائم</label>
-                                <textarea type="date" class="form-control" rows="4" name="address" id="address">{{ old('address') }}</textarea>
+                                <textarea class="form-control" rows="4" name="address" id="address">{{ old('address') }}</textarea>
                                 @error('address') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="address_uae">العنوان في الإمارات العربية المتحدة</label>
-                                <textarea type="date" class="form-control" rows="4" name="address_uae" id="address_uae" required> {{ old('address_uae') }}</textarea>
+                                <textarea class="form-control" rows="4" name="address_uae" id="address_uae" required> {{ old('address_uae') }}</textarea>
                                 @error('address_uae') <span class="text-danger">{{ $message }}</span> @enderror
                                 <input type="checkbox" class="form-check-input" name="same_address" onclick="copyAddress()" id="same_address"/>
                                 <label for="same_address" class="form-label">نفس العنوان الدائم</label>
@@ -157,11 +157,11 @@
                           <label class="form-label fw-bold" for="previous_visit_1">تواريخ الزيارة السابقة للجمهورية اليمنية (إن وجدت)</label>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">    
-                                <input type="date" class="form-control" name="previous_visit_1" value="{{ old('previous_visit_1') }}" required/>
+                                <input type="date" class="form-control" min="1900-01-01" max="2099-12-31" name="previous_visit_1" value="{{ old('previous_visit_1') }}" required/>
                                 @error('previous_visit_1') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                                <input type="date" class="form-control" name="previous_visit_2" value="{{ old('previous_visit_2') }}" required/>
+                                <input type="date" class="form-control" min="1900-01-01" max="2099-12-31" name="previous_visit_2" value="{{ old('previous_visit_2') }}" required/>
                                 @error('previous_visit_2') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>

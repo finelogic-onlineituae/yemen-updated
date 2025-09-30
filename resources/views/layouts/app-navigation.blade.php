@@ -4,7 +4,7 @@
     <div class="col col-lg-6 col-md-10 col-sm-12 d-flex justify-content-center align-items-center">
         {{-- <span class=" header_logo_section"> --}}
         @auth
-        <div class="d-block bg-white d-lg-none d-xl-none d-flex justify-content-center">
+        <div class="d-block bg-white d-lg-none d-xl-none d-flex justify-content-center ms-4">
           <button class="btn toggle-btn" id="menuToggle">☰</button>
         </div>
         @endauth
@@ -70,9 +70,10 @@
                 @endauth
               </div>
           </div>
+          
           </div>
 
-
+          <img src="{{ asset('assets/images/logo.png') }}" class="logo img-fluid header_logo_section d-block d-lg-none d-xl-none" style="padding-left: 20px;" />
 
     </div>
   {{-- <div class="col-2 col-lg-2 col-md-0 col-sm-0 pt-2 d-none d-lg-block d-xl-block  align-items-end translate-wrapper" style="text-align:center; padding:10px;">

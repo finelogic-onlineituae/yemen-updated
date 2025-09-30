@@ -153,7 +153,7 @@
   overflow-x: scroll;
   white-space: nowrap;
 }
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   /* Styles for tablets (md screens) */
 
   .footer-container{
@@ -172,7 +172,7 @@
     padding-right: 0px;
   }
   .content-container {
-    padding-top: 17vh;
+    padding-top: 11vh;
   }
 }
 
@@ -228,7 +228,7 @@
     padding-top: 5vh;
   }
   .content-container {
-    padding-top: 17vh;
+    padding-top: 7vh;
   }
 }
 .logo{

@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                             <label class="form-label fw-bold" for="issued_on">تاريخ الإصدار</label>
-                                            <input type="date" class="form-control" name="issued_on" value="{{  $application->formable->passport->issued_on  }}" @if(!request('edit')) disabled @endif required/>
+                                            <input type="date" min="1900-01-01" max="2099-12-31" class="form-control" name="issued_on" value="{{  $application->formable->passport->issued_on  }}" @if(!request('edit')) disabled @endif required/>
                                             @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                 </div>

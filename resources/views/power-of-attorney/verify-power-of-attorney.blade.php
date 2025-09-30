@@ -63,12 +63,12 @@
                                     
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_on">تاريخ إصدار جواز السفر</label>
-                                        <input type="date" class="form-control" name="issued_on" @if(!request('edit')) disabled @endif   value="{{ $application->formable->clientPassport->issued_on }}" required/>
+                                        <input type="date" class="form-control" name="issued_on" min="1900-01-01" max="2099-12-31" @if(!request('edit')) disabled @endif   value="{{ $application->formable->clientPassport->issued_on }}" required/>
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء جواز السفر</label>
-                                        <input type="date" class="form-control" id="expire_on" name="expire_on" @if(!request('edit')) disabled @endif  value="{{ $application->formable->clientPassport->expires_on }}" required/>
+                                        <input type="date" class="form-control" id="expire_on" min="1900-01-01" max="2099-12-31" name="expire_on" @if(!request('edit')) disabled @endif  value="{{ $application->formable->clientPassport->expires_on }}" required/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>

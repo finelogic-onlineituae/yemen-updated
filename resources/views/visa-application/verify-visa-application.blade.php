@@ -61,12 +61,12 @@
                         <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="issued_on">تاريخ إصدار جواز السفر</label>
-                                        <input type="date" class="form-control" name="issued_on" value="{{ $application->formable->passport->issued_on }}" @if(!request('edit')) disabled @endif required/>
+                                        <input type="date" min="1900-01-01" max="2099-12-31" class="form-control" name="issued_on" value="{{ $application->formable->passport->issued_on }}" @if(!request('edit')) disabled @endif required/>
                                         @error('issued_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <label class="form-label fw-bold" for="expire_on">تاريخ انتهاء جواز السفر</label>
-                                        <input type="date" class="form-control" id="expire_on" name="expire_on" value="{{ $application->formable->passport->expires_on }}" @if(!request('edit')) disabled @endif required/>
+                                        <input type="date" min="1900-01-01" max="2099-12-31" class="form-control" id="expire_on" name="expire_on" value="{{ $application->formable->passport->expires_on }}" @if(!request('edit')) disabled @endif required/>
                                         @error('expire_on')<span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                          <div class="row">
                                <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
                                 <label class="form-label fw-bold" for="name">تاريخ الميلاد</label>
-                                <input type="date" class="form-control" name="date_of_birth" value="{{ $application->formable->date_of_birth }}" @if(!request('edit')) disabled @endif required/>
+                                <input type="date" min="1900-01-01" max="2099-12-31" class="form-control" name="date_of_birth" value="{{ $application->formable->date_of_birth }}" @if(!request('edit')) disabled @endif required/>
                                 @error('date_of_birth') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
@@ -109,12 +109,12 @@
                        <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
                                 <label class="form-label fw-bold" for="address">العنوان الدائم</label>
-                                <textarea type="date" class="form-control" rows="4" name="address" id="address" @if(!request('edit')) disabled @endif required>{{ $application->formable->permanent_address }}</textarea>
+                                <textarea class="form-control" rows="4" name="address" id="address" @if(!request('edit')) disabled @endif required>{{ $application->formable->permanent_address }}</textarea>
                                 @error('address') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="address_uae">العنوان في الإمارات العربية المتحدة</label>
-                                <textarea type="date" class="form-control" rows="4" name="address_uae" id="address_uae" @if(!request('edit')) disabled @endif required> {{ $application->formable->uae_address }}</textarea>
+                                <textarea class="form-control" rows="4" name="address_uae" id="address_uae" @if(!request('edit')) disabled @endif required> {{ $application->formable->uae_address }}</textarea>
                                 @error('address_uae') <span class="text-danger">{{ $message }}</span> @enderror
                                 <input type="checkbox" class="form-check-input" name="same_address" id="same_address" onclick="copyAddress()" @if(!request('edit')) disabled @endif/>
                                 <label for="same_address" class="form-label">نفس العنوان الدائم</label>
@@ -157,11 +157,11 @@
                           <label class="form-label fw-bold" for="previous_visit_1">تواريخ الزيارة السابقة للجمهورية اليمنية (إن وجدت)</label>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">    
-                                <input type="date" class="form-control" name="previous_visit_1" value="{{ $application->formable->previous_visit_1 }}" @if(!request('edit')) disabled @endif required/>
+                                <input type="date" min="1900-01-01" max="2099-12-31" class="form-control" name="previous_visit_1" value="{{ $application->formable->previous_visit_1 }}" @if(!request('edit')) disabled @endif required/>
                                 @error('previous_visit_1') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                                <input type="date" class="form-control" name="previous_visit_2" value="{{ $application->formable->previous_visit_2 }}" @if(!request('edit')) disabled @endif required/>
+                                <input type="date" min="1900-01-01" max="2099-12-31" class="form-control" name="previous_visit_2" value="{{ $application->formable->previous_visit_2 }}" @if(!request('edit')) disabled @endif required/>
                                 @error('previous_visit_2') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>

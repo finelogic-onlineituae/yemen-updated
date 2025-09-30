@@ -39,7 +39,7 @@
 .manage-width-75{
   
      /* box-shadow: -1px 2px 15px #4c4848 !important; */
-    padding: 10px;
+   /* padding: 10px;*/
     border-radius: 10px;
     background-size: 50px 50px;
     background: #fff!important;
@@ -52,7 +52,7 @@
 }
 .manage-width-75 .card .card-body{
     border: none!important;
-
+    padding: 0px !important;
 }
 .card-body .form-group .form-select{
      
