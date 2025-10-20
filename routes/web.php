@@ -241,7 +241,7 @@ Route::get('/download-file', [DownloadfileController::class, 'download'])
 
 Route::get('/secure-pdf', [DownloadfileController::class, 'servePdf'])->name('secure.pdf')->middleware('signed');
 
- Route::get('/download-application/{application_id}', [PDFController::class, 'generate'])->name('download-app');
+ 
 });
-
+Route::get('/download-application/{application_id}', [PDFController::class, 'generate'])->name('download-app');
 require __DIR__.'/auth.php';

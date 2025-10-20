@@ -1,10 +1,7 @@
 <x-app-layout>
 <div>
     <h3  class="text-success w-100 text-center" >لإصدار إفادة صلة قرابة، يرجى تعبئة جميع الحقول الإلزامية لإتمام الطلب</h3>
-    <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
-        <form action="{{ route('family-member.store') }}" enctype="multipart/form-data" method="POST" wire:submit.prevent="verifyApplication" id="family-member-form" class="w-100 align-items-center text-center d-flex justify-content-center">
-            @csrf
-            @if ($errors->any())
+    @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -13,6 +10,10 @@
                     </ul>
                 </div>
             @endif
+    <div class="align-items-center text-center d-flex justify-content-center w-100 p-2 bg-form mh-100 h-100 ">
+        <form action="{{ route('family-member.store') }}" enctype="multipart/form-data" method="POST" wire:submit.prevent="verifyApplication" id="family-member-form" class="w-100 align-items-center text-center d-flex justify-content-center">
+            @csrf
+            
             <div class="manage-width-75 manage-width p-3 mx-2 rounded  align-items-center text-center form-scroll bg-ash ">
               
             {{-- <div class="card text-start my-2">
@@ -84,11 +85,11 @@
                                  <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                             <label class="form-label fw-bold" for="applicant_passport_attachment">نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
-                                            <input type="file" name="applicant_passport_attachment" class="form-control">
+                                            <input type="file" name="applicant_passport_attachment" class="form-control" required>
                                     </div>
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                             <label class="form-label fw-bold" for="applicant_emirate_id_attachment"> نسخة من الهوية الاماراتيه (pdf ,jpg, png, jpeg)</label>
-                                            <input type="file" class="form-control" name="applicant_emirate_id_attachment" />
+                                            <input type="file" class="form-control" name="applicant_emirate_id_attachment" required/>
                                     </div>   
                             </div>   
                                

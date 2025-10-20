@@ -66,7 +66,7 @@
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                             <div @class(["d-none" => !request('edit'), "mb-2"])>
                                 <label class="form-label fw-bold" for="applicant_passport_attachment"> جواز (ملف بي دي إف  ,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="applicant_passport_attachment"  @if(!request('edit')) disabled @endif required/>
+                                <input type="file" class="form-control" name="applicant_passport_attachment"  @if(!request('edit')) disabled @endif/>
                                  @error('applicant_passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                            <div>
@@ -91,7 +91,7 @@
                              <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <div @class(["d-none" => !request('edit'), "mb-2"])>
                                 <label class="form-label fw-bold" for="emirate_id_attachment"> الهوية الإماراتية (ملف بي دي إف  ,jpg, png, jpeg)</label>
-                                <input type="file" class="form-control" name="emirate_id_attachment"  @if(!request('edit')) disabled @endif  required/>
+                                <input type="file" class="form-control" name="emirate_id_attachment"  @if(!request('edit')) disabled @endif />
                                 @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
                                  </div>
                            <div>
@@ -210,7 +210,7 @@
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                         <div @class(["d-none" => !request('edit'), "mb-2"])>
                                         <label class="form-label fw-bold" for="emirate_id_attachment"> الهوية الإماراتية (ملف بي دي إف  ,jpg, png, jpeg)</label>
-                                        <input type="file" class="form-control" name="emirate_id_attachment"  @if(!request('edit')) disabled @endif required/>
+                                        <input type="file" class="form-control" name="emirate_id_attachment"  @if(!request('edit')) disabled @endif/>
                                         @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                         <div>
