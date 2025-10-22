@@ -39,7 +39,7 @@
                                         <br><br>
                                     </div>
                                 </div>
-                                <img src="/storage/{{ $application->formable->photo }}" width="200" class="img-thumbnail">
+                                <img src="{{ $application->formable->photo }}" width="200" class="img-thumbnail">
                             </div>
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12" id="preview-crop" style="display: none;">
                                     <!-- Show Cropped Result -->
@@ -136,7 +136,13 @@
                                     <div id="birth_certificate" class="modal">
                                         <div class="modal-content">
                                             <span class="close" onclick="closeModal('birth_certificate')">&times;</span>
-                                            <iframe id="passport_iframe" src="/storage/{{ $application->formable->birth_certificate }}"></iframe>
+                                            @if(Str::of($application->formable->birth_certificate)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
+                                                        <img src="{{ $application->formable->birth_certificate }}"
+                                                            alt="Preview"
+                                                            style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
+                                            @else
+                                                <iframe id="passport_iframe" src="{{ $application->formable->birth_certificate }}"></iframe>
+                                            @endif
                                         </div>
                                     </div>
                                     <!-- End Modal -->
@@ -154,7 +160,13 @@
                                     <div id="marriage_certificate" class="modal">
                                         <div class="modal-content">
                                             <span class="close" onclick="closeModal('marriage_certificate')">&times;</span>
-                                            <iframe id="emirate_id_iframe" src="/storage/{{ $application->formable->marriage_certificate_parents }}"></iframe>
+                                            @if(Str::of($application->formable->marriage_certificate_parents)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
+                                                        <img src="{{ $application->formable->marriage_certificate_parents }}"
+                                                            alt="Preview"
+                                                            style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
+                                            @else
+                                                <iframe id="passport_iframe" src="{{ $application->formable->marriage_certificate_parents }}"></iframe>
+                                            @endif
                                         </div>
                                     </div>
                                     <!-- End Modal -->
@@ -174,7 +186,13 @@
                                     <div id="father_passport" class="modal">
                                         <div class="modal-content">
                                             <span class="close" onclick="closeModal('father_passport')">&times;</span>
-                                            <iframe id="passport_iframe" src="/storage/{{ $application->formable->father_passport }}"></iframe>
+                                             @if(Str::of($application->formable->father_passport)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
+                                                        <img src="{{ $application->formable->father_passport }}"
+                                                            alt="Preview"
+                                                            style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
+                                            @else
+                                                <iframe id="passport_iframe" src="{{ $application->formable->father_passport }}"></iframe>
+                                            @endif
                                         </div>
                                     </div>
                                     <!-- End Modal -->
@@ -192,7 +210,13 @@
                                     <div id="mother_passport" class="modal">
                                         <div class="modal-content">
                                             <span class="close" onclick="closeModal('mother_passport')">&times;</span>
-                                            <iframe id="emirate_id_iframe" src="/storage/{{ $application->formable->mother_passport }}"></iframe>
+                                             @if(Str::of($application->formable->mother_passport)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
+                                                        <img src="{{ $application->formable->mother_passport }}"
+                                                            alt="Preview"
+                                                            style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
+                                            @else
+                                                <iframe id="passport_iframe" src="{{ $application->formable->mother_passport }}"></iframe>
+                                            @endif
                                         </div>
                                     </div>
                                     <!-- End Modal -->
@@ -212,7 +236,13 @@
                                     <div id="father_id_card" class="modal">
                                         <div class="modal-content">
                                             <span class="close" onclick="closeModal('father_id_card')">&times;</span>
-                                            <iframe id="passport_iframe" src="/storage/{{ $application->formable->father_id_card }}"></iframe>
+                                             @if(Str::of($application->formable->father_id_card)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
+                                                        <img src="{{ $application->formable->father_id_card }}"
+                                                            alt="Preview"
+                                                            style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
+                                            @else
+                                                <iframe id="passport_iframe" src="{{ $application->formable->father_id_card }}"></iframe>
+                                            @endif
                                         </div>
                                     </div>
                                     <!-- End Modal -->
@@ -230,7 +260,13 @@
                                     <div id="mother_id_card" class="modal">
                                         <div class="modal-content">
                                             <span class="close" onclick="closeModal('mother_id_card')">&times;</span>
-                                            <iframe id="emirate_id_iframe" src="/storage/{{ $application->formable->mother_id_card }}"></iframe>
+                                            @if(Str::of($application->formable->mother_id_card)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
+                                                        <img src="{{ $application->formable->mother_id_card }}"
+                                                            alt="Preview"
+                                                            style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
+                                            @else
+                                                <iframe id="passport_iframe" src="{{ $application->formable->mother_id_card }}"></iframe>
+                                            @endif
                                         </div>
                                     </div>
                                     <!-- End Modal -->
