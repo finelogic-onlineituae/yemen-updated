@@ -48,15 +48,21 @@ class AttestationController extends Controller
         ]);
 
         if($request->hasFile('passport_attachment')) {
-            $passport_file_path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id());
+            $path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            Storage::disk('s3')->setVisibility($path, 'public');
+            $passport_file_path = Storage::disk('s3')->url($path);
         }
 
         if($request->hasFile('emirate_id_attachment')) {
-            $emirate_id_file_path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id());
+            $path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            Storage::disk('s3')->setVisibility($path, 'public');
+            $emirate_id_file_path = Storage::disk('s3')->url($path);
         }
 
         if($request->hasFile('document_attachment')) {
-            $document_file_path = $request->file('document_attachment')->store('uploads/user_' . auth()->id());
+            $path = $request->file('document_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            Storage::disk('s3')->setVisibility($path, 'public');
+            $document_file_path = Storage::disk('s3')->url($path);
         }
       
 
