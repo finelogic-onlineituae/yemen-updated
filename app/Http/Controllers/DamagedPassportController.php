@@ -78,9 +78,6 @@ class DamagedPassportController extends Controller
                 // Store in S3 (default visibility)
                 Storage::disk('s3')->put($photo_file_path, $imageData);
 
-                // Change visibility to public
-                Storage::disk('s3')->setVisibility($photo_file_path, 'public');
-
                 // Get the public URL
                 $photo_file_path = Storage::disk('s3')->url($photo_file_path);
                 // Store in /storage/app/public/images
@@ -91,10 +88,12 @@ class DamagedPassportController extends Controller
                         
          }
         if($request->hasFile('passport_attachment')) {
-            $passport_file_path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id());
+            $path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            $passport_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('emirate_id_attachment')) {
-            $emirate_id_file_path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id());
+            $path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            $emirate_id_file_path = Storage::disk('s3')->url($path);
         }
         // if($request->hasFile('id_card')) {
         //     $id_card_file_path = $request->file('id_card')->store('uploads/user_' . auth()->id());

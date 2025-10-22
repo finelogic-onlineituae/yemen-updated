@@ -40,16 +40,20 @@ class PowerOfAttorneyController extends Controller
                 'poa_document' =>  $request->has('application') ? 'nullable' : 'required|file|mimes:pdf,webp,png,jpg,jpeg|max:2048',
         ]);
         if($request->hasFile('passport_attachment')) {
-            $client_passport_file_path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id());
+            $path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            $client_passport_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('emirate_id_attachment')) {
-            $client_emirate_id_file_path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id());
+            $path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            $client_emirate_id_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('agent_id_attachment')) {
-            $agent_id_file_path = $request->file('agent_id_attachment')->store('uploads/user_' . auth()->id());
+            $path = $request->file('agent_id_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            $agent_id_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('poa_document')) {
-            $poa_document_file_path = $request->file('poa_document')->store('uploads/user_' . auth()->id());
+            $path = $request->file('poa_document')->store('uploads/user_' . auth()->id(), 's3');
+            $poa_document_file_path = Storage::disk('s3')->url($path);
         }
         
         

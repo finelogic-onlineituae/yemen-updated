@@ -53,7 +53,6 @@ class FamilyMemberController extends Controller
             foreach($request->file('member_passport_attachment') as $passport)
             {
                 $path = $passport->store('uploads/user_' . auth()->id(), 's3');
-                Storage::disk('s3')->setVisibility($path, 'public');
                 $file_path = Storage::disk('s3')->url($path);
 
                 array_push($passport_file_paths, $file_path);
@@ -64,7 +63,6 @@ class FamilyMemberController extends Controller
             foreach($request->file('member_emirate_id_attachment') as $emirate_id)
             {
                 $path = $emirate_id->store('uploads/user_' . auth()->id(), 's3');
-                Storage::disk('s3')->setVisibility($path, 'public');
                 $file_path = Storage::disk('s3')->url($path);
 
                 array_push($emirate_id_file_paths, $file_path);
@@ -96,12 +94,10 @@ class FamilyMemberController extends Controller
                 $passport_attachment = null;
                 if($request->hasFile("member_passport_attachment.$i")){
                     $path = $request->file('member_passport_attachment')[$i]->store('uploads/user_' . auth()->id(), 's3');
-                    Storage::disk('s3')->setVisibility($path, 'public');
                     $passport_attachment_path = Storage::disk('s3')->url($path);
                 }
                 if($request->hasFile("member_emirate_id_attachment.$i")){
                     $path = $request->file('member_emirate_id_attachment')[$i]->store('uploads/user_' . auth()->id(), 's3');
-                    Storage::disk('s3')->setVisibility($path, 'public');
                     $emirate_id_attachment_path = Storage::disk('s3')->url($path);
                 }
                 $passport->passport_number = $request->member_passport_number[$i];
@@ -127,11 +123,9 @@ class FamilyMemberController extends Controller
         else{
            
             $path = $request->file('applicant_passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
-            Storage::disk('s3')->setVisibility($path, 'public');
             $applicant_passport_file = Storage::disk('s3')->url($path);
 
             $path = $request->file('applicant_emirate_id_attachment')->store('uploads/user_' . auth()->id(), 's3');
-            Storage::disk('s3')->setVisibility($path, 'public');
             $applicant_emirates_id_file = Storage::disk('s3')->url($path);
 
             $user = auth()->user();
@@ -232,11 +226,9 @@ class FamilyMemberController extends Controller
         ]);
 
         $path = $request->file('member_passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
-        Storage::disk('s3')->setVisibility($path, 'public');
         $passport_path = Storage::disk('s3')->url($path);
 
         $path = $request->file('member_emirate_id_attachment')->store('uploads/user_' . auth()->id(), 's3');
-        Storage::disk('s3')->setVisibility($path, 'public');
         $emirate_id_path = Storage::disk('s3')->url($path);
 
         $passport = auth()->user()->passports()->create([

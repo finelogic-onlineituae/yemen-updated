@@ -8,8 +8,8 @@ use App\Models\NoIdCardGroup;
 use App\Models\PassportCenter;
 use App\Models\NoIdentityCard;
 use App\Models\GroupIdCardMember;
-
 use Illuminate\Support\Facades\Storage;
+
 class NoIdCardGroupController extends Controller
 {
     public function create(Request $request)
@@ -71,42 +71,61 @@ class NoIdCardGroupController extends Controller
                 $filename = 'crop_' . time() . '.jpg';
                 $photo_file_path = '/uploads/user_' . auth()->id() .'/'. $filename;
 
-                // Store in /storage/app/public/images
-                Storage::disk('public')->put($photo_file_path, $imageData);
+                // Store in S3 (default visibility)
+                Storage::disk('s3')->put($photo_file_path, $imageData);
+
+                // Get the public URL
+                $photo_file_path = Storage::disk('s3')->url($photo_file_path);
 
                 // (Optional) Get full URL to return or save in DB
                  //$photo_file_path = $path; // e.g., /storage/images/crop_123456.jpg
                         
          }
          if($request->hasFile('passport_attachment')){
-            $passport_file_path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id());
+            $path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            $passport_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('emirate_id_attachment')){
-            $emirate_id_file_path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id());
+            $path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            $emirate_id_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('father_passport')){
-            $father_passport = $request->file('father_passport')->store('uploads/user_' . auth()->id());
+            $path = $request->file('father_passport')->store('uploads/user_' . auth()->id(), 's3');
+            $father_passport = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('mother_passport')){
-            $mother_passport = $request->file('mother_passport')->store('uploads/user_' . auth()->id());
+            $path = $request->file('mother_passport')->store('uploads/user_' . auth()->id(), 's3');
+            $mother_passport = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('father_emirate_id')){
-            $father_emirate_id = $request->file('father_emirate_id')->store('uploads/user_' . auth()->id());
+           
+            $path = $request->file('father_emirate_id')->store('uploads/user_' . auth()->id(), 's3');
+            $father_emirate_id = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('mother_emirate_id')){
-            $mother_emirate_id = $request->file('mother_emirate_id')->store('uploads/user_' . auth()->id());
+
+            $path = $request->file('mother_emirate_id')->store('uploads/user_' . auth()->id(), 's3');
+            $mother_emirate_id = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('husband_passport')){
-            $husband_passport = $request->file('husband_passport')->store('uploads/user_' . auth()->id());
+
+            $path = $request->file('husband_passport')->store('uploads/user_' . auth()->id(), 's3');
+            $husband_passport = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('wife_passport_attachment')){
-            $wife_passport = $request->file('wife_passport_attachment')->store('uploads/user_' . auth()->id());
+
+            $path = $request->file('wife_passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            $wife_passport = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('wife_emirate_id_attachment')){
-            $wife_emirate_id = $request->file('wife_emirate_id_attachment')->store('uploads/user_' . auth()->id());
+
+            $path = $request->file('wife_emirate_id_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            $wife_emirate_id = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('marriage_document')){
-            $marriage_document = $request->file('marriage_document')->store('uploads/user_' . auth()->id());
+
+            $path = $request->file('marriage_document')->store('uploads/user_' . auth()->id(), 's3');
+            $marriage_document = Storage::disk('s3')->url($path);
         }
         if($request->has('batch')){
             $application_batch = NoIdentityCard::findOrFail(decrypt($request->batch));
@@ -168,28 +187,28 @@ class NoIdCardGroupController extends Controller
             abort(403);
         }
         if($member->photo){
-            Storage::delete($member->photo);
+            Storage::disk('s3')->delete($member->photo);
         }
         if($member->passport->attachment){
-            Storage::delete($member->passport->attachment);
+            Storage::disk('s3')->delete($member->passport->attachment);
         }
         if($member->emirate_id_attachment){
-            Storage::delete($member->emirate_id_attachment);
+            Storage::disk('s3')->delete($member->emirate_id_attachment);
         }
         if($member->husband_passport){
-            Storage::delete($member->husband_passport);
+            Storage::disk('s3')->delete($member->husband_passport);
         }
         if($member->father_passport){
-            Storage::delete($member->father_passport);
+            Storage::disk('s3')->delete($member->father_passport);
         }
         if($member->mother_passport){
-            Storage::delete($member->mother_passport);
+            Storage::disk('s3')->delete($member->mother_passport);
         }
         if($member->father_emirate_id){
-            Storage::delete($member->father_emirate_id);
+            Storage::disk('s3')->delete($member->father_emirate_id);
         }
         if($member->mother_emirate_id){
-            Storage::delete($member->mother_emirate_id);
+            Storage::disk('s3')->delete($member->mother_emirate_id);
         }
         
         $member->delete();

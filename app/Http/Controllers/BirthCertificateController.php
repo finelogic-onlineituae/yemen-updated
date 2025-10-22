@@ -8,6 +8,7 @@ use App\Models\Form;
 use App\Models\Country;
 use App\Models\PassportCenter;
 use App\Models\BirthCertificate;
+use Illuminate\Support\Facades\Storage;
 
 class BirthCertificateController extends Controller
 {
@@ -46,23 +47,19 @@ class BirthCertificateController extends Controller
 
         if($request->hasFile('passport_attachment')) {
             $path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
-            Storage::disk('s3')->setVisibility($path, 'public');
             $passport_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('emirate_id_attachment')) {
             $path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id(), 's3');
-            Storage::disk('s3')->setVisibility($path, 'public');
             $emirate_id_file_path = Storage::disk('s3')->url($path);
             //dd($emirate_id_file_path);
         }
         if($request->hasFile('father_passport_attachment')) {
             $path = $request->file('father_passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
-            Storage::disk('s3')->setVisibility($path, 'public');
             $father_passport_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('mother_passport_attachment')) {
             $path = $request->file('mother_passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
-            Storage::disk('s3')->setVisibility($path, 'public');
             $mother_passport_file_path = Storage::disk('s3')->url($path);
         }
         if($request->has('application')){

@@ -134,11 +134,11 @@
                                         <div class="modal-content">
                                             <span class="close" onclick="closeModal('passport')">&times;</span>
                                             @if(Str::of($application->formable->passport->attachment)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
-                                                    <img src="/storage/{{ $application->formable->passport->attachment }}"
+                                                    <img src="{{ $application->formable->passport->attachment }}"
                                                         alt="Preview"
                                                         style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
                                             @else
-                                            <iframe id="passport_iframe" src="/storage/{{ $application->formable->passport->attachment }}"></iframe>
+                                            <iframe id="passport_iframe" src="{{ $application->formable->passport->attachment }}"></iframe>
                                             @endif
                                             
                                         </div>
@@ -159,11 +159,11 @@
                                         <div class="modal-content">
                                             <span class="close" onclick="closeModal('emirate_id')">&times;</span>
                                             @if(Str::of($application->formable->emirates_id_attachment)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
-                                                    <img src="/storage/{{ $application->formable->emirates_id_attachment }}"
+                                                    <img src="{{ $application->formable->emirates_id_attachment }}"
                                                         alt="Preview"
                                                         style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
                                             @else
-                                            <iframe id="emirate_id_iframe" src="/storage/{{ $application->formable->emirates_id_attachment }}"></iframe>
+                                            <iframe id="emirate_id_iframe" src="{{ $application->formable->emirates_id_attachment }}"></iframe>
                                             @endif
                                             
                                         </div>
@@ -186,11 +186,11 @@
                                         <div class="modal-content">
                                             <span class="close" onclick="closeModal('licence')">&times;</span>
                                             @if(Str::of($application->formable->driving_licence_attachment)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
-                                                    <img src="/storage/{{ $application->formable->driving_licence_attachment }}"
+                                                    <img src="{{ $application->formable->driving_licence_attachment }}"
                                                         alt="Preview"
                                                         style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
                                             @else
-                                            <iframe id="passport_iframe" src="/storage/{{ $application->formable->driving_licence_attachment }}"></iframe>
+                                            <iframe id="passport_iframe" src="{{ $application->formable->driving_licence_attachment }}"></iframe>
                                             @endif
                                             
                                         </div>

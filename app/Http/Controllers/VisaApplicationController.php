@@ -182,31 +182,39 @@ class VisaApplicationController extends Controller
                 $filename = 'crop_' . time() . '.jpg';
                 $photo_file_path = '/uploads/user_' . auth()->id() .'/'. $filename;
 
-                // Store in /storage/app/public/images
-                Storage::disk('public')->put($photo_file_path, $imageData);
+                 // Store in S3 (default visibility)
+                Storage::disk('s3')->put($photo_file_path, $imageData);
+
+                // Get the public URL
+                $photo_file_path = Storage::disk('s3')->url($photo_file_path);
 
                 // (Optional) Get full URL to return or save in DB
                  //$photo_file_path = $path; // e.g., /storage/images/crop_123456.jpg
                         
          }
         if($request->hasFile('passport_attachment')) {
-            $file_path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id());
+            $path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            $passport_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('id_card')) {
-            $id_card_file_path = $request->file('id_card')->store('uploads/user_' . auth()->id());
+            $path = $request->file('id_card')->store('uploads/user_' . auth()->id(), 's3');
+            $id_card_file_path = Storage::disk('s3')->url($path);
         }
-
         if($request->hasFile('sponsor_pass')) {
-            $sponsor_noc_file_path = $request->file('sponsor_pass')->store('uploads/user_' . auth()->id());
+            $path = $request->file('sponsor_pass')->store('uploads/user_' . auth()->id(), 's3');
+            $sponsor_noc_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('sponsor_passport')) {
-            $sponsor_passport_file_path = $request->file('sponsor_passport')->store('uploads/user_' . auth()->id());
+            $path = $request->file('sponsor_passport')->store('uploads/user_' . auth()->id(), 's3');
+            $sponsor_passport_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('accompany_passport')) {
-            $accompany_passport_file_path = $request->file('accompany_passport')->store('uploads/user_' . auth()->id());
+            $path = $request->file('accompany_passport')->store('uploads/user_' . auth()->id(), 's3');
+            $accompany_passport_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('accompany_id_card')) {
-            $accompany_id_card_file_path = $request->file('accompany_id_card')->store('uploads/user_' . auth()->id());
+            $path = $request->file('accompany_id_card')->store('uploads/user_' . auth()->id(), 's3');
+            $accompany_id_card_file_path = Storage::disk('s3')->url($path);
         }
        // dd($sponsor_pass_file_path.$id_card_file_path);
         if($request->same_address){

@@ -68,27 +68,31 @@ class LossPassportController extends Controller
                 $filename = 'crop_' . time() . '.jpg';
                 $photo_file_path = '/uploads/user_' . auth()->id() .'/'. $filename;
 
-                // Store in /storage/app/public/images
-                Storage::disk('public')->put($photo_file_path, $imageData);
+                // Store in S3 (default visibility)
+                Storage::disk('s3')->put($photo_file_path, $imageData);
+
+                // Get the public URL
+                $photo_file_path = Storage::disk('s3')->url($photo_file_path);
 
                 // (Optional) Get full URL to return or save in DB
                  //$photo_file_path = $path; // e.g., /storage/images/crop_123456.jpg
                         
          }
         if($request->hasFile('passport_attachment')) {
-            $passport_file_path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id());
+            $path = $request->file('passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            $passport_file_path = Storage::disk('s3')->url($path);
         }
-        if($request->hasFile('emirate_id_attachment')) {
-            $emirate_id_file_path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id());
-        } 
-        
+       if($request->hasFile('emirate_id_attachment')) {
+            $path = $request->file('emirate_id_attachment')->store('uploads/user_' . auth()->id(), 's3');
+            $emirate_id_file_path = Storage::disk('s3')->url($path);
+        }
         if($request->hasFile('police_reporting_letter')) {
-            $police_reporting_letter_file_path = $request->file('police_reporting_letter')->store('uploads/user_' . auth()->id());
+            $path = $request->file('police_reporting_letter')->store('uploads/user_' . auth()->id(), 's3');
+            $police_reporting_letter_file_path = Storage::disk('s3')->url($path);
         }
-    
-       
         if($request->hasFile('notice_in_newpaper')) {
-            $notice_in_newpaper_file_path = $request->file('notice_in_newpaper')->store('uploads/user_' . auth()->id());
+            $path = $request->file('notice_in_newpaper')->store('uploads/user_' . auth()->id(), 's3');
+            $notice_in_newpaper_file_path = Storage::disk('s3')->url($path);
         }
       
      

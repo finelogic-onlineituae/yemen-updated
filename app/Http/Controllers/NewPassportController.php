@@ -69,33 +69,39 @@ class NewPassportController extends Controller
                 $filename = 'crop_' . time() . '.jpg';
                 $photo_file_path = '/uploads/user_' . auth()->id() .'/'. $filename;
 
-                // Store in /storage/app/public/images
-                Storage::disk('public')->put($photo_file_path, $imageData);
+                 // Store in S3 (default visibility)
+                Storage::disk('s3')->put($photo_file_path, $imageData);
+
+                // Get the public URL
+                $photo_file_path = Storage::disk('s3')->url($photo_file_path);
 
                 // (Optional) Get full URL to return or save in DB
                  //$photo_file_path = $path; // e.g., /storage/images/crop_123456.jpg
                         
          }
         if($request->hasFile('birth_certificate')) {
-            $birth_certificate_file_path = $request->file('birth_certificate')->store('uploads/user_' . auth()->id());
+            $path = $request->file('birth_certificate')->store('uploads/user_' . auth()->id(), 's3');
+            $birth_certificate_file_path = Storage::disk('s3')->url($path);
         }
-        // if($request->hasFile('photo')) {
-        //     $photo_file_path = $request->file('photo')->store('uploads/user_' . auth()->id());
-        // }
         if($request->hasFile('father_passport')) {
-            $father_passport_file_path = $request->file('father_passport')->store('uploads/user_' . auth()->id());
+            $path = $request->file('father_passport')->store('uploads/user_' . auth()->id(), 's3');
+            $father_passport_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('father_id_card')) {
-            $father_id_card_file_path = $request->file('father_id_card')->store('uploads/user_' . auth()->id());
+            $path = $request->file('father_id_card')->store('uploads/user_' . auth()->id(), 's3');
+            $father_id_card_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('mother_passport')) {
-            $mother_passport_file_path = $request->file('mother_passport')->store('uploads/user_' . auth()->id());
+            $path = $request->file('mother_passport')->store('uploads/user_' . auth()->id(), 's3');
+            $mother_passport_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('mother_id_card')) {
-            $mother_id_card_file_path = $request->file('mother_id_card')->store('uploads/user_' . auth()->id());
+            $path = $request->file('mother_id_card')->store('uploads/user_' . auth()->id(), 's3');
+            $mother_id_card_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('marriage_certificate')) {
-            $marriage_certificate_parents_file_path = $request->file('marriage_certificate')->store('uploads/user_' . auth()->id());
+            $path = $request->file('marriage_certificate')->store('uploads/user_' . auth()->id(), 's3');
+            $marriage_certificate_parents_file_path = Storage::disk('s3')->url($path);
         }
      
 

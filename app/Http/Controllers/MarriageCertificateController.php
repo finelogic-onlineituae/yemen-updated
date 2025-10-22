@@ -7,6 +7,7 @@ use App\Models\Form;
 use App\Models\Country;
 use App\Models\PassportCenter;
 use App\Models\MarriageCertificate;
+use Illuminate\Support\Facades\Storage;
 
 class MarriageCertificateController extends Controller
 {
@@ -42,34 +43,29 @@ class MarriageCertificateController extends Controller
         if($request->hasFile('husband_passport_attachment')) {
 
             $path = $request->file('husband_passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
-            Storage::disk('s3')->setVisibility($path, 'public');
             $husband_passport_file_path = Storage::disk('s3')->url($path);
         }
         
         if($request->hasFile('husband_emirate_id_attachment')) {
 
             $path = $request->file('husband_emirate_id_attachment')->store('uploads/user_' . auth()->id(), 's3');
-            Storage::disk('s3')->setVisibility($path, 'public');
             $husband_emirates_id_file_path = Storage::disk('s3')->url($path);
         }
         if($request->hasFile('wife_passport_attachment')) {
 
             $path = $request->file('wife_passport_attachment')->store('uploads/user_' . auth()->id(), 's3');
-            Storage::disk('s3')->setVisibility($path, 'public');
             $wife_passport_file_path = Storage::disk('s3')->url($path);
         }
         
         if($request->hasFile('wife_emirate_id_attachment')) {
 
             $path = $request->file('wife_emirate_id_attachment')->store('uploads/user_' . auth()->id(), 's3');
-            Storage::disk('s3')->setVisibility($path, 'public');
             $wife_emirates_id_file_path = Storage::disk('s3')->url($path);
         }
 
         if($request->hasFile('marriage_document')) {
 
             $path = $request->file('marriage_document')->store('uploads/user_' . auth()->id(), 's3');
-            Storage::disk('s3')->setVisibility($path, 'public');
             $marriage_document_file_path = Storage::disk('s3')->url($path);
         }
 
