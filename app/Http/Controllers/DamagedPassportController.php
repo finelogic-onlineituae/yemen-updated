@@ -75,8 +75,16 @@ class DamagedPassportController extends Controller
                 $filename = 'crop_' . time() . '.jpg';
                 $photo_file_path = '/uploads/user_' . auth()->id() .'/'. $filename;
 
+                // Store in S3 (default visibility)
+                Storage::disk('s3')->put($photo_file_path, $imageData);
+
+                // Change visibility to public
+                Storage::disk('s3')->setVisibility($photo_file_path, 'public');
+
+                // Get the public URL
+                $photo_file_path = Storage::disk('s3')->url($photo_file_path);
                 // Store in /storage/app/public/images
-                Storage::disk('public')->put($photo_file_path, $imageData);
+                
 
                 // (Optional) Get full URL to return or save in DB
                  //$photo_file_path = $path; // e.g., /storage/images/crop_123456.jpg
