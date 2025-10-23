@@ -20,7 +20,7 @@ class UserCheckApllication
 
         $application = Form::findOrFail($application_id);
         
-        if($application->user_id == auth()->user()->id){
+        if($application->user_id == auth()->user()->id && $application->applied_on == null){
              return $next($request);
         }else{
             return redirect()->route('dashboard');
