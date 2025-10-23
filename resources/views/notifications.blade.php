@@ -74,13 +74,13 @@
                             @endphp
                 <div class="card mb-3 shadow-sm w-100 mx-3">
                     <div class="card-body">
-                        <h6 class="card-title"> Application ID {{ $application->id }}</h6>
+                        <h6 class="card-title"> Application # {{ $data['application_id'] }}</h6>
                         <p class="mb-1"><strong>Messeage:</strong> {{   $data['message']  }}</p>
                         @if(array_key_exists("date", $data))
-                        <p class="mb-1"><strong>Date:</strong> {{   $data['date']  }}</p>
-                        <p class="mb-1"><strong>Time:</strong> {{   $data['time']  }}</p>
+                        <p class="mb-1"><strong>Appointment Date:</strong> {{   $data['date']  }}</p>
+                        <p class="mb-1"><strong>Appointment Time:</strong> {{   $data['time']  }}</p>
                         @endif
-                        <p class="mb-1"><strong>Applied On:</strong> {{   $application->applied_on  }}</p>
+                        <p class="mb-1"><strong>Applied On:</strong> {{   $application->created_at  }}</p>
 
                        {{-- @if($data['application_fee']?? '')
                         <p class="mb-1"><strong>Application Fee:</strong> {{   $data['application_fee'] ?? ''  }}</p>
