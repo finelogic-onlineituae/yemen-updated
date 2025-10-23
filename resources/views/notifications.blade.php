@@ -75,8 +75,13 @@
                 <div class="card mb-3 shadow-sm w-100 mx-3">
                     <div class="card-body">
                         <h6 class="card-title"> Application ID {{ $application->id }}</h6>
-                        <p class="mb-1"><strong>Messeage:</strong> {{   $data['application_id']  }}</p>
-                        <p class="mb-1"><strong>date:</strong> {{    $application->created_at  }}</p>
+                        <p class="mb-1"><strong>Messeage:</strong> {{   $data['message']  }}</p>
+                        @if(array_key_exists("date", $data))
+                        <p class="mb-1"><strong>Date:</strong> {{   $data['date']  }}</p>
+                        <p class="mb-1"><strong>Time:</strong> {{   $data['time']  }}</p>
+                        @endif
+                        <p class="mb-1"><strong>Applied On:</strong> {{   $application->applied_on  }}</p>
+
                        {{-- @if($data['application_fee']?? '')
                         <p class="mb-1"><strong>Application Fee:</strong> {{   $data['application_fee'] ?? ''  }}</p>
                         @endif
@@ -86,15 +91,7 @@
                         @if($data['reason'] ?? '')
                         <p class="mb-1"><strong>Reason:</strong> {{   $data['reason'] ?? '' }}</p>
                         @endif--}}
-                        <a href="https://yemenembassyadmin.finelogic.in/print-certificate?application_id={{obfuscate_id($application->id)}}" data-id="{{ encrypt($application->id) }}" class="print-certificate-link">
-                                @if($application->read_at==null)
-                                    <button class="btn btn-sm btn-success">منظر</button>
-                                @else
-                                    <button class="btn btn-sm btn-primary">تمت المشاهدة</button>
-                                @endif
-
-
-                            </a>
+                        
                         {{-- <button class="btn btn-sm btn-primary mt-2">منظر</button> --}}
                     </div>
                 </div>
