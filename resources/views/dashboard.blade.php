@@ -42,7 +42,7 @@
                     <li class="list-group-item"><a href="/applications/new-passport" class="text-decoration-none">جواز سفر جديد</a></li>
                     <li class="list-group-item"><a href="/applications/damaged-passport" class="text-decoration-none">جواز السفر التالف</a></li>
                     <li class="list-group-item"><a href="/applications/loss-passport" class="text-decoration-none">فقدان جواز السفر</a></li>
-                     <li class="list-group-item"><a href="/applications/no-objection-certification" class="text-decoration-none">شهادة عدم ممانعة </a></li>
+                    
                     {{-- <li class="list-group-item"><a href="/applications/passport-name-change" class="text-decoration-none">تغيير الاسم في جواز السفر</a></li> --}}
                     </ul>
                 </div>
@@ -77,7 +77,7 @@
                                     {{-- <li class="list-group-item"><a href="#" class="text-decoration-none">Dependancy Certificate</a></li> --}}
                                     <li class="list-group-item"><a href="/applications/family-member" class="text-decoration-none">إفادة صلة قرابة</a></li>
                             <li class="list-group-item"><a href="/applications/no-id-card-group" class="text-decoration-none">إفادة لايحمل هوية</a></li>
-                            <li class="list-group-item"><a href="#" class="text-decoration-none">إفادة اعاله</a></li>
+                            <li class="list-group-item"><a href="/applications/support" class="text-decoration-none">إفادة اعاله</a></li>
 
 
                                     {{-- <li class="list-group-item"><a href="#" class="text-decoration-none">شهادة القرابة</a></li>
@@ -119,9 +119,7 @@
 
                                     <div class="collapse" id="attachements-documents-dashboard">
                                         <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><a href="/applications/school-certificate" class="text-decoration-none">	شهادة مدرسية </a></li>
-                              <li class="list-group-item"><a href="/applications/university-certificate" class="text-decoration-none"> شهادة جامعية</a></li>
-                              <li class="list-group-item"><a href="/applications/other-certificate" class="text-decoration-none"> شهادة أخرى</a></li>
+                                        <li class="list-group-item"><a href="/applications/attestation/prompt-requirements" class="text-decoration-none">	الشهادات</a></li>
 
 
                                         {{-- <li class="list-group-item"><a href="#" class="text-decoration-none">لا شهادة مدرسية</a></li> --}}

@@ -34,7 +34,7 @@
                         <tr>
                             <td class="tr-unread">{{ $loop->iteration }}</td>
                             <td class="tr-unread">{{  $data['application_id'] }}</td>
-                            <td class="tr-unread">{{  $data['message'] }}</td>
+                            <td class="tr-unread text-end">{{  $data['message'] }}</td>
                             <td class="tr-unread">{{  array_key_exists("date", $data) ? $data['date'].'-'.$data['time'] : '' }}</td>
                            {{-- <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['application_fee'] ?? '' }}</td>
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['cashier'] ?? '' }}</td>
@@ -96,7 +96,7 @@
                 <p>No Notifications found.</p>
             @endforelse
         </div>
-    </div> 
+    
 
 </x-app-layout>
 
