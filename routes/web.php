@@ -196,12 +196,13 @@ Route::middleware(['auth', 'email.verified'])->group(function () {
         Route::get('/applications/edit-power-of-attorney/{application_id}', [PowerOfAttorneyController::class, 'edit'])->name('power-of-attorney.edit');
 
         Route::post('/applications/confirm-application/{application_id}', [ApplicationController::class, 'confirmApplication'])->name('application.confirm');
-        Route::get('/applications/post-confirmation/{application_id}', [ApplicationController::class, 'postConfirmation'])->name('post-confirmation');
+        
 
        
 
     });
 
+    Route::get('/applications/post-confirmation/{application_id}', [ApplicationController::class, 'postConfirmation'])->name('post-confirmation');
 
     Route::post('/notification-view/{application_id}', [NotificationController::class, 'generate'])->name('notification-app');
 
