@@ -63,7 +63,7 @@
                 <tbody>
                     @forelse($application->formable->groupIdCardMembers as $member)
                     <tr>
-                        <td data-label="Photo">@if($member->photo) <img src="/storage{{$member->photo}}" width="100"> @else NA  @endif</td>
+                        <td data-label="Photo">@if($member->photo) <img src="{{$member->photo}}" width="100"> @else NA  @endif</td>
                         <td data-label="Name">{{ $member->name_arabic }}</td>
                         <td data-label="Passport Number">{{ $member->passport->passport_number }}</td>
                         <td data-label="Issued On">{{ $member->passport->issued_on }}</td>
