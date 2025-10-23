@@ -37,7 +37,7 @@
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['application_id'] }}</td>
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['message'] }}</td>
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $application->created_at }}</td>
-                            <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['date'].'-'.$data['time'] }}</td>
+                            <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  array_key_exists("date", $data) ? $data['date'].'-'.$data['time'] : '' }}</td>
                            {{-- <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['application_fee'] ?? '' }}</td>
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['cashier'] ?? '' }}</td>
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['reason'] ?? '' }}</td> --}}
