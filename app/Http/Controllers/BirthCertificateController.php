@@ -65,6 +65,8 @@ class BirthCertificateController extends Controller
         if($request->has('application')){
             $application = Form::findOrFail($request->application);
          //   dd($application->formable->passport);
+            $application->formable->name_arabic = $request->name_arabic;
+            $application->formable->profession = $request->profession;
             $application->formable->country_of_birth = $request->country_of_birth;
             $application->formable->city_of_birth = $request->city_of_birth;
             $application->formable->date_of_birth = $request->date_of_birth;
