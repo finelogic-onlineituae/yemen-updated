@@ -18,7 +18,6 @@
                         <th> No.</th>
                         <th> Application ID </th>
                         <th> Message </th>
-                        <th> Date </th>
                         <th> Appointment</th>
                         {{-- <th> Application Fee </th>
                         <th> Cashier </th>
@@ -36,7 +35,6 @@
                             <td class="tr-unread">{{ $loop->iteration }}</td>
                             <td class="tr-unread">{{  $data['application_id'] }}</td>
                             <td class="tr-unread">{{  $data['message'] }}</td>
-                            <td class="tr-unread">{{  $application->created_at }}</td>
                             <td class="tr-unread">{{  array_key_exists("date", $data) ? $data['date'].'-'.$data['time'] : '' }}</td>
                            {{-- <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['application_fee'] ?? '' }}</td>
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['cashier'] ?? '' }}</td>
@@ -75,12 +73,11 @@
                 <div class="card mb-3 shadow-sm w-100 mx-3">
                     <div class="card-body">
                         <h6 class="card-title"> Application # {{ $data['application_id'] }}</h6>
-                        <p class="mb-1"><strong>Messeage:</strong> {{   $data['message']  }}</p>
+                        <p class="mb-1">{{   $data['message']  }}</p>
                         @if(array_key_exists("date", $data))
                         <p class="mb-1"><strong>Appointment Date:</strong> {{   $data['date']  }}</p>
                         <p class="mb-1"><strong>Appointment Time:</strong> {{   $data['time']  }}</p>
                         @endif
-                        <p class="mb-1"><strong>Applied On:</strong> {{   $application->created_at  }}</p>
 
                        {{-- @if($data['application_fee']?? '')
                         <p class="mb-1"><strong>Application Fee:</strong> {{   $data['application_fee'] ?? ''  }}</p>
