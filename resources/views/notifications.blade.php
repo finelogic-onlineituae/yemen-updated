@@ -17,12 +17,13 @@
                     <tr class="table-dark">
                         <th> No.</th>
                         <th> Application ID </th>
-                        <th> Messeage </th>
-                        <th> date </th>
+                        <th> Message </th>
+                        <th> Date </th>
+                        <th> Appointment</th>
                         {{-- <th> Application Fee </th>
                         <th> Cashier </th>
                         <th> Reason </th> --}}
-                        <th> View </th>
+                        
                    
                     </tr>
                 </thead>
@@ -36,19 +37,10 @@
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['application_id'] }}</td>
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['message'] }}</td>
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $application->created_at }}</td>
+                            <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['date'].'-'.$data['time'] }}</td>
                            {{-- <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['application_fee'] ?? '' }}</td>
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['cashier'] ?? '' }}</td>
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['reason'] ?? '' }}</td> --}}
-
-                            <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}"><a href="https://yemenembassyadmin.finelogic.in/print-certificate?application_id={{obfuscate_id($application->id)}}" data-id="{{ encrypt($application->id) }}" class="print-certificate-link">
-                                @if($application->read_at==null)
-                                    <button class="btn btn-sm btn-success">منظر</button>
-                                @else
-                                    <button class="btn btn-sm btn-primary">تمت المشاهدة</button>
-                                @endif
-
-
-                            </a></td> 
                             {{-- <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}"><a href="#" data-id="{{ encrypt($application->id) }}" class="print-certificate-link">
                                 @if($application->read_at==null)
                                     <button class="btn btn-sm btn-success">منظر</button>
