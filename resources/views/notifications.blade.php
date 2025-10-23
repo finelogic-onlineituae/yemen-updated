@@ -33,11 +33,11 @@
                                 $data = json_decode($application->data, true);
                             @endphp
                         <tr>
-                            <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{ $loop->iteration }}</td>
-                            <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['application_id'] }}</td>
-                            <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['message'] }}</td>
-                            <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $application->created_at }}</td>
-                            <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  array_key_exists("date", $data) ? $data['date'].'-'.$data['time'] : '' }}</td>
+                            <td class="tr-unread">{{ $loop->iteration }}</td>
+                            <td class="tr-unread">{{  $data['application_id'] }}</td>
+                            <td class="tr-unread">{{  $data['message'] }}</td>
+                            <td class="tr-unread">{{  $application->created_at }}</td>
+                            <td class="tr-unread">{{  array_key_exists("date", $data) ? $data['date'].'-'.$data['time'] : '' }}</td>
                            {{-- <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['application_fee'] ?? '' }}</td>
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['cashier'] ?? '' }}</td>
                             <td class="{{ $application->read_at ? 'tr-read' : 'tr-unread' }}">{{  $data['reason'] ?? '' }}</td> --}}
