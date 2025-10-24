@@ -266,7 +266,7 @@ class VisaApplicationController extends Controller
             } 
                
             if($request->hasFile('passport_attachment')) {
-                $application->formable->passport->attachment = $file_path;
+                $application->formable->passport->attachment = $passport_file_path;
             }
             if($request->hasFile('sponsor_pass')) {
                 $application->formable->sponsor_noc = $sponsor_noc_file_path;
@@ -302,7 +302,7 @@ class VisaApplicationController extends Controller
                 'passport_center_id' => $request->passport_center,
                 'issued_on' => $request->issued_on,
                 'expires_on' => $request->expire_on,
-                'attachment' => $file_path
+                'attachment' => $passport_file_path
             ]);
 
     

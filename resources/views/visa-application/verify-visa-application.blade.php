@@ -179,7 +179,7 @@
                                             <div class="modal-content">
                                                 <span class="close" onclick="closeModal('passport_attachment')">&times;</span>
                                                 @if(Str::of($application->formable->passport->attachment)->lower()->endsWith(['.jpg', '.jpeg', '.png', '.webp']))
-                                                        <img src="{{ $application->formable->attachment }}"
+                                                        <img src="{{ $application->formable->passport->attachment }}"
                                                             alt="Preview"
                                                             style="max-width: 100%;aspect-ratio: 1 / 1;object-fit: cover; max-height: 100%; object-fit: contain; border-radius: 6px;">
                                                 @else
