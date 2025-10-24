@@ -127,7 +127,7 @@
                                 <input type="file" class="form-control" name="passport_attachment"  @if(!request('edit')) disabled @endif/>
                                  @error('passport_attachment') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                           <div>
+                           <div class="mt-2">
                             <a onclick="openModal('passport')" class="btn btn-dark">View Passport</a>
                             <!-- Modal -->
                                     <div id="passport" class="modal">
@@ -152,7 +152,7 @@
                                 <input type="file" class="form-control" name="emirate_id_attachment"  @if(!request('edit')) disabled @endif  />
                                 @error('emirate_id_attachment')<span class="text-danger">{{ $message }}</span> @enderror
                                  </div>
-                           <div>
+                           <div class="mt-2">
                             <a onclick="openModal('emirate_id')" class="btn btn-dark">View Emirate ID</a>
                             <!-- Modal -->
                                     <div id="emirate_id" class="modal">

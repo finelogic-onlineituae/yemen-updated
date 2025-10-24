@@ -252,10 +252,15 @@ class VisaApplicationController extends Controller
          
             
             if($request->has('has_accompany')){
-                $application->formable->has_accompany = $request->has_accompany ? true : false;
+                $application->formable->has_accompany = true;
                 $application->formable->accompany_name = $request->accompany_name;
             }
-
+            else{
+                $application->formable->has_accompany = false;
+                $application->formable->accompany_name = null;
+                $application->formable->accompany_passport = null;
+                $application->formable->accompany_id_card = null;
+            }
             if($request->hasFile('id_card')) {
                 $application->formable->id_card = $id_card_file_path;
             } 

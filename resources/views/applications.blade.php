@@ -64,7 +64,7 @@
                         <th>تطبق على</th>
                         <th>حالة</th>
                         <th>عرض التطبيق</th>
-                        <th>حالة الدفع</th>
+                        
 
                     </tr>
                 </thead>
@@ -77,14 +77,6 @@
                             <td>{{ $application->created_at }}</td>
                             <td>{{ $application->status }}</td>
                             <td><a href="{{url('download-application',$application->id)}}" target="_blank"><button class="btn btn-sm btn-primary">منظر</button></a></td>
-                            <td>
-                            {{-- @if($application->status=='approved')
-                            @endif
-                               --}}
-
-                                {{-- <a href="{{url('pay',encrypt($application->id))}}"><button class="btn btn-sm btn-primary">Pay</button></a> --}}
-                            </td>
-                        
                         </tr>
                     @empty
                         <tr>

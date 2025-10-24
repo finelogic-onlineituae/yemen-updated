@@ -15,7 +15,6 @@
             <table class="text-center table  table-bordered">
                 <thead>
                     <tr class="table-dark">
-                        <th> No.</th>
                         <th> Application ID </th>
                         <th> Message </th>
                         <th> Appointment</th>
@@ -32,7 +31,6 @@
                                 $data = json_decode($application->data, true);
                             @endphp
                         <tr>
-                            <td class="tr-unread">{{ $loop->iteration }}</td>
                             <td class="tr-unread">{{  $data['application_id'] }}</td>
                             <td class="tr-unread text-end">{{  $data['message'] }}</td>
                             <td class="tr-unread">{{  array_key_exists("date", $data) ? $data['date'].'-'.$data['time'] : '' }}</td>
