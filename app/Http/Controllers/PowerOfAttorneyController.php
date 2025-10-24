@@ -7,6 +7,7 @@ use App\Models\Form;
 use App\Models\PowerOfAttorney;
 use App\Models\Country;
 use App\Models\PassportCenter;
+use Illuminate\Support\Facades\Storage;
 
 class PowerOfAttorneyController extends Controller
 {
