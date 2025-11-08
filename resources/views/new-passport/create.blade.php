@@ -125,6 +125,7 @@
                             </div>
                             
                         </div>       
+                        <p class="text-danger mt-2">إذا كان لديك ملفات JPG أو PDF متعددة لتحميلها، يرجى دمجها في ملف واحد وإرفاقه هنا</p>
                         <div class="row">
                             <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                             <label class="form-label fw-bold" for="birth_certificate"> شهادة الميلاد (ملف بي دي إف  ,jpg, png, jpeg)</label>

@@ -165,6 +165,7 @@
                                 @error('previous_visit_2') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
+                        <p class="text-danger mt-2">إذا كان لديك ملفات JPG أو PDF متعددة لتحميلها، يرجى دمجها في ملف واحد وإرفاقه هنا</p>
                          <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 mb-md-0">
                                 <label class="form-label fw-bold" for="passport_attachment">نسخة من جواز السفر<br>(ملف jpg/png/PDF أقل من 2 ميجا بايت)</label>

@@ -95,6 +95,7 @@
                         <div class="card">
                             <div class="card-header">بيانات الوثيقة المطلوب تصديقها</div>
                             <div class="card-body">
+                                <p class="text-danger mt-2">إذا كان لديك ملفات JPG أو PDF متعددة لتحميلها، يرجى دمجها في ملف واحد وإرفاقه هنا</p>
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                             <label class="form-label fw-bold" for="document_type">نوع الوثيقة</label>

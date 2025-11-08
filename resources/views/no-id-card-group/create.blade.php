@@ -78,7 +78,7 @@
             <div class="w-100 d-flex justify-content-center">
                 <form action="{{ route('application.confirm', ['application_id' => $application->id]) }}" method="POST">
                     @csrf
-                    <button class="btn btn-success" onclick="return confirm('Are you sure want to submit finally?')">Final Submit</button>
+                    <button class="btn btn-success" onclick="return confirm('Are you sure want to submit finally?')">الإرسال النهائي</button>
                 </form>
             </div>
         @endif
@@ -173,7 +173,9 @@
         <div class="card text-start my-2">
                     <div class="card-header">المرفقات</div>
                     <div class="card-body">
+                        <p class="text-danger mt-2">إذا كان لديك ملفات JPG أو PDF متعددة لتحميلها، يرجى دمجها في ملف واحد وإرفاقه هنا</p>
                         <div id="general">
+                            
                             <div class="row">
                                 <div class="form-group mb-3 col-lg-6 col-xl-6 col-md-6 col-sm-12">
                                 <label class="form-label fw-bold" for="passport_attachment"> نسخة من جواز السفر (pdf ,jpg, png, jpeg)</label>
@@ -307,7 +309,7 @@
                         </div>
                     </div>
                 </div>
-                <div><button class="btn btn-success">Add Member</button></div>
+                <div><button class="btn btn-success">إضافة عضواو تقديم الطلب</button></div>
             
             </div>
         </form>
