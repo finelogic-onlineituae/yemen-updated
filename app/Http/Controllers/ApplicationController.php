@@ -54,26 +54,36 @@ class ApplicationController extends Controller
         $application_id = $request->application_id;
         $application = Form::findOrFail($application_id);
 
-        $application->status = 'Applied';
-        $staffWithToken = Officer::where('current_token', true)->first();
         $query = Officer::where('role_id', '3');
+        $currentStaffQuery = Officer::where(['current_token' => true, 'role_id' => 3]);
 
-        if($staffWithToken){
+        if(in_array($application->form_type_id, [9,10,11,12,13]))
+            $section = 'passport';
+        else
+            $section = 'others';
+        
+        $query->where('section', $section);
+        $currentStaffQuery->where('section', $section);
+
+        $staffWithToken = $currentStaffQuery->first();
+        
+        if($staffWithToken)
             $query->where('id', '>', $staffWithToken->id);              
-        }
+        
         $next_staff = $query->orderBy('id')->first();
 
-        $next_staff = $next_staff ?: Officer::where('role_id', 3)->orderBy('id')->first();
+        if(!$next_staff)
+            $next_staff = Officer::where('role_id', 3)->where('section', $section)->orderBy('id')->first();
+        
 
         if($staffWithToken){
             $staffWithToken->current_token = false;
             $staffWithToken->save();
         }
+        $application->status = 'Applied';
         $application->current_position = $next_staff->user->id;
         $application->applied_on = now();
         $application->save();
-
-     
 
         $next_staff->current_token = true;
         $next_staff->save();
