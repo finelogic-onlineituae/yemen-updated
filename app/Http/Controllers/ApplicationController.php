@@ -54,13 +54,13 @@ class ApplicationController extends Controller
         $application_id = $request->application_id;
         $application = Form::findOrFail($application_id);
 
-        $query = Officer::where('role_id', '3');
+        $query = Officer::where(['role_id' =>'3',  'is_active' => true]);
         $currentStaffQuery = Officer::where(['current_token' => true, 'role_id' => 3]);
 
         if(in_array($application->form_type_id, [9,10,11,12,13]))
             $section = 'passport';
         else
-            $section = 'others';
+            $section = 'general';
         
         $query->where('section', $section);
         $currentStaffQuery->where('section', $section);
@@ -73,7 +73,7 @@ class ApplicationController extends Controller
         $next_staff = $query->orderBy('id')->first();
 
         if(!$next_staff)
-            $next_staff = Officer::where('role_id', 3)->where('section', $section)->orderBy('id')->first();
+            $next_staff = Officer::where(['role_id' => 3, 'section' => $section, 'is_active' => true])->orderBy('id')->first();
         
 
         if($staffWithToken){
